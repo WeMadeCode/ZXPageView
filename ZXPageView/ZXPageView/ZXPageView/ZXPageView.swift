@@ -38,19 +38,20 @@ class ZXPageView: UIView {
 extension ZXPageView{
     fileprivate func setupSubViews(){
     
-        //创建标题
+        //1.创建ZXtitleView
         let titleFrame = CGRect(x: 0, y: 0, width: bounds.width, height: style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titles)
-        titleView.backgroundColor = UIColor.orange
+        titleView.backgroundColor = UIColor.randomColor
         addSubview(titleView)
         
         
-        //创建内容
+        //2.创建ZXContentView
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
         let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs)
-        contentView.backgroundColor = UIColor.purple
+        contentView.backgroundColor = UIColor.randomColor
         addSubview(contentView)
         
+        //3.让ZXTitleView和ZXContentView进行交互
         
         
     }
