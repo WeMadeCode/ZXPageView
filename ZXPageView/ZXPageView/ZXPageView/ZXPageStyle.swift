@@ -12,7 +12,7 @@ class ZXPageStyle {
     
     var isScrollEnable:Bool = false
 
-    
+    //Label的一些属性
     var titleHeight : CGFloat = 44
     
     //正常颜色
