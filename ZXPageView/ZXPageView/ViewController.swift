@@ -14,24 +14,24 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
 
-        
+        //1.创建所需要的样式
         let style = ZXPageStyle()
-        style.isScrollEnable = true
+//        style.isScrollEnable = true
         
+        //2.获取所有的标题
         let titles = ["推荐", "游戏游戏游戏", "热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         
-        var childVcs = [UIViewController]()
         
+        //3.获取所有的内容控制器
+        var childVcs = [UIViewController]()
         for _ in 0..<titles.count {
-            
             let vc = UIViewController()
-            
-            vc.view.backgroundColor = UIColor(red: CGFloat(arc4random_uniform(256))/255.0, green:CGFloat(arc4random_uniform(256))/255.0 , blue: CGFloat(arc4random_uniform(256))/255.0, alpha: 1.0)
-            
+            vc.view.backgroundColor = UIColor.randomColor
             childVcs.append(vc)
             
         }
         
+        //4.创建ZXPageView
         let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height - 64)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs,parentVc:self)
         pageView.backgroundColor = UIColor.blue

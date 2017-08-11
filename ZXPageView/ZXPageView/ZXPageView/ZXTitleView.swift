@@ -8,11 +8,18 @@
 
 import UIKit
 
+protocol ZXTitleViewDelegate:class {
+    func titleView(_ titleView:ZXTitleView,currentIndex:Int)
+}
+
 class ZXTitleView: UIView {
 
+    /// weak:只能用来修饰对象
+    weak var delegate : ZXTitleViewDelegate?
     
     fileprivate var style:ZXPageStyle
     fileprivate var titles:[String]
+    fileprivate var currentIndex : Int = 0
     
     fileprivate lazy var titleLabels : [UILabel] = [UILabel]()
     fileprivate lazy var scrollView:UIScrollView = {
@@ -115,7 +122,6 @@ extension ZXTitleView{
         
         //3.设置contentSize
         if style.isScrollEnable {
-            
             scrollView.contentSize.width = titleLabels.last!.frame.maxX + style.titleMargin * 0.5
         }
         
@@ -138,13 +144,47 @@ extension ZXTitleView{
     @objc fileprivate func titleLabelClick(_ tapGes:UITapGestureRecognizer){
         
         //1.校验UILabel
-        guard let targetLabel = tapGes.view as? UILabel else {
-            return
+        guard let targetLabel = tapGes.view as? UILabel else { return }
+       
+        guard targetLabel.tag != currentIndex else {  return  }
+        
+        //2.取出原来的label
+        let sourceLabel = titleLabels[currentIndex]
+        
+        //3.改变Label的颜色
+        sourceLabel.textColor = style.normalColor
+        targetLabel.textColor = style.selectColor
+        
+        //4.记录最新的index
+        currentIndex = targetLabel.tag
+        
+        //5.让点击的label居中显示
+        adjustLabelPosition(targetLabel)
+        
+        //6.通知代理
+        delegate?.titleView(self, currentIndex: currentIndex)
+
+        
+    }
+    
+    
+    private func adjustLabelPosition(_ targetLabel:UILabel){
+    
+        //1.计算offsetX
+        var offsetX = targetLabel.center.x - bounds.width * 0.5
+        
+        //2.临界值判断
+        if offsetX < 0 {
+            offsetX = 0
         }
         
-        //2.获取下标
-        print(targetLabel.tag)
-    
+        if offsetX > scrollView.contentSize.width - scrollView.bounds.width {
+            offsetX = scrollView.contentSize.width - scrollView.bounds.width
+        }
+        
+        //3.设置scrollView的contentOffset
+        scrollView.setContentOffset(CGPoint(x:offsetX,y:0), animated: true)
+        
     }
 
 }

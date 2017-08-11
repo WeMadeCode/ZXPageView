@@ -94,3 +94,19 @@ extension ZXContentView:UICollectionViewDelegate{
 }
 
 
+extension ZXContentView:ZXTitleViewDelegate{
+    
+    func titleView(_ titleView: ZXTitleView, currentIndex: Int) {
+        
+        //1.根据currentIndex获取indexPath
+        let indexPath = IndexPath(item: currentIndex, section: 0)
+        
+        //2.滚动到正确位置
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
+        
+        
+    }
+
+}
+
+

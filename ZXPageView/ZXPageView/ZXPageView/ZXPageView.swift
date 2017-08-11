@@ -19,6 +19,7 @@ class ZXPageView: UIView {
     init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
         
         //在super.init()之前，需要保证所有的属性有被初始化
+        //self.不能省略：在函数中，如果和成员属性产生歧义
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -54,7 +55,7 @@ extension ZXPageView{
         addSubview(contentView)
         
         //3.让ZXTitleView和ZXContentView进行交互
-        
+        titleView.delegate = contentView
         
     }
 }

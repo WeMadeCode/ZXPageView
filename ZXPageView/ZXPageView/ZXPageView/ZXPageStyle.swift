@@ -10,18 +10,14 @@ import UIKit
 
 class ZXPageStyle {
     
+    //是否可以滚动
     var isScrollEnable:Bool = false
 
     //Label的一些属性
     var titleHeight : CGFloat = 44
-    
-    //正常颜色
     var normalColor:UIColor = UIColor.white
-    //选中颜色
     var selectColor : UIColor = UIColor.orange
-    
     var fontSize:CGFloat = 15
-    
     var titleMargin : CGFloat = 30
 
     
