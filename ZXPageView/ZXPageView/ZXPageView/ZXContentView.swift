@@ -8,12 +8,22 @@
 
 import UIKit
 
+protocol ZXContentViewDelegate:class {
+    
+    func contentView(_ contentView:ZXContentView,inIndex:Int)
+    func contentView(_ contentView:ZXContentView,sourceIndex:Int,targetIndex:Int,progress:CGFloat)
+    
+}
+
 private let kContentCellId = "kContentCellId"
 
 class ZXContentView: UIView {
 
+    weak var delegate:ZXContentViewDelegate?
     fileprivate var childVcs:[UIViewController]
     fileprivate var parentVc:UIViewController
+    fileprivate var startOffsetX : CGFloat = 0
+    fileprivate var isForbidDelegate:Bool = false
     fileprivate lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = self.bounds.size
@@ -90,6 +100,56 @@ extension ZXContentView:UICollectionViewDataSource{
 
 extension ZXContentView:UICollectionViewDelegate{
 
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        collectionViewDidEndScroll()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {//如果没有减速的话
+            collectionViewDidEndScroll()
+        }
+    }
+    
+    func collectionViewDidEndScroll() {
+        //1.获取位置
+        let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
+        
+        //2.通知代理
+        delegate?.contentView(self, inIndex: inIndex)
+        
+    }
+    
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isForbidDelegate = false
+        startOffsetX = scrollView.contentOffset.x
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        //1.判断是否需要执行后续代码
+        if scrollView.contentOffset.x == startOffsetX || isForbidDelegate {
+            return
+        }
+        
+        //2.定于需要的参数
+        var progress:CGFloat = 0
+        var targetIndex = 0
+        let sourceIndex = Int(startOffsetX/collectionView.bounds.width)
+        
+        //3.判断用户是左滑动还是右滑动
+        if collectionView.contentOffset.x > startOffsetX {//左滑动
+            targetIndex = sourceIndex + 1
+            progress = (collectionView.contentOffset.x - startOffsetX)/collectionView.bounds.width
+            
+        }else{  //右滑动
+            targetIndex = sourceIndex - 1
+            progress = (startOffsetX - collectionView.contentOffset.x)/collectionView.bounds.width
+        }
+        
+        //4.通知代理
+        delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)
+    }
 
 }
 
@@ -98,12 +158,13 @@ extension ZXContentView:ZXTitleViewDelegate{
     
     func titleView(_ titleView: ZXTitleView, currentIndex: Int) {
         
+        // 0.设置isForbidDelegate属性为true
+        isForbidDelegate = true
+        
         //1.根据currentIndex获取indexPath
         let indexPath = IndexPath(item: currentIndex, section: 0)
-        
         //2.滚动到正确位置
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
-        
         
     }
 

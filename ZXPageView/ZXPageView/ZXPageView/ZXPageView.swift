@@ -56,6 +56,6 @@ extension ZXPageView{
         
         //3.让ZXTitleView和ZXContentView进行交互
         titleView.delegate = contentView
-        
+        contentView.delegate = titleView
     }
 }
