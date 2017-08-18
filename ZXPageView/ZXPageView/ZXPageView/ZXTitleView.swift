@@ -180,6 +180,12 @@ extension ZXTitleView{
     
     fileprivate func adjustLabelPosition(_ targetLabel:UILabel){
     
+        //0.只有可以滚动的时候可以调整
+        guard style.isScrollEnable else {
+            return
+        }
+        
+        
         //1.计算offsetX
         var offsetX = targetLabel.center.x - bounds.width * 0.5
         
