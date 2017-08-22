@@ -10,12 +10,15 @@ import UIKit
 
 class ZXPageView: UIView {
     
-    var style : ZXPageStyle
-    var titles : [String]
-    var childVcs : [UIViewController]
-    var parentVc : UIViewController
-
     
+    // MARK: 定义属性
+    fileprivate var style : ZXPageStyle
+    fileprivate var titles : [String]
+    fileprivate var childVcs : [UIViewController]
+    fileprivate var parentVc : UIViewController
+
+
+    // MARK: 构造函数
     init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
         
         //在super.init()之前，需要保证所有的属性有被初始化
@@ -25,8 +28,6 @@ class ZXPageView: UIView {
         self.childVcs = childVcs
         self.parentVc = parentVc
         super.init(frame:frame)
-        
-        
         setupSubViews()
         
     }

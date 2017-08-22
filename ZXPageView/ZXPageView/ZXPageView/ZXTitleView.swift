@@ -14,7 +14,7 @@ protocol ZXTitleViewDelegate:class {
 
 class ZXTitleView: UIView {
 
-    /// weak:只能用来修饰对象
+    // weak:只能用来修饰对象
     weak var delegate : ZXTitleViewDelegate?
     
     fileprivate var style:ZXPageStyle
@@ -23,7 +23,7 @@ class ZXTitleView: UIView {
     
     typealias ColorRGB = (red:CGFloat,green:CGFloat,blue:CGFloat)
     fileprivate lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
-    fileprivate lazy var normalRGB : ColorRGB = self.style.selectColor.getRGB()
+    fileprivate lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
     fileprivate lazy var deltaRGB : ColorRGB = {
         let deltaR = self.selectRGB.red - self.normalRGB.red
         let deltaG = self.selectRGB.green - self.normalRGB.green
@@ -39,9 +39,16 @@ class ZXTitleView: UIView {
         scrollView.scrollsToTop = false
         return scrollView
     }()
+    fileprivate lazy var bottomLine: UIView = {
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = self.style.bottomLineColor
+        bottomLine.frame.size.height = self.style.bottomLineHeight
+        bottomLine.frame.origin.y = self.bounds.height - self.style.bottomLineHeight
+        return bottomLine
+    }()
     
     
-    //MARK:构造函数
+    //MARK: 构造函数
     init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
         
         self.style = style
@@ -58,7 +65,7 @@ class ZXTitleView: UIView {
 
 extension ZXTitleView{
     
-    fileprivate  func setupSubView(){
+    fileprivate func setupSubView(){
         
         //1.添加一个UIScrollView
         addSubview(scrollView)
@@ -68,6 +75,25 @@ extension ZXTitleView{
         
         //3.设置label的frame
         setupLabelsFrame()
+        
+        // 4.设置bottomLine
+        setupBottomLine()
+        
+    }
+    
+    private func setupBottomLine(){
+    
+        //1.判断是否需要显示BottomLine
+        guard style.isShowBottomLine else {
+            return
+        }
+        
+        //2.将bottomLine添加到scrollView中
+        scrollView.addSubview(bottomLine)
+        
+        // 3.设置bottomLine的frame中的属性
+        bottomLine.frame.origin.x = titleLabels.first!.frame.origin.x
+        bottomLine.frame.size.width = titleLabels.first!.frame.width
         
     }
     
@@ -92,7 +118,6 @@ extension ZXTitleView{
             titleLabels.append(label)
             
             //5.监听label的点击
-            //事件监听依然是发送消息
             let tapGes = UITapGestureRecognizer(target: self, action: #selector(titleLabelClick(_:)))
             label.addGestureRecognizer(tapGes)
             label.isUserInteractionEnabled = true
@@ -114,19 +139,13 @@ extension ZXTitleView{
         let count = titleLabels.count
         for (i,titlelabel) in titleLabels.enumerated() {
             if style.isScrollEnable {
-                
                 labelW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName
                     :titlelabel.font], context: nil).width
-                
                 labelX = i == 0 ? style.titleMargin * 0.5 : (titleLabels[i - 1].frame.maxX + style.titleMargin)
-                
             }else{
-                
                 labelW = bounds.width / CGFloat(count)
                 labelX = labelW * CGFloat(i)
-            
             }
-            
             titlelabel.frame = CGRect(x: labelX, y: labelY, width: labelW, height: labelH)
         }
         
@@ -134,23 +153,12 @@ extension ZXTitleView{
         if style.isScrollEnable {
             scrollView.contentSize.width = titleLabels.last!.frame.maxX + style.titleMargin * 0.5
         }
-        
-        
-        
-    
     }
 
 }
 
 extension ZXTitleView{
 
-    /*
-     tapGes:外部参数
-     @objc 如果在函数前加载@objc，那么会保留OC的特性
-     OC在调用方法时，本质是发送消息
-     将方法包装成@SEL -> 根据@SEL去类中的方法映射表 -> IMP指针
-     目的：灵活 -> 不安全
-     */
     @objc fileprivate func titleLabelClick(_ tapGes:UITapGestureRecognizer){
         
         //1.校验UILabel
@@ -161,7 +169,7 @@ extension ZXTitleView{
         //2.取出原来的label
         let sourceLabel = titleLabels[currentIndex]
         
-        //3.改变Label的颜色
+        //3.改变label的颜色
         sourceLabel.textColor = style.normalColor
         targetLabel.textColor = style.selectColor
         
@@ -173,6 +181,14 @@ extension ZXTitleView{
         
         //6.通知代理
         delegate?.titleView(self, currentIndex: currentIndex)
+        
+        //7.调整bottomLine
+        if style.isShowBottomLine {
+            UIView.animate(withDuration: 0.25, animations: { 
+                self.bottomLine.frame.origin.x = targetLabel.frame.origin.x
+                self.bottomLine.frame.size.width = targetLabel.frame.width
+            })
+        }
 
         
     }
@@ -184,7 +200,6 @@ extension ZXTitleView{
         guard style.isScrollEnable else {
             return
         }
-        
         
         //1.计算offsetX
         var offsetX = targetLabel.center.x - bounds.width * 0.5
@@ -224,10 +239,19 @@ extension ZXTitleView :ZXContentViewDelegate{
         let sourceLabel = titleLabels[sourceIndex]
         let targetLabel = titleLabels[targetIndex]
         
+        print("sourceIndex = \(sourceIndex),targetIndex = \(targetIndex),progress = \(progress)")
+
         //2.颜色的渐变
         sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
-        
         targetLabel.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
+        
+        // 3.bottomLine的调整
+        if style.isShowBottomLine {
+            let deltaX = targetLabel.frame.origin.x - sourceLabel.frame.origin.x
+            let deltaW = targetLabel.frame.width - sourceLabel.frame.width
+            bottomLine.frame.origin.x = sourceLabel.frame.origin.x + progress * deltaX
+            bottomLine.frame.size.width = sourceLabel.frame.width + progress * deltaW
+        }
     }
     
 }

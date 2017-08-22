@@ -9,7 +9,6 @@
 import UIKit
 
 protocol ZXContentViewDelegate:class {
-    
     func contentView(_ contentView:ZXContentView,inIndex:Int)
     func contentView(_ contentView:ZXContentView,sourceIndex:Int,targetIndex:Int,progress:CGFloat)
     
@@ -19,9 +18,12 @@ private let kContentCellId = "kContentCellId"
 
 class ZXContentView: UIView {
 
+    
+    // MARK: 定义属性
     weak var delegate:ZXContentViewDelegate?
-    fileprivate var childVcs:[UIViewController]
-    fileprivate var parentVc:UIViewController
+    
+    fileprivate var childVcs : [UIViewController]
+    fileprivate var parentVc : UIViewController
     fileprivate var startOffsetX : CGFloat = 0
     fileprivate var isForbidDelegate:Bool = false
     fileprivate lazy var collectionView:UICollectionView = {
@@ -43,6 +45,7 @@ class ZXContentView: UIView {
         
     }()
     
+    // MARK: 构造函数
     init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController) {
         self.childVcs = childVcs
         self.parentVc = parentVc
@@ -58,7 +61,6 @@ class ZXContentView: UIView {
 
 extension ZXContentView{
     fileprivate func setupSubView(){
-        
         //1.添加collectionView
         addSubview(collectionView)
         
