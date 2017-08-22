@@ -60,7 +60,6 @@ class ZXPageStyle {
 
 extension UIColor{
     
-    
     /*
      在extension中扩充构造函数，只能扩充便利构造函数
      1>在init前需要加上关键字convenience
