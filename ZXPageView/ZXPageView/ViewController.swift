@@ -20,8 +20,11 @@ class ViewController: UIViewController {
         //1.创建所需要的样式
         let style = ZXPageStyle()
         style.isScrollEnable = true
-        style.isShowBottomLine = true
+//        style.isShowBottomLine = true
         style.isScaleEnable = true
+//        style.isShowCoverView = true
+
+        
         //2.获取所有的标题
         let titles = ["推荐", "游戏游戏游戏", "热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         
