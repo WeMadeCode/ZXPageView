@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		92309DAC1F3B45B000E2F5E2 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92309DAB1F3B45B000E2F5E2 /* UIColor+Extension.swift */; };
 		92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */; };
 		92CFA6391F3B2A6E00E21E7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6381F3B2A6E00E21E7A /* ViewController.swift */; };
 		92CFA63C1F3B2A6E00E21E7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92CFA63A1F3B2A6E00E21E7A /* Main.storyboard */; };
@@ -20,7 +19,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		92309DAB1F3B45B000E2F5E2 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		92CFA6331F3B2A6E00E21E7A /* ZXPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92CFA6381F3B2A6E00E21E7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,7 +80,6 @@
 				92CFA64B1F3B2ADE00E21E7A /* ZXPageView.swift */,
 				92CFA64D1F3B2D3B00E21E7A /* ZXTitleView.swift */,
 				92CFA64F1F3B2DA500E21E7A /* ZXContentView.swift */,
-				92309DAB1F3B45B000E2F5E2 /* UIColor+Extension.swift */,
 			);
 			path = ZXPageView;
 			sourceTree = "<group>";
@@ -159,7 +156,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92309DAC1F3B45B000E2F5E2 /* UIColor+Extension.swift in Sources */,
 				92CFA6391F3B2A6E00E21E7A /* ViewController.swift in Sources */,
 				92CFA64C1F3B2ADE00E21E7A /* ZXPageView.swift in Sources */,
 				92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */,

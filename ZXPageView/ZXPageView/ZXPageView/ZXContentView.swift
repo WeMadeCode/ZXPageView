@@ -113,7 +113,7 @@ extension ZXContentView:UICollectionViewDelegate{
     }
     
     func collectionViewDidEndScroll() {
-        //1.获取位置
+        //1.获取停止的正确位置
         let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
         
         //2.通知代理
@@ -130,24 +130,55 @@ extension ZXContentView:UICollectionViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         //1.判断是否需要执行后续代码
-        if scrollView.contentOffset.x == startOffsetX || isForbidDelegate {
-            return
-        }
+        guard  !isForbidDelegate  else { return  }
         
         //2.定于需要的参数
         var progress:CGFloat = 0
-        var targetIndex = 0
-        let sourceIndex = Int(startOffsetX/collectionView.bounds.width)
+        var targetIndex:Int = 0
+        var sourceIndex:Int = 0
         
         //3.判断用户是左滑动还是右滑动
-        if collectionView.contentOffset.x > startOffsetX {//左滑动
+        let currentOffsetX = scrollView.contentOffset.x
+        let scrollViewW = scrollView.bounds.width
+        if currentOffsetX > startOffsetX {//左滑动
+            
+            // 1.计算progress  floor:向下取整函数
+            progress = currentOffsetX / scrollViewW -  floor(currentOffsetX / scrollViewW)
+            
+            
+            // 2.计算sourceIndex
+            sourceIndex = Int(currentOffsetX / scrollViewW)
+
+            // 3.计算targetIndex
             targetIndex = sourceIndex + 1
-            progress = (collectionView.contentOffset.x - startOffsetX)/collectionView.bounds.width
+            if targetIndex >= childVcs.count {
+                targetIndex = childVcs.count - 1
+            }
+            
+            // 4.如果完全划过去
+            if progress == 0 {
+                progress = 1
+                targetIndex = sourceIndex
+            }
             
         }else{  //右滑动
-            targetIndex = sourceIndex - 1
-            progress = (startOffsetX - collectionView.contentOffset.x)/collectionView.bounds.width
+            
+            // 1.计算progress
+            progress = 1 - (currentOffsetX / scrollViewW - floor(currentOffsetX / scrollViewW))
+            
+            
+            // 2.计算targetIndex
+            targetIndex = Int(currentOffsetX / scrollViewW)
+            
+            // 3.计算sourceIndex
+            sourceIndex = targetIndex + 1
+            if sourceIndex >= childVcs.count {
+                sourceIndex = childVcs.count - 1
+            }
+
         }
+        
+//        print("sourceIndex = \(sourceIndex),targetIndex = \(targetIndex),progress = \(progress)")
         
         //4.通知代理
         delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)

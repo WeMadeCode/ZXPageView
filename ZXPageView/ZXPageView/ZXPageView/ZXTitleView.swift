@@ -301,7 +301,6 @@ extension ZXTitleView :ZXContentViewDelegate{
         let sourceLabel = titleLabels[sourceIndex]
         let targetLabel = titleLabels[targetIndex]
         
-        print("sourceIndex = \(sourceIndex),targetIndex = \(targetIndex),progress = \(progress)")
 
         //2.颜色的渐变
         sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)

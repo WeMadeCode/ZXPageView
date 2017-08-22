@@ -41,7 +41,6 @@ class ViewController: UIViewController {
         //4.创建ZXPageView
         let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height - 64)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs,parentVc:self)
-        pageView.backgroundColor = UIColor.blue
         view.addSubview(pageView)
         
         
