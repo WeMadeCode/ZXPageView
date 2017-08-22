@@ -28,6 +28,10 @@ class ZXPageStyle {
     var bottomLineColor : UIColor = UIColor.orange
     //滚动条高度
     var bottomLineHeight : CGFloat = 2
+    //是否支持标题缩放
+    var isScaleEnable : Bool = false
+    //缩放大小
+    var maxScale : CGFloat = 1.2
 
     
 

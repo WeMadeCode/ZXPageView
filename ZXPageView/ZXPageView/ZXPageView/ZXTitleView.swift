@@ -149,6 +149,12 @@ extension ZXTitleView{
             titlelabel.frame = CGRect(x: labelX, y: labelY, width: labelW, height: labelH)
         }
         
+        //设置scale属性
+        if style.isScaleEnable {
+            titleLabels.first?.transform = CGAffineTransform(scaleX: style.maxScale, y: style.maxScale)
+        }
+        
+        
         //3.设置contentSize
         if style.isScrollEnable {
             scrollView.contentSize.width = titleLabels.last!.frame.maxX + style.titleMargin * 0.5
@@ -182,7 +188,15 @@ extension ZXTitleView{
         //6.通知代理
         delegate?.titleView(self, currentIndex: currentIndex)
         
-        //7.调整bottomLine
+        // 7.调整scale缩放
+        if style.isScaleEnable {
+            UIView.animate(withDuration: 0.25, animations: { 
+                sourceLabel.transform = CGAffineTransform.identity
+                targetLabel.transform = CGAffineTransform(scaleX: self.style.maxScale, y: self.style.maxScale)
+            })
+        }
+        
+        //8.调整bottomLine
         if style.isShowBottomLine {
             UIView.animate(withDuration: 0.25, animations: { 
                 self.bottomLine.frame.origin.x = targetLabel.frame.origin.x
@@ -215,7 +229,6 @@ extension ZXTitleView{
         
         //3.设置scrollView的contentOffset
         scrollView.setContentOffset(CGPoint(x:offsetX,y:0), animated: true)
-        
     }
 
 }
@@ -245,7 +258,14 @@ extension ZXTitleView :ZXContentViewDelegate{
         sourceLabel.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
         targetLabel.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
         
-        // 3.bottomLine的调整
+        // 3.scale的调整
+        if style.isScaleEnable {
+            let deltaScale = style.maxScale - 1.0
+            sourceLabel.transform = CGAffineTransform(scaleX: style.maxScale - progress * deltaScale, y: style.maxScale - progress * deltaScale)
+            targetLabel.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale, y: 1.0 + progress * deltaScale)
+        }
+        
+        // 4.bottomLine的调整
         if style.isShowBottomLine {
             let deltaX = targetLabel.frame.origin.x - sourceLabel.frame.origin.x
             let deltaW = targetLabel.frame.width - sourceLabel.frame.width
