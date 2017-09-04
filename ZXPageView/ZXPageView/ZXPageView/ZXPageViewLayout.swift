@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZXPageViewLayout: UICollectionViewFlowLayout {
+class ZXPageViewLayout: UICollectionViewLayout {
     fileprivate lazy var cellAttrs : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
     fileprivate lazy var pageCount = 0
     var sectionInset : UIEdgeInsets = UIEdgeInsets.zero
@@ -30,27 +30,39 @@ extension ZXPageViewLayout{
         let sectionCount = collectionView.numberOfSections
         
         //3.获取每组中有多少个数据
+        let itemW : CGFloat = (collectionView.bounds.width - sectionInset.left - sectionInset.right - CGFloat(cols - 1) * itemSpacing)/CGFloat(cols)
+        let itemH : CGFloat = (collectionView.bounds.height - sectionInset.top - sectionInset.bottom - CGFloat(rows - 1) * lineSpacing)/CGFloat(rows)
+        //计算累加的组有多少页
         for sectionIndex in 0..<sectionCount {
             
             let itemCount = collectionView.numberOfItems(inSection: sectionIndex)
+            
             //4.为每一个cell创建对应的UICollectionViewLayoutAttributes
             for itemIndex in 0..<itemCount {
                 //4.1创建Attributes
                 let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
                 let attr = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 
-                //4.2设置Attributes的frame
-                let itemW : CGFloat = 100
-                let itemH : CGFloat = 100
-                let itemX : CGFloat = 10
-                let itemY : CGFloat = 10
+                //4.2求出itemIndex在该组中的第几页中的第几个
+                let pageIndex = itemIndex/(rows * cols)
+                let pageItemIndex = itemIndex % (rows * cols)
+                
+                //4.3求itemIndex在该页中第几行/第几列
+                let rowIndex = pageItemIndex / cols
+                let colIndex = pageItemIndex % cols
+                
+                //4.4设置Attributes的frame
+                let itemX : CGFloat = CGFloat(pageCount + pageIndex) * collectionView.bounds.width + sectionInset.left + (itemW + itemSpacing) * CGFloat(colIndex)
+                let itemY : CGFloat = sectionInset.top + (itemH + lineSpacing) * CGFloat(rowIndex)
                 attr.frame = CGRect(x: itemX, y: itemY, width: itemW, height: itemH)
                 
-                // 4.3将Attributes添加到数组中
+                // 4.5将Attributes添加到数组中
                 cellAttrs.append(attr)
             }
             
-            
+            //5.计算该组一共占据多少页
+            pageCount += (itemCount - 1) / (cols * rows) + 1
+
         }
         
     }
@@ -72,6 +84,6 @@ extension ZXPageViewLayout{
 extension ZXPageViewLayout{
     
     override var collectionViewContentSize: CGSize{
-        return CGSize(width: 10000, height: 0)
+        return CGSize(width: CGFloat(pageCount) * collectionView!.bounds.width, height: 0)
     }
 }
