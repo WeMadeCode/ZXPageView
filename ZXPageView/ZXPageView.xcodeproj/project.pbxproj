@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9256BCDF1F5D25E7008ECC93 /* ZXPageViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */; };
 		92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */; };
 		92CFA6391F3B2A6E00E21E7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6381F3B2A6E00E21E7A /* ViewController.swift */; };
 		92CFA63C1F3B2A6E00E21E7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92CFA63A1F3B2A6E00E21E7A /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXPageViewLayout.swift; sourceTree = "<group>"; };
 		92CFA6331F3B2A6E00E21E7A /* ZXPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92CFA6381F3B2A6E00E21E7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				92CFA64B1F3B2ADE00E21E7A /* ZXPageView.swift */,
 				92CFA64D1F3B2D3B00E21E7A /* ZXTitleView.swift */,
 				92CFA64F1F3B2DA500E21E7A /* ZXContentView.swift */,
+				9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */,
 			);
 			path = ZXPageView;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				92CFA64A1F3B2AB900E21E7A /* ZXPageStyle.swift in Sources */,
 				92CFA6501F3B2DA500E21E7A /* ZXContentView.swift in Sources */,
 				92CFA64E1F3B2D3B00E21E7A /* ZXTitleView.swift in Sources */,
+				9256BCDF1F5D25E7008ECC93 /* ZXPageViewLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

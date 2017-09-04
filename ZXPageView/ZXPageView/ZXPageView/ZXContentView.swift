@@ -54,6 +54,9 @@ class ZXContentView: UIView {
         
     }
     
+    
+
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -177,9 +180,6 @@ extension ZXContentView:UICollectionViewDelegate{
             }
 
         }
-        
-//        print("sourceIndex = \(sourceIndex),targetIndex = \(targetIndex),progress = \(progress)")
-        
         //4.通知代理
         delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)
     }

@@ -8,15 +8,24 @@
 
 import UIKit
 
+
+private let kCollectionViewCellID = "kCollectionViewCellID"
+
 class ZXPageView: UIView {
-    
-    
     // MARK: 定义属性
     fileprivate var style : ZXPageStyle
     fileprivate var titles : [String]
-    fileprivate var childVcs : [UIViewController]
-    fileprivate var parentVc : UIViewController
+    fileprivate var childVcs : [UIViewController]!
+    fileprivate var parentVc : UIViewController!
+    fileprivate var layout : ZXPageViewLayout!
 
+    fileprivate lazy var titleView: ZXTitleView = {
+        let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
+        let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
+        titleView.backgroundColor = UIColor.blue
+        return titleView
+    }()
+    
 
     // MARK: 构造函数
     init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
@@ -32,6 +41,18 @@ class ZXPageView: UIView {
         
     }
     
+    
+    init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
+        self.style = style
+        self.titles = titles
+        self.layout = layout
+        super.init(frame: frame)
+        setupCollection()
+        
+    }
+    
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,12 +61,42 @@ class ZXPageView: UIView {
 
 
 extension ZXPageView{
+    
+    
+    /// 初始化collectionView的UI
+    fileprivate func setupCollection(){
+        
+        //1.添加ZXtitleView
+        addSubview(titleView)
+        
+        
+        //2.添加collectionView
+        let collectionFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight - style.pageControlHeight)
+
+        let collectionView = UICollectionView(frame: collectionFrame, collectionViewLayout: layout)
+        collectionView.isPagingEnabled = true
+        collectionView.scrollsToTop = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.dataSource = self
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kCollectionViewCellID)
+        addSubview(collectionView)
+
+        
+        //3.添加UIPageController
+        let pageControlFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
+        let pageControl = UIPageControl(frame: pageControlFrame)
+        pageControl.numberOfPages = 4
+        addSubview(pageControl)
+        
+        
+        
+        
+    }
+    
+    /// 初始化控制器的UI
     fileprivate func setupSubViews(){
     
-        //1.创建ZXtitleView
-        let titleFrame = CGRect(x: 0, y: 0, width: bounds.width, height: style.titleHeight)
-        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titles)
-        titleView.backgroundColor = UIColor.randomColor
+        //1.添加ZXtitleView
         addSubview(titleView)
         
         
@@ -60,3 +111,24 @@ extension ZXPageView{
         contentView.delegate = titleView
     }
 }
+
+extension ZXPageView : UICollectionViewDataSource{
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCollectionViewCellID, for: indexPath)
+        cell.backgroundColor = UIColor.randomColor
+        return cell
+        
+    }
+    
+}
+

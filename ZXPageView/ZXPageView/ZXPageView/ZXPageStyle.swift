@@ -52,6 +52,10 @@ class ZXPageStyle {
     var coverHeight : CGFloat = 25
     //遮盖圆角
     var coverRadius : CGFloat = 12
+    
+    
+    // pageControl的高度
+    var pageControlHeight : CGFloat = 20
 
     
 
