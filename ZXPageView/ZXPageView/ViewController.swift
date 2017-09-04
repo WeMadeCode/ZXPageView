@@ -31,14 +31,15 @@ class ViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 10)
         layout.lineSpacing = 10
         layout.itemSpacing = 10
-        layout.cols = 7
-        layout.rows = 3
+        layout.cols = 4
+        layout.rows = 2
         
 
         //3.创建ZXPageView
         let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: 300)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
         pageView.dataSource = self
+        pageView.delegate = self
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
         pageView.backgroundColor = UIColor.orange
         view.addSubview(pageView)
@@ -49,13 +50,15 @@ class ViewController: UIViewController {
 
 extension ViewController :ZXPageViewDataSource{
     
+    //有多少组
     func numberOfSectionInPageView(_ pageView: ZXPageView) -> Int {
         return 4
     }
     
+    //每组有多少个
     func pageView(_ pageView: ZXPageView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return 20
+            return 12
         } else if section == 1 {
             return 30
         } else if section == 2 {
@@ -65,13 +68,22 @@ extension ViewController :ZXPageViewDataSource{
         return 13
     }
     
+    //每组的具体内容
     func pageView(_ pageView: ZXPageView, cellForItemsAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = pageView.dequeueReusableCell(withReuseIdentifier: kCollectionViewCellID, for: indexPath)
-        
         cell.backgroundColor = UIColor.randomColor
-        
         return cell
+    }
+}
+
+extension ViewController:ZXPageViewDelegate{
+    
+    //点击某个item
+    func pageView(_ pageView: ZXPageView, didSelectedAtIndexPath indexPath: IndexPath) {
+        
+        print(indexPath)
     }
     
 }
+
 

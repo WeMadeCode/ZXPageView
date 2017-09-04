@@ -14,19 +14,24 @@ protocol ZXPageViewDataSource:class {
     func pageView(_ pageView:ZXPageView,cellForItemsAtIndexPath indexPath:IndexPath) -> UICollectionViewCell
 }
 
+@objc protocol ZXPageViewDelegate:class{
+    @objc optional func pageView(_ pageView:ZXPageView,didSelectedAtIndexPath indexPath:IndexPath)
+}
 
 
 class ZXPageView: UIView {
     // MARK: 定义属性
-    weak var dataSource:ZXPageViewDataSource?
+    weak var dataSource  : ZXPageViewDataSource?
+    weak var delegate  :  ZXPageViewDelegate?
+    
     fileprivate var style    : ZXPageStyle
     fileprivate var titles   : [String]
     fileprivate var childVcs : [UIViewController]!
     fileprivate var parentVc : UIViewController!
     fileprivate var layout   : ZXPageViewLayout!
 
-    fileprivate var collectionView:UICollectionView!
-    fileprivate var pageControl:UIPageControl!
+    fileprivate var collectionView : UICollectionView!
+    fileprivate var pageControl : UIPageControl!
     fileprivate lazy var currentSection : Int = 0
 
     fileprivate lazy var titleView: ZXTitleView = {
@@ -82,14 +87,14 @@ extension ZXPageView{
         collectionView.scrollsToTop = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         addSubview(collectionView)
-        collectionView.backgroundColor = UIColor.green
 
         
         //3.添加UIPageController
         let pageControlFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
         pageControl = UIPageControl(frame: pageControlFrame)
-        pageControl.numberOfPages = 4
+        pageControl.isEnabled = false
         addSubview(pageControl)
         
         //4.监听titleView的点击
@@ -142,6 +147,12 @@ extension ZXPageView : UICollectionViewDataSource{
 
 extension ZXPageView : UICollectionViewDelegate{
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        delegate?.pageView?(self, didSelectedAtIndexPath: indexPath)
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         collectionViewDidEndScroll()
     }
@@ -173,11 +184,11 @@ extension ZXPageView : UICollectionViewDelegate{
             currentSection = indexPath.section
             
             //2.3让titleView选中最新的title
-            titleView.setCurrentIndex(currntIndex: currentSection)
+            titleView.setCurrentIndex(currentIndex: currentSection)
         }
         
         //3.显示pageController正确的currntPage
-        let pageIndex = indexPath.item/8
+        let pageIndex = indexPath.item / 8
         pageControl.currentPage = pageIndex
         
     
