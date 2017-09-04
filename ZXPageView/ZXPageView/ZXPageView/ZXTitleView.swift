@@ -256,6 +256,47 @@ extension ZXTitleView{
         
     }
     
+    fileprivate func setTargetLabel(_ targetLabel:UILabel){
+        // 1.取出原来的label
+        let sourceLabel = titleLabels[currentIndex]
+        
+        // 2.改变Label的颜色
+        sourceLabel.textColor = style.normalColor
+        targetLabel.textColor = style.selectColor
+        
+        // 3.记录最新的index
+        currentIndex = targetLabel.tag
+        
+        // 4.让点击的label居中显示
+        adjustLabelPosition(targetLabel)
+        
+        // 5.调整scale缩放
+        // transform : frame.wh = bounds.wh * transform的值
+        if style.isScaleEnable {
+            UIView.animate(withDuration: 0.25, animations: {
+                sourceLabel.transform = CGAffineTransform.identity
+                targetLabel.transform = CGAffineTransform(scaleX: self.style.maxScale, y: self.style.maxScale)
+            })
+        }
+        
+        // 6.调整bottomLine
+        if style.isShowBottomLine {
+            UIView.animate(withDuration: 0.25, animations: {
+                self.bottomLine.frame.origin.x = targetLabel.frame.origin.x
+                self.bottomLine.frame.size.width = targetLabel.frame.width
+            })
+        }
+        
+        // 7.调整CoverView
+        if style.isShowCoverView {
+            let coverX = style.isScrollEnable ? (targetLabel.frame.origin.x - style.coverMargin) : targetLabel.frame.origin.x
+            let coverW = style.isScrollEnable ? (targetLabel.frame.width + style.coverMargin * 2) : targetLabel.frame.width
+            UIView.animate(withDuration: 0.15, animations: {
+                self.coverView.frame.origin.x = coverX
+                self.coverView.frame.size.width = coverW
+            })
+        }
+    }
     
     fileprivate func adjustLabelPosition(_ targetLabel:UILabel){
     
@@ -333,3 +374,10 @@ extension ZXTitleView :ZXContentViewDelegate{
     
 }
 
+
+// MARK: - 对外提供的方法
+extension ZXTitleView{
+    func setCurrentIndex(currntIndex:Int)  {
+        setTargetLabel(titleLabels[currentIndex])
+    }
+}

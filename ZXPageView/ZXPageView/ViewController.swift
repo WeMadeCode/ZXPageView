@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
         pageView.dataSource = self
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
-        pageView.backgroundColor = UIColor.blue
+        pageView.backgroundColor = UIColor.orange
         view.addSubview(pageView)
         
     }
