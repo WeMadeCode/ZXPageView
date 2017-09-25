@@ -19,6 +19,14 @@ class ViewController: UIViewController {
 
         
         automaticallyAdjustsScrollViewInsets = false
+       
+        method1()
+        
+    }
+    
+    
+    func method2(){
+        
         
         //1.创建所需要的样式
         let style = ZXPageStyle()
@@ -34,7 +42,7 @@ class ViewController: UIViewController {
         layout.cols = 4
         layout.rows = 2
         
-
+        
         //3.创建ZXPageView
         let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: 300)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
@@ -43,6 +51,35 @@ class ViewController: UIViewController {
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
         pageView.backgroundColor = UIColor.orange
         view.addSubview(pageView)
+        
+        
+    }
+    
+    func method1(){
+        
+        // 1.创建需要的样式
+        let style = ZXPageStyle()
+        //        style.isScrollEnable = true
+        style.isShowBottomLine = true
+        
+        
+        // 2.获取所有的标题  "热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"
+        let titles = ["卖车查价", "爱车估值"]
+        
+        // 3.获取所有的内容控制器
+        var childVcs = [UIViewController]()
+        for _ in 0..<titles.count {
+            let vc = UIViewController()
+            vc.view.backgroundColor = UIColor.randomColor
+            childVcs.append(vc)
+        }
+        
+        // 4.创建HYPageView
+        let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height - 64)
+        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self)
+        pageView.backgroundColor = UIColor.blue
+        view.addSubview(pageView)
+        
         
     }
 
