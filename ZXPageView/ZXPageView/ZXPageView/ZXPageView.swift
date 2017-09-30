@@ -27,10 +27,19 @@ class ZXPageView: UIView {
     fileprivate var style    : ZXPageStyle
     fileprivate var titles   : [String]
     fileprivate var childVcs : [UIViewController]!
-    fileprivate var parentVc : UIViewController!
+    fileprivate weak var parentVc : UIViewController!
     fileprivate var layout   : ZXPageViewLayout!
 
-    fileprivate var collectionView : UICollectionView!
+    fileprivate lazy var collectionView : UICollectionView = {
+       let collectionFrame = CGRect(x: 0, y: self.style.titleHeight, width: self.bounds.width, height: self.bounds.height - self.style.titleHeight - self.style.pageControlHeight)
+       let clv = UICollectionView(frame: collectionFrame, collectionViewLayout: self.layout)
+           clv.isPagingEnabled = true
+           clv.scrollsToTop = false
+           clv.showsHorizontalScrollIndicator = false
+           clv.dataSource = self
+           clv.delegate = self
+           return clv
+    }()
     fileprivate var pageControl : UIPageControl!
     fileprivate lazy var currentSection : Int = 0
 
@@ -80,14 +89,6 @@ extension ZXPageView{
         addSubview(titleView)
         
         //2.添加collectionView
-        let collectionFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight - style.pageControlHeight)
-
-        collectionView = UICollectionView(frame: collectionFrame, collectionViewLayout: layout)
-        collectionView.isPagingEnabled = true
-        collectionView.scrollsToTop = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
         addSubview(collectionView)
 
         
