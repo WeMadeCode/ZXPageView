@@ -18,7 +18,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         
-        automaticallyAdjustsScrollViewInsets = false
        
         method1()
         
@@ -59,12 +58,12 @@ class ViewController: UIViewController {
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-        //        style.isScrollEnable = true
+        style.isScrollEnable = true
         style.isShowBottomLine = true
         
         
-        // 2.获取所有的标题  "热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"
-        let titles = ["卖车查价", "爱车估值"]
+        // 2.获取所有的标题
+        let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()

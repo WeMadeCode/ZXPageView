@@ -133,8 +133,12 @@ extension ZXTitleView{
         let count = titleButtons.count
         for (i,titleButton) in titleButtons.enumerated() {
             if style.isScrollEnable {
-                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName
-                    :titleButton.titleLabel!.font], context: nil).width
+                
+                //FIXME: - 这里的font怎么是个可选的？
+                let font = titleButton.titleLabel!.font!
+                let attributes = [NSAttributedStringKey.font:font]
+                
+                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes:attributes , context: nil).width
                 buttonX = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
             }else{
                 buttonW = bounds.width / CGFloat(count)
