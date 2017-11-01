@@ -94,7 +94,7 @@ extension UIColor{
     convenience init?(hex:String,alpha : CGFloat = 1.0) {
         
         //1.判断字符串长度是否大于等于6
-        guard hex.characters.count >= 6 else {
+        if hex.count < 6{
             return nil
         }
         
