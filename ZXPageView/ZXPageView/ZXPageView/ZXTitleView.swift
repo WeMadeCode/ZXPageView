@@ -136,9 +136,20 @@ extension ZXTitleView{
                 
                 //FIXME: - 这里的font怎么是个可选的？
                 let font = titleButton.titleLabel!.font!
+              
+                
+                
                 let attributes = [NSAttributedStringKey.font:font]
                 
-                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes:attributes , context: nil).width
+                
+                let string = titles[i] as NSString
+                
+                let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
+                
+                buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
+                
+                
+//                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes:attributes , context: nil).width
                 buttonX = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
             }else{
                 buttonW = bounds.width / CGFloat(count)
