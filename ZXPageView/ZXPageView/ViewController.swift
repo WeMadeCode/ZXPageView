@@ -17,43 +17,19 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
 
-        
-       
         method1()
-        
     }
     
+
     
-    func method2(){
-        
-        
-        //1.创建所需要的样式
-        let style = ZXPageStyle()
-        
-        //2.获取所有的标题
-        let titles = ["推荐", "游戏", "热门", "趣玩"]
-        
-        //3.创建布局
-        let layout = ZXPageViewLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 10)
-        layout.lineSpacing = 10
-        layout.itemSpacing = 10
-        layout.cols = 4
-        layout.rows = 2
-        
-        
-        //3.创建ZXPageView
-        let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: 300)
-        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
-        pageView.dataSource = self
-        pageView.delegate = self
-        pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
-        pageView.backgroundColor = UIColor.orange
-        view.addSubview(pageView)
-        
-        
-    }
+
+
+}
+
+
+extension ViewController{
     
+    //用法1
     func method1(){
         
         // 1.创建需要的样式
@@ -74,14 +50,40 @@ class ViewController: UIViewController {
         }
         
         // 4.创建HYPageView
-        let pageFrame = CGRect(x: 0, y: 64, width: view.bounds.width, height: view.bounds.height - 64)
+        let y1 = UIApplication.shared.statusBarFrame.height
+        let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
+        let pageFrame = CGRect(x: 0, y: y1 + y2 , width: view.bounds.width, height: view.bounds.height - y1 - y2)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self)
         pageView.backgroundColor = UIColor.blue
         view.addSubview(pageView)
-        
-        
     }
-
+    
+    //用法2
+    func method2(){
+        //1.创建所需要的样式
+        let style = ZXPageStyle()
+        //2.获取所有的标题
+        let titles = ["推荐", "游戏", "热门", "趣玩"]
+        //3.创建布局
+        let layout = ZXPageViewLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 10)
+        layout.lineSpacing = 10
+        layout.itemSpacing = 10
+        layout.cols = 4
+        layout.rows = 2
+        
+        
+        //3.创建ZXPageView
+        let y1 = UIApplication.shared.statusBarFrame.height
+        let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
+        let pageFrame = CGRect(x: 0, y: y1 + y2, width: view.bounds.width, height: 300)
+        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
+        pageView.dataSource = self
+        pageView.delegate = self
+        pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
+        pageView.backgroundColor = UIColor.orange
+        view.addSubview(pageView)
+    }
 }
 
 extension ViewController :ZXPageViewDataSource{

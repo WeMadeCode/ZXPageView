@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9256BCDF1F5D25E7008ECC93 /* ZXPageViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */; };
+		92C39AF61FAB2A5700E1F5AF /* ZXUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C39AF51FAB2A5700E1F5AF /* ZXUIColor+Extension.swift */; };
 		92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */; };
 		92CFA6391F3B2A6E00E21E7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6381F3B2A6E00E21E7A /* ViewController.swift */; };
 		92CFA63C1F3B2A6E00E21E7A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92CFA63A1F3B2A6E00E21E7A /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXPageViewLayout.swift; sourceTree = "<group>"; };
+		92C39AF51FAB2A5700E1F5AF /* ZXUIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZXUIColor+Extension.swift"; sourceTree = "<group>"; };
 		92CFA6331F3B2A6E00E21E7A /* ZXPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92CFA6381F3B2A6E00E21E7A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		92CFA6481F3B2A9600E21E7A /* ZXPageView */ = {
 			isa = PBXGroup;
 			children = (
+				92C39AF51FAB2A5700E1F5AF /* ZXUIColor+Extension.swift */,
 				92CFA6491F3B2AB900E21E7A /* ZXPageStyle.swift */,
 				92CFA64B1F3B2ADE00E21E7A /* ZXPageView.swift */,
 				92CFA64D1F3B2D3B00E21E7A /* ZXTitleView.swift */,
@@ -162,6 +165,7 @@
 				92CFA6391F3B2A6E00E21E7A /* ViewController.swift in Sources */,
 				92CFA64C1F3B2ADE00E21E7A /* ZXPageView.swift in Sources */,
 				92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */,
+				92C39AF61FAB2A5700E1F5AF /* ZXUIColor+Extension.swift in Sources */,
 				92CFA64A1F3B2AB900E21E7A /* ZXPageStyle.swift in Sources */,
 				92CFA6501F3B2DA500E21E7A /* ZXContentView.swift in Sources */,
 				92CFA64E1F3B2D3B00E21E7A /* ZXTitleView.swift in Sources */,
