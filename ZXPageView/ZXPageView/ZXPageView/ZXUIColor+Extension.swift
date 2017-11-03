@@ -25,13 +25,10 @@ extension UIColor{
     
     /// 计算属性：只读属性
     class var randomColor : UIColor{
-        
         return UIColor(r: CGFloat(arc4random_uniform(256)), g: CGFloat(arc4random_uniform(256)), b: CGFloat(arc4random_uniform(256)))
-        
     }
     
     func getRGB() -> (CGFloat,CGFloat,CGFloat) {
-        
         var red     :CGFloat = 0
         var green   :CGFloat = 0
         var blue    :CGFloat = 0

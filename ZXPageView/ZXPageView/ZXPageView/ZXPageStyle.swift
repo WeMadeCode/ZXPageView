@@ -10,10 +10,9 @@ import UIKit
 
 class ZXPageStyle {
     
-    //是否可以滚动
-    var isScrollEnable:Bool = false
-   
     
+    //是否可以滚动
+    var isScrollEnable:Bool = true
     //字体高度
     var titleHeight : CGFloat = 44
     //非选中字体颜色
@@ -27,7 +26,7 @@ class ZXPageStyle {
     
     
     //是否显示滚动条
-    var isShowBottomLine : Bool = false
+    var isShowBottomLine : Bool = true
     //滚动条颜色
     var bottomLineColor : UIColor = UIColor.orange
     //滚动条高度

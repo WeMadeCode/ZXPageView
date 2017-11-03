@@ -34,9 +34,6 @@ extension ViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-        style.isScrollEnable = true
-        style.isShowBottomLine = true
-        
         
         // 2.获取所有的标题
         let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]

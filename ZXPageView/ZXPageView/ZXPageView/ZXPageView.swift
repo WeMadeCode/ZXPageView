@@ -51,9 +51,9 @@ class ZXPageView: UIView {
     }()
     
     // MARK: 构造函数
+    // 在super.init()之前，需要保证所有的属性有被初始化
+    // self.不能省略：在函数中，如果和成员属性产生歧义
     init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
-        //在super.init()之前，需要保证所有的属性有被初始化
-        //self.不能省略：在函数中，如果和成员属性产生歧义
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -62,6 +62,8 @@ class ZXPageView: UIView {
         setupSubViews()
         
     }
+    
+    
     
     init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
         self.style = style
@@ -113,7 +115,6 @@ extension ZXPageView{
         //2.创建ZXContentView
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
         let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc)
-        contentView.backgroundColor = UIColor.randomColor
         addSubview(contentView)
         
         //3.让ZXTitleView和ZXContentView进行交互

@@ -53,9 +53,7 @@ class ZXTitleView: UIView {
         return coverView
     }()
     
-    //MARK: 构造函数
     init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
-        
         self.style = style
         self.titles = titles
         super.init(frame: frame)
@@ -84,7 +82,6 @@ extension ZXTitleView{
         // 4.设置bottomLine
         setupBottomLine()
         
-        
         // 5.设置coverView
         setupCoverView()
         
@@ -97,6 +94,8 @@ extension ZXTitleView{
             
             //1.创建Label
             let button = UIButton()
+            
+             button.backgroundColor = UIColor.randomColor
             
             //2.设置label的属性
             button.tag = i
@@ -137,17 +136,13 @@ extension ZXTitleView{
                 //FIXME: - 这里的font怎么是个可选的？
                 let font = titleButton.titleLabel!.font!
               
-                
-                
                 let attributes = [NSAttributedStringKey.font:font]
-                
                 
                 let string = titles[i] as NSString
                 
                 let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
                 
                 buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
-                
                 
 //                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes:attributes , context: nil).width
                 buttonX = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
@@ -357,15 +352,19 @@ extension ZXTitleView :ZXContentViewDelegate{
     
     
     func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+
         
         //1.获取sourceLabel&targetLabel
         let sourceButton = titleButtons[sourceIndex]
         let targetButton = titleButtons[targetIndex]
         
 
-        //2.颜色的渐变
-        sourceButton.titleLabel?.textColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
-        targetButton.titleLabel?.textColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
+        //2.字体颜色的渐变
+        let sourceColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
+        sourceButton.setTitleColor(sourceColor, for: .normal)
+        let targetColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
+        targetButton.setTitleColor(targetColor, for: .normal)
+        
         
         // 3.scale的调整
         if style.isScaleEnable {
@@ -376,10 +375,14 @@ extension ZXTitleView :ZXContentViewDelegate{
         
         // 4.bottomLine的调整
         if style.isShowBottomLine {
+            
+            //4.1计算x值
             let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
+             bottomLine.frame.origin.x = sourceButton.frame.origin.x + progress * deltaX
+            
+            //4.2计算宽度
             let deltaW = targetButton.frame.width - sourceButton.frame.width
-            bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
-            bottomLine.center.x = sourceButton.center.x + progress * deltaX
+            bottomLine.frame.size.width = sourceButton.frame.width + progress * deltaW
 
         }
         
