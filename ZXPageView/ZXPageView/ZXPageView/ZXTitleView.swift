@@ -14,13 +14,10 @@ protocol ZXTitleViewDelegate:class {
 
 class ZXTitleView: UIView {
 
-    // weak:只能用来修饰对象
     weak var delegate : ZXTitleViewDelegate?
-    
     fileprivate var style:ZXPageStyle
     fileprivate var titles:[String]
     fileprivate var currentIndex : Int = 0
-    
     typealias ColorRGB = (red:CGFloat,green:CGFloat,blue:CGFloat)
     fileprivate lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
     fileprivate lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
@@ -92,10 +89,8 @@ extension ZXTitleView{
         
         for (i,title) in titles.enumerated() {
             
-            //1.创建Label
+            //1.创建UIbutton
             let button = UIButton()
-            
-             button.backgroundColor = UIColor.randomColor
             
             //2.设置label的属性
             button.tag = i

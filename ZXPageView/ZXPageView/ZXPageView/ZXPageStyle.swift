@@ -16,14 +16,13 @@ class ZXPageStyle {
     //字体高度
     var titleHeight : CGFloat = 44
     //非选中字体颜色
-    var normalColor : UIColor = UIColor.white
+    var normalColor : UIColor = UIColor.gray
     //选中字体的颜色
     var selectColor : UIColor = UIColor.orange
     //字体大小
     var fontSize    : CGFloat = 15
     //字体间距
     var titleMargin : CGFloat = 30
-    
     
     //是否显示滚动条
     var isShowBottomLine : Bool = true

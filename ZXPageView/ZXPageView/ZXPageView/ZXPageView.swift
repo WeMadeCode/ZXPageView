@@ -29,7 +29,6 @@ class ZXPageView: UIView {
     fileprivate var childVcs : [UIViewController]!
     fileprivate weak var parentVc : UIViewController!
     fileprivate var layout   : ZXPageViewLayout!
-
     fileprivate lazy var collectionView : UICollectionView = {
        let collectionFrame = CGRect(x: 0, y: self.style.titleHeight, width: self.bounds.width, height: self.bounds.height - self.style.titleHeight - self.style.pageControlHeight)
        let clv = UICollectionView(frame: collectionFrame, collectionViewLayout: self.layout)
@@ -42,17 +41,12 @@ class ZXPageView: UIView {
     }()
     fileprivate var pageControl : UIPageControl!
     fileprivate lazy var currentSection : Int = 0
-
     fileprivate lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
-        titleView.backgroundColor = UIColor.blue
+        titleView.backgroundColor = UIColor.white
         return titleView
     }()
-    
-    // MARK: 构造函数
-    // 在super.init()之前，需要保证所有的属性有被初始化
-    // self.不能省略：在函数中，如果和成员属性产生歧义
     init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
         self.style = style
         self.titles = titles
@@ -62,9 +56,6 @@ class ZXPageView: UIView {
         setupSubViews()
         
     }
-    
-    
-    
     init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
         self.style = style
         self.titles = titles
