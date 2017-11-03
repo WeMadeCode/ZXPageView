@@ -185,7 +185,6 @@ extension ZXTitleView{
         // 1.判断是否需要显示coverView
         guard style.isShowCoverView  else { return  }
         
-        
         // 2.添加到scrollView
         scrollView.insertSubview(coverView, at: 0)
         
@@ -194,7 +193,7 @@ extension ZXTitleView{
         var coverW = firstLabel.bounds.width
         let coverH = style.coverHeight
         var coverX = firstLabel.frame.origin.x
-        let coverY = (firstLabel.frame.height - coverH) * 0.5
+        let coverY = (firstLabel.frame.size.height - coverH) * 0.5
         if style.isScrollEnable {
             coverX -= style.coverMargin
             coverW += 2 * style.coverMargin
