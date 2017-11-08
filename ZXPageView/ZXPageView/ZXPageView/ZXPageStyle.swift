@@ -12,7 +12,7 @@ class ZXPageStyle {
     
     
     //是否可以滚动
-    var isScrollEnable:Bool = true
+    var isScrollEnable:Bool = false
     //字体高度
     var titleHeight : CGFloat = 44
     //非选中字体颜色

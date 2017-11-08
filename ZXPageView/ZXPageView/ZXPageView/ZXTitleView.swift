@@ -29,7 +29,7 @@ class ZXTitleView: UIView {
     }()
 
     fileprivate lazy var titleButtons : [UIButton] = [UIButton]()
-    fileprivate lazy var scrollView:UIScrollView = {
+    fileprivate lazy var titleScrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = self.bounds
         scrollView.showsHorizontalScrollIndicator = false
@@ -68,7 +68,7 @@ extension ZXTitleView{
     fileprivate func setupSubView(){
         
         //1.添加一个UIScrollView
-        addSubview(scrollView)
+        addSubview(titleScrollView)
         
         //2.创建所有的标题按钮
         setupTitleButtons()
@@ -92,6 +92,8 @@ extension ZXTitleView{
             //1.创建UIbutton
             let button = UIButton()
             
+            button.backgroundColor = UIColor.randomColor
+            
             //2.设置label的属性
             button.tag = i
             button.setTitle(title, for: .normal)
@@ -103,7 +105,7 @@ extension ZXTitleView{
             button.titleLabel?.textAlignment = .center
             button.titleLabel?.font = UIFont.systemFont(ofSize:style.fontSize)
             //3.将label添加到scrollView中
-            scrollView.addSubview(button)
+            titleScrollView.addSubview(button)
             
             //4.将label添加到数组中
             titleButtons.append(button)
@@ -130,16 +132,10 @@ extension ZXTitleView{
                 
                 //FIXME: - 这里的font怎么是个可选的？
                 let font = titleButton.titleLabel!.font!
-              
                 let attributes = [NSAttributedStringKey.font:font]
-                
                 let string = titles[i] as NSString
-                
                 let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
-                
                 buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
-                
-//                buttonW = (titles[i] as NSString).boundingRect(with: CGSize(width:CGFloat.greatestFiniteMagnitude,height:0), options: .usesLineFragmentOrigin, attributes:attributes , context: nil).width
                 buttonX = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
             }else{
                 buttonW = bounds.width / CGFloat(count)
@@ -156,7 +152,7 @@ extension ZXTitleView{
         
         //3.设置contentSize
         if style.isScrollEnable {
-            scrollView.contentSize.width = titleButtons.last!.frame.maxX + style.titleMargin * 0.5
+            titleScrollView.contentSize.width = titleButtons.last!.frame.maxX + style.titleMargin * 0.5
         }
     }
     
@@ -169,7 +165,7 @@ extension ZXTitleView{
         }
         
         //2.将bottomLine添加到scrollView中
-        scrollView.addSubview(bottomLine)
+        titleScrollView.addSubview(bottomLine)
         
         // 3.设置bottomLine的frame中的属性
         let button = titleButtons.first!
@@ -186,7 +182,7 @@ extension ZXTitleView{
         guard style.isShowCoverView  else { return  }
         
         // 2.添加到scrollView
-        scrollView.insertSubview(coverView, at: 0)
+        titleScrollView.insertSubview(coverView, at: 0)
         
         // 3.设置遮盖的frame
         let firstLabel = titleButtons.first!
@@ -322,12 +318,12 @@ extension ZXTitleView{
             offsetX = 0
         }
         
-        if offsetX > scrollView.contentSize.width - scrollView.bounds.width {
-            offsetX = scrollView.contentSize.width - scrollView.bounds.width
+        if offsetX > titleScrollView.contentSize.width - titleScrollView.bounds.width {
+            offsetX = titleScrollView.contentSize.width - titleScrollView.bounds.width
         }
         
         //3.设置scrollView的contentOffset
-        scrollView.setContentOffset(CGPoint(x:offsetX,y:0), animated: true)
+        titleScrollView.setContentOffset(CGPoint(x:offsetX,y:0), animated: true)
     }
 
 }
@@ -370,13 +366,16 @@ extension ZXTitleView :ZXContentViewDelegate{
         // 4.bottomLine的调整
         if style.isShowBottomLine {
             
-            //4.1计算x值
-            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
-             bottomLine.frame.origin.x = sourceButton.frame.origin.x + progress * deltaX
+            //4.1计算宽度
+            let deltaW = targetButton.titleLabel!.frame.width - sourceButton.titleLabel!.frame.width
+            bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
             
-            //4.2计算宽度
-            let deltaW = targetButton.frame.width - sourceButton.frame.width
-            bottomLine.frame.size.width = sourceButton.frame.width + progress * deltaW
+            
+            //4.2计算x值
+            let deltaX = targetButton.center.x - sourceButton.center.x
+//            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
+            bottomLine.center.x = sourceButton.center.x + progress * deltaX
+//            bottomLine.frame.origin.x = sourceButton.frame.origin.x + progress * deltaX
 
         }
         
