@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9234F8D41FB403FB009CA76C /* ZXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9234F8D31FB403FB009CA76C /* ZXPageViewController.swift */; };
 		9256BCDF1F5D25E7008ECC93 /* ZXPageViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */; };
 		92C39AF61FAB2A5700E1F5AF /* ZXUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C39AF51FAB2A5700E1F5AF /* ZXUIColor+Extension.swift */; };
 		92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9234F8D31FB403FB009CA76C /* ZXPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXPageViewController.swift; sourceTree = "<group>"; };
 		9256BCDE1F5D25E7008ECC93 /* ZXPageViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXPageViewLayout.swift; sourceTree = "<group>"; };
 		92C39AF51FAB2A5700E1F5AF /* ZXUIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZXUIColor+Extension.swift"; sourceTree = "<group>"; };
 		92CFA6331F3B2A6E00E21E7A /* ZXPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +71,7 @@
 				92CFA6481F3B2A9600E21E7A /* ZXPageView */,
 				92CFA6361F3B2A6E00E21E7A /* AppDelegate.swift */,
 				92CFA6381F3B2A6E00E21E7A /* ViewController.swift */,
+				9234F8D31FB403FB009CA76C /* ZXPageViewController.swift */,
 				92CFA63A1F3B2A6E00E21E7A /* Main.storyboard */,
 				92CFA63D1F3B2A6E00E21E7A /* Assets.xcassets */,
 				92CFA63F1F3B2A6E00E21E7A /* LaunchScreen.storyboard */,
@@ -166,6 +169,7 @@
 				92CFA64C1F3B2ADE00E21E7A /* ZXPageView.swift in Sources */,
 				92CFA6371F3B2A6E00E21E7A /* AppDelegate.swift in Sources */,
 				92C39AF61FAB2A5700E1F5AF /* ZXUIColor+Extension.swift in Sources */,
+				9234F8D41FB403FB009CA76C /* ZXPageViewController.swift in Sources */,
 				92CFA64A1F3B2AB900E21E7A /* ZXPageStyle.swift in Sources */,
 				92CFA6501F3B2DA500E21E7A /* ZXContentView.swift in Sources */,
 				92CFA64E1F3B2D3B00E21E7A /* ZXTitleView.swift in Sources */,

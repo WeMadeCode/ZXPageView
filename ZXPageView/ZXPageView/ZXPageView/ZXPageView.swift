@@ -23,7 +23,7 @@ class ZXPageView: UIView {
     // MARK: 定义属性
     weak var dataSource  : ZXPageViewDataSource?
     weak var delegate  :  ZXPageViewDelegate?
-    
+    fileprivate var defaultIndex:Int
     fileprivate var style    : ZXPageStyle
     fileprivate var titles   : [String]
     fileprivate var childVcs : [UIViewController]!
@@ -39,19 +39,35 @@ class ZXPageView: UIView {
            clv.delegate = self
            return clv
     }()
-    fileprivate var pageControl : UIPageControl!
+    fileprivate lazy var pageControl : UIPageControl = {
+        let pageControlFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
+        let  pageControl = UIPageControl(frame: pageControlFrame)
+        pageControl.isEnabled = false
+        return pageControl
+    }()
     fileprivate lazy var currentSection : Int = 0
+    
+    
     fileprivate lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
         titleView.backgroundColor = UIColor.white
         return titleView
     }()
-    init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController) {
+    
+    fileprivate lazy var contentView: ZXContentView = {
+        let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
+        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc)
+        return contentView
+    }()
+    
+    
+    init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
         self.parentVc = parentVc
+        self.defaultIndex = defaultIndex
         super.init(frame:frame)
         setupSubViews()
         
@@ -60,6 +76,7 @@ class ZXPageView: UIView {
         self.style = style
         self.titles = titles
         self.layout = layout
+        self.defaultIndex = 0
         super.init(frame: frame)
         setupCollection()
         
@@ -75,6 +92,27 @@ class ZXPageView: UIView {
 extension ZXPageView{
     
     
+    /// 初始化控制器的UI
+    fileprivate func setupSubViews(){
+        
+        //1.添加ZXtitleView
+        addSubview(titleView)
+        
+        //2.创建ZXContentView
+        addSubview(contentView)
+        
+        //3.让ZXTitleView和ZXContentView进行交互
+        titleView.delegate = contentView
+        contentView.delegate = titleView
+        
+        //4.默认的滚动位置
+        guard defaultIndex <= 0 || defaultIndex >= titles.count else {
+            titleView.setDefaultConetnt(index:defaultIndex)
+            return
+        }
+        
+    }
+    
     /// 初始化collectionView的UI
     fileprivate func setupCollection(){
         
@@ -86,92 +124,55 @@ extension ZXPageView{
 
         
         //3.添加UIPageController
-        let pageControlFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
-        pageControl = UIPageControl(frame: pageControlFrame)
-        pageControl.isEnabled = false
         addSubview(pageControl)
         
         //4.监听titleView的点击
         titleView.delegate = self
-        
-        
-    }
-    
-    /// 初始化控制器的UI
-    fileprivate func setupSubViews(){
-    
-        //1.添加ZXtitleView
-        addSubview(titleView)
-        
-        //2.创建ZXContentView
-        let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
-        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc)
-        addSubview(contentView)
-        
-        //3.让ZXTitleView和ZXContentView进行交互
-        titleView.delegate = contentView
-        contentView.delegate = titleView
     }
 }
 
 
 // MARK: - UICollectionView的数据源方法
 extension ZXPageView : UICollectionViewDataSource{
-
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataSource?.numberOfSectionInPageView(self) ?? 0
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         let itemCount = dataSource?.pageView(self, numberOfItemsInSection: section) ?? 0
         if section == 0 {
             pageControl.numberOfPages = (itemCount - 1)/(layout.cols * layout.rows) + 1
         }
         return itemCount
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return dataSource!.pageView(self, cellForItemsAtIndexPath: indexPath)
     }
-    
 }
 
 
 extension ZXPageView : UICollectionViewDelegate{
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         delegate?.pageView?(self, didSelectedAtIndexPath: indexPath)
     }
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         collectionViewDidEndScroll()
     }
-    
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
         if !decelerate {
             collectionViewDidEndScroll()
         }
     }
     
-    
     func collectionViewDidEndScroll() {
-        
         //1.获取当前显示页中的某一个cell的indexPath
         let point = CGPoint(x: layout.sectionInset.left + collectionView.contentOffset.x, y: layout.sectionInset.top)
         guard let indexPath = collectionView.indexPathForItem(at: point) else { return  }
     
-        
         //2.如果发现组(section)发生了改变，那么重新设置pageControl的numberOfPages
         if indexPath.section != currentSection {
             //2.1改变pageControl的numberOfPages
             let itemCount = dataSource?.pageView(self, numberOfItemsInSection: indexPath.section) ?? 0
             pageControl.numberOfPages = (itemCount - 1)/(layout.rows * layout.cols) + 1
-            
             
             //2.2记录最新的currentSection
             currentSection = indexPath.section

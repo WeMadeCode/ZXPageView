@@ -82,6 +82,7 @@ extension ZXTitleView{
         // 5.设置coverView
         setupCoverView()
         
+        
     }
     
     
@@ -205,6 +206,12 @@ extension ZXTitleView{
         
     }
     
+    func setDefaultConetnt(index:Int)  {
+        
+        let button = titleButtons[index]
+        button.titleLabel?.sizeToFit()
+        titleButtonClick(button)
+    }
 
 }
 

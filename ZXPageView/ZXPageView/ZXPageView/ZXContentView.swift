@@ -17,13 +17,9 @@ protocol ZXContentViewDelegate:class {
 private let kContentCellId = "kContentCellId"
 
 class ZXContentView: UIView {
-
-    
-    // MARK: 定义属性
     weak var delegate:ZXContentViewDelegate?
-    
     fileprivate var childVcs : [UIViewController]
-    fileprivate var parentVc : UIViewController
+    fileprivate weak var  parentVc : UIViewController!
     fileprivate var startOffsetX : CGFloat = 0
     fileprivate var isForbidDelegate:Bool = false
     fileprivate lazy var collectionView:UICollectionView = {
@@ -45,7 +41,6 @@ class ZXContentView: UIView {
         
     }()
     
-    // MARK: 构造函数
     init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController) {
         self.childVcs = childVcs
         self.parentVc = parentVc
@@ -53,9 +48,6 @@ class ZXContentView: UIView {
         setupSubView()
         
     }
-    
-    
-
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -68,10 +60,9 @@ extension ZXContentView{
         addSubview(collectionView)
         
         //2.将所有的子控制器添加到父控制器中
-        for childVc in childVcs {
-            parentVc.addChildViewController(childVc)
+        childVcs.forEach { (childVc) in
+            self.parentVc.addChildViewController(childVc)
         }
-    
     }
 }
 
@@ -83,10 +74,8 @@ extension ZXContentView:UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         //1.获取cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kContentCellId, for: indexPath)
-        
         //2.给cell设置内容
         for subView in cell.contentView.subviews {
             subView.removeFromSuperview()
@@ -94,10 +83,8 @@ extension ZXContentView:UICollectionViewDataSource{
         let childVc = childVcs[indexPath.item]
         childVc.view.frame = cell.contentView.bounds
         cell.contentView.addSubview(childVc.view)
-        
+        //3.返回cell
         return cell
-        
-        
     }
     
 
