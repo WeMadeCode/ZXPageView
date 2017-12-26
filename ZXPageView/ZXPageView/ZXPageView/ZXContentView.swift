@@ -18,12 +18,12 @@ private let kContentCellId = "kContentCellId"
 
 public class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
-    fileprivate var style:ZXPageStyle
-    fileprivate var childVcs : [UIViewController]
-    fileprivate weak var  parentVc : UIViewController!
-    fileprivate var startOffsetX : CGFloat = 0
-    fileprivate var isForbidDelegate:Bool = false
-    fileprivate lazy var collectionView:UICollectionView = {
+    private var style:ZXPageStyle
+    private var childVcs : [UIViewController]
+    private weak var  parentVc : UIViewController!
+    private var startOffsetX : CGFloat = 0
+    private var isForbidDelegate:Bool = false
+    private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = self.bounds.size
         layout.minimumLineSpacing = 0

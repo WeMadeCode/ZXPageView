@@ -9,8 +9,8 @@
 import UIKit
 
 public class ZXPageViewLayout: UICollectionViewLayout {
-    fileprivate lazy var cellAttrs : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
-    fileprivate lazy var pageCount = 0
+    private lazy var cellAttrs : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
+    private lazy var pageCount = 0
     var sectionInset : UIEdgeInsets = UIEdgeInsets.zero
     var itemSpacing : CGFloat = 0
     var lineSpacing : CGFloat = 0

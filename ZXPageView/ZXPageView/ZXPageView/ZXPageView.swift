@@ -23,13 +23,13 @@ public class ZXPageView: UIView {
     // MARK: 定义属性
     weak var dataSource  : ZXPageViewDataSource?
     weak var delegate  :  ZXPageViewDelegate?
-    fileprivate var defaultIndex:Int
-    fileprivate var style    : ZXPageStyle
-    fileprivate var titles   = [String]()
-    fileprivate var childVcs = [UIViewController]()
-    fileprivate weak var parentVc : UIViewController!
-    fileprivate var layout   : ZXPageViewLayout!
-    fileprivate lazy var collectionView : UICollectionView = {
+    private var defaultIndex:Int
+    private var style    : ZXPageStyle
+    private var titles   = [String]()
+    private var childVcs = [UIViewController]()
+    private weak var parentVc : UIViewController!
+    private var layout   : ZXPageViewLayout!
+    private lazy var collectionView : UICollectionView = {
        let collectionFrame = CGRect(x: 0, y: self.style.titleHeight, width: self.bounds.width, height: self.bounds.height - self.style.titleHeight - self.style.pageControlHeight)
        let clv = UICollectionView(frame: collectionFrame, collectionViewLayout: self.layout)
            clv.isPagingEnabled = true
@@ -39,29 +39,29 @@ public class ZXPageView: UIView {
            clv.delegate = self
            return clv
     }()
-    fileprivate lazy var pageControl : UIPageControl = {
+    private lazy var pageControl : UIPageControl = {
         let pageControlFrame = CGRect(x: 0, y: collectionView.frame.maxY, width: bounds.width, height: style.pageControlHeight)
         let  pageControl = UIPageControl(frame: pageControlFrame)
         pageControl.isEnabled = false
         return pageControl
     }()
-    fileprivate lazy var currentSection : Int = 0
+    private lazy var currentSection : Int = 0
     
     
-    fileprivate lazy var titleView: ZXTitleView = {
+    private lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
         return titleView
     }()
     
-    fileprivate lazy var contentView: ZXContentView = {
+    private lazy var contentView: ZXContentView = {
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
         let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc,style:style)
         return contentView
     }()
     
     
-  public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
+    public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -71,7 +71,7 @@ public class ZXPageView: UIView {
         setupSubViews()
         
     }
-   public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
+    public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
         self.style = style
         self.titles = titles
         self.layout = layout
@@ -92,7 +92,7 @@ extension ZXPageView{
     
     
     /// 初始化控制器的UI
-    fileprivate func setupSubViews(){
+    private func setupSubViews(){
         
         //1.添加ZXtitleView
         addSubview(titleView)
@@ -113,7 +113,7 @@ extension ZXPageView{
     }
     
     /// 初始化collectionView的UI
-    fileprivate func setupCollection(){
+    private func setupCollection(){
         
         //1.添加ZXtitleView
         addSubview(titleView)
@@ -121,7 +121,6 @@ extension ZXPageView{
         //2.添加collectionView
         addSubview(collectionView)
 
-        
         //3.添加UIPageController
         addSubview(pageControl)
         

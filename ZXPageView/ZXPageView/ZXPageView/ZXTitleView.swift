@@ -15,21 +15,21 @@ protocol ZXTitleViewDelegate:class {
 public class ZXTitleView: UIView {
 
     weak var delegate : ZXTitleViewDelegate?
-    fileprivate var style:ZXPageStyle
-    fileprivate var titles:[String]
-    fileprivate var currentIndex : Int = 0
+    private var style:ZXPageStyle
+    private var titles:[String]
+    private var currentIndex : Int = 0
     typealias ColorRGB = (red:CGFloat,green:CGFloat,blue:CGFloat)
-    fileprivate lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
-    fileprivate lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
-    fileprivate lazy var deltaRGB : ColorRGB = {
+    private lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
+    private lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
+    private lazy var deltaRGB : ColorRGB = {
         let deltaR = self.selectRGB.red - self.normalRGB.red
         let deltaG = self.selectRGB.green - self.normalRGB.green
         let deltaB = self.selectRGB.blue - self.normalRGB.blue
         return (deltaR, deltaG, deltaB)
     }()
 
-    fileprivate lazy var titleButtons : [UIButton] = [UIButton]()
-    fileprivate lazy var titleScrollView:UIScrollView = {
+    private lazy var titleButtons : [UIButton] = [UIButton]()
+    private lazy var titleScrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = self.bounds
         scrollView.showsHorizontalScrollIndicator = false
@@ -37,7 +37,7 @@ public class ZXTitleView: UIView {
         scrollView.backgroundColor = UIColor.white
         return scrollView
     }()
-    fileprivate lazy var bottomLine: UIView = {
+    private lazy var bottomLine: UIView = {
         let bottomLine = UIView()
         bottomLine.backgroundColor = self.style.bottomLineColor
         bottomLine.frame.size.height = self.style.bottomLineHeight
@@ -61,7 +61,7 @@ public class ZXTitleView: UIView {
 
 extension ZXTitleView{
     
-    fileprivate func setupSubView(){
+    private func setupSubView(){
         
         //1.添加一个UIScrollView
         addSubview(titleScrollView)
