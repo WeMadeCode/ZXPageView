@@ -84,8 +84,6 @@ extension ZXTitleView{
             //1.创建UIbutton
             let button = UIButton()
             
-            button.backgroundColor = UIColor.randomColor
-            
             //2.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
