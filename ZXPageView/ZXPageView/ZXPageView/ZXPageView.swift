@@ -61,7 +61,7 @@ public class ZXPageView: UIView {
     }()
     
     
-    init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
+  public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -71,7 +71,7 @@ public class ZXPageView: UIView {
         setupSubViews()
         
     }
-    init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
+   public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
         self.style = style
         self.titles = titles
         self.layout = layout

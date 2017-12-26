@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZXPageViewLayout: UICollectionViewLayout {
+public class ZXPageViewLayout: UICollectionViewLayout {
     fileprivate lazy var cellAttrs : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
     fileprivate lazy var pageCount = 0
     var sectionInset : UIEdgeInsets = UIEdgeInsets.zero
@@ -20,7 +20,7 @@ class ZXPageViewLayout: UICollectionViewLayout {
 
 
 // MARK: - 准备所有的布局
-extension ZXPageViewLayout{
+public extension ZXPageViewLayout{
     override func prepare() {
         super.prepare()
         //1.对collectionView进行校验
@@ -71,7 +71,7 @@ extension ZXPageViewLayout{
 
 
 // MARK: - 返回所有的布局
-extension ZXPageViewLayout{
+public extension ZXPageViewLayout{
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return cellAttrs
@@ -81,7 +81,7 @@ extension ZXPageViewLayout{
 
 
 // MARK: - 设置可滚动区域
-extension ZXPageViewLayout{
+public extension ZXPageViewLayout{
     
     override var collectionViewContentSize: CGSize{
         return CGSize(width: CGFloat(pageCount) * collectionView!.bounds.width, height: 0)
