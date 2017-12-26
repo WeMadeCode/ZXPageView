@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ZXPageView"
-  s.version      = "0.0.1"
-  s.summary      = "ZXPageViewSpec"
+  s.version      = "0.1.0"
+  s.summary      = "滚动框架"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-    Copy the headline of the today scroll frame
+    Copy the headline of the today scroll frame，a framework of sliding scrollView
                     DESC
 
   s.homepage     = "https://github.com/WeMadeCode/ZXPageView"
@@ -68,7 +68,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "10.0"
+  s.ios.deployment_target = "8.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"

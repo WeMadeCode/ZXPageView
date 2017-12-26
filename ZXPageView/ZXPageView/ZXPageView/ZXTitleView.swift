@@ -34,6 +34,7 @@ class ZXTitleView: UIView {
         scrollView.frame = self.bounds
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
+        scrollView.backgroundColor = UIColor.orange
         return scrollView
     }()
     fileprivate lazy var bottomLine: UIView = {
@@ -43,12 +44,7 @@ class ZXTitleView: UIView {
         bottomLine.frame.origin.y = self.bounds.height - self.style.bottomLineHeight
         return bottomLine
     }()
-    fileprivate lazy var coverView : UIView = {
-        let coverView = UIView()
-        coverView.backgroundColor = self.style.coverBgColor
-        coverView.alpha = self.style.coverAlpha
-        return coverView
-    }()
+
     
     init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
         self.style = style
@@ -78,11 +74,6 @@ extension ZXTitleView{
         
         // 4.设置bottomLine
         setupBottomLine()
-        
-        // 5.设置coverView
-        setupCoverView()
-        
-        
     }
     
     
@@ -95,7 +86,7 @@ extension ZXTitleView{
             
             button.backgroundColor = UIColor.randomColor
             
-            //2.设置label的属性
+            //2.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
             if i == 0{
@@ -105,13 +96,11 @@ extension ZXTitleView{
             }
             button.titleLabel?.textAlignment = .center
             button.titleLabel?.font = UIFont.systemFont(ofSize:style.fontSize)
-            //3.将label添加到scrollView中
-            titleScrollView.addSubview(button)
-            
-            //4.将label添加到数组中
+     
+            //3.将button添加到数组中
             titleButtons.append(button)
             
-            //5.监听label的点击
+            //4.监听button的点击
             button.addTarget(self, action: #selector(titleButtonClick(_:)), for: .touchUpInside)
         }
         
@@ -129,9 +118,7 @@ extension ZXTitleView{
         //2.设置titlelabel的frame
         let count = titleButtons.count
         for (i,titleButton) in titleButtons.enumerated() {
-            if style.isScrollEnable {
-                
-                //FIXME: - 这里的font怎么是个可选的？
+            if style.titleScrollEnable {
                 let font = titleButton.titleLabel!.font!
                 let attributes = [NSAttributedStringKey.font:font]
                 let string = titles[i] as NSString
@@ -143,6 +130,9 @@ extension ZXTitleView{
                 buttonX = buttonW * CGFloat(i)
             }
             titleButton.frame = CGRect(x: buttonX, y: buttonY, width: buttonW, height: buttonH)
+            
+            //将button添加到scrollView中
+            titleScrollView.addSubview(titleButton)
         }
         
         //设置scale属性
@@ -152,7 +142,7 @@ extension ZXTitleView{
         
         
         //3.设置contentSize
-        if style.isScrollEnable {
+        if style.titleScrollEnable {
             titleScrollView.contentSize.width = titleButtons.last!.frame.maxX + style.titleMargin * 0.5
         }
     }
@@ -176,35 +166,6 @@ extension ZXTitleView{
     }
 
     
-    
-    private func setupCoverView(){
-        
-        // 1.判断是否需要显示coverView
-        guard style.isShowCoverView  else { return  }
-        
-        // 2.添加到scrollView
-        titleScrollView.insertSubview(coverView, at: 0)
-        
-        // 3.设置遮盖的frame
-        let firstLabel = titleButtons.first!
-        var coverW = firstLabel.bounds.width
-        let coverH = style.coverHeight
-        var coverX = firstLabel.frame.origin.x
-        let coverY = (firstLabel.frame.size.height - coverH) * 0.5
-        if style.isScrollEnable {
-            coverX -= style.coverMargin
-            coverW += 2 * style.coverMargin
-        }
-        
-        coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
-        
-        // 4.设置圆角
-        coverView.layer.cornerRadius = style.coverRadius
-        coverView.layer.masksToBounds = true
-        
-        
-        
-    }
     
     func setDefaultConetnt(index:Int)  {
         
@@ -254,18 +215,6 @@ extension ZXTitleView{
                 self.bottomLine.center.x = targetButton.center.x
             })
         }
-        
-        // 9.调整CoverView
-        if style.isShowCoverView {
-            let coverX = style.isScrollEnable ? (targetButton.frame.origin.x - style.coverMargin) : targetButton.frame.origin.x
-            let coverW = style.isScrollEnable ? (targetButton.frame.width + style.coverMargin * 2) : targetButton.frame.width
-            UIView.animate(withDuration: 0.15, animations: {
-                self.coverView.frame.origin.x = coverX
-                self.coverView.frame.size.width = coverW
-            })
-        }
-
-        
     }
     
     fileprivate func setTargetLabel(_ targetButton:UIButton){
@@ -300,20 +249,20 @@ extension ZXTitleView{
         }
         
         // 7.调整CoverView
-        if style.isShowCoverView {
-            let coverX = style.isScrollEnable ? (targetButton.frame.origin.x - style.coverMargin) : targetButton.frame.origin.x
-            let coverW = style.isScrollEnable ? (targetButton.frame.width + style.coverMargin * 2) : targetButton.frame.width
-            UIView.animate(withDuration: 0.15, animations: {
-                self.coverView.frame.origin.x = coverX
-                self.coverView.frame.size.width = coverW
-            })
-        }
+//        if style.isShowCoverView {
+//            let coverX = style.titleScrollEnable ? (targetButton.frame.origin.x - style.coverMargin) : targetButton.frame.origin.x
+//            let coverW = style.titleScrollEnable ? (targetButton.frame.width + style.coverMargin * 2) : targetButton.frame.width
+//            UIView.animate(withDuration: 0.15, animations: {
+//                self.coverView.frame.origin.x = coverX
+//                self.coverView.frame.size.width = coverW
+//            })
+//        }
     }
     
     fileprivate func adjustLabelPosition(_ targetButton:UIButton){
     
         //0.只有可以滚动的时候可以调整
-        guard style.isScrollEnable else {
+        guard style.titleScrollEnable else {
             return
         }
         
@@ -388,12 +337,12 @@ extension ZXTitleView :ZXContentViewDelegate{
         
         
         // 5.coverView的调整
-        if style.isShowCoverView {
-            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
-            let deltaW = targetButton.frame.width - sourceButton.frame.width
-            coverView.frame.size.width = style.isScrollEnable ? (sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress) : (sourceButton.frame.width + deltaW * progress)
-            coverView.frame.origin.x = style.isScrollEnable ? (sourceButton.frame.origin.x - style.coverMargin + deltaX * progress) : (sourceButton.frame.origin.x + deltaX * progress)
-        }
+//        if style.isShowCoverView {
+//            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
+//            let deltaW = targetButton.frame.width - sourceButton.frame.width
+//            coverView.frame.size.width = style.titleScrollEnable ? (sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress) : (sourceButton.frame.width + deltaW * progress)
+//            coverView.frame.origin.x = style.titleScrollEnable ? (sourceButton.frame.origin.x - style.coverMargin + deltaX * progress) : (sourceButton.frame.origin.x + deltaX * progress)
+//        }
     }
     
 }

@@ -25,8 +25,8 @@ class ZXPageView: UIView {
     weak var delegate  :  ZXPageViewDelegate?
     fileprivate var defaultIndex:Int
     fileprivate var style    : ZXPageStyle
-    fileprivate var titles   : [String]
-    fileprivate var childVcs : [UIViewController]!
+    fileprivate var titles   = [String]()
+    fileprivate var childVcs = [UIViewController]()
     fileprivate weak var parentVc : UIViewController!
     fileprivate var layout   : ZXPageViewLayout!
     fileprivate lazy var collectionView : UICollectionView = {
@@ -51,13 +51,12 @@ class ZXPageView: UIView {
     fileprivate lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
-        titleView.backgroundColor = UIColor.white
         return titleView
     }()
     
     fileprivate lazy var contentView: ZXContentView = {
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
-        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc)
+        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc,style:style)
         return contentView
     }()
     

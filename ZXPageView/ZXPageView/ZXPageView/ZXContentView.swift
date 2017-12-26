@@ -18,6 +18,7 @@ private let kContentCellId = "kContentCellId"
 
 class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
+    fileprivate var style:ZXPageStyle
     fileprivate var childVcs : [UIViewController]
     fileprivate weak var  parentVc : UIViewController!
     fileprivate var startOffsetX : CGFloat = 0
@@ -37,11 +38,14 @@ class ZXContentView: UIView {
         collectionView.delegate = self
         collectionView.bounces = false
         collectionView.register(UICollectionViewCell.self,forCellWithReuseIdentifier:kContentCellId)
+        
+        collectionView.isScrollEnabled = self.style.contentScrollEnable
         return collectionView
         
     }()
     
-    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController) {
+    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle) {
+        self.style = style
         self.childVcs = childVcs
         self.parentVc = parentVc
         super.init(frame: frame)
