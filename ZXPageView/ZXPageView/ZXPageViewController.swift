@@ -38,9 +38,10 @@ extension ZXPageViewController{
         // 1.创建需要的样式
         let style = ZXPageStyle()
         style.contentScrollEnable = false
+        style.titleScrollEnable = false
 //        style.isScrollEnable = true
         // 2.获取所有的标题
-        // let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+//         let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         let titles = ["维保查询", "精准定价", "车史定价"]
         
         
@@ -83,7 +84,7 @@ extension ZXPageViewController{
         pageView.dataSource = self
         pageView.delegate = self
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
-        pageView.backgroundColor = UIColor.orange
+        pageView.backgroundColor = UIColor.white
         view.addSubview(pageView)
     }
 }

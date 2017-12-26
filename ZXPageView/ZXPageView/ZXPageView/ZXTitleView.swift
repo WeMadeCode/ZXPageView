@@ -34,7 +34,7 @@ public class ZXTitleView: UIView {
         scrollView.frame = self.bounds
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
-        scrollView.backgroundColor = UIColor.orange
+        scrollView.backgroundColor = UIColor.white
         return scrollView
     }()
     fileprivate lazy var bottomLine: UIView = {
@@ -83,7 +83,7 @@ extension ZXTitleView{
             
             //1.创建UIbutton
             let button = UIButton()
-            
+                        
             //2.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
