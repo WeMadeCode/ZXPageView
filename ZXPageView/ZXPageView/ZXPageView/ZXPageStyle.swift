@@ -10,41 +10,39 @@ import UIKit
 
 public class ZXPageStyle:NSObject {
     
-    
     //标题栏是否可以滚动
-    var titleScrollEnable:Bool = false
-    
+    public var titleScrollEnable:Bool = false
     //内容是否可以滚动
-    var contentScrollEnable:Bool = true
+    public var contentScrollEnable:Bool = true
     
     //字体高度
-    var titleHeight : CGFloat = 44
+    public var titleHeight : CGFloat = 44
     //非选中字体颜色
-    var normalColor : UIColor = UIColor.gray
+    public var normalColor : UIColor = UIColor.gray
     //选中字体的颜色
-    var selectColor : UIColor = UIColor.orange
+    public var selectColor : UIColor = UIColor.orange
     //字体大小
-    var fontSize    : CGFloat = 15
+    public var fontSize    : CGFloat = 15
     //字体间距
-    var titleMargin : CGFloat = 30
+    public var titleMargin : CGFloat = 30
     
     //是否显示滚动条
-    var isShowBottomLine : Bool = true
+    public var isShowBottomLine : Bool = true
     //滚动条颜色
-    var bottomLineColor : UIColor = UIColor.orange
+    public var bottomLineColor : UIColor = UIColor.orange
     //滚动条高度
-    var bottomLineHeight : CGFloat = 2
+    public var bottomLineHeight : CGFloat = 2
     
     
     //是否支持标题缩放
-    var isScaleEnable : Bool = false
+    public var isScaleEnable : Bool = false
     //缩放大小
-    var maxScale : CGFloat = 1.2
+    public var maxScale : CGFloat = 1.2
     
 
     
     // pageControl的高度
-    var pageControlHeight : CGFloat = 20
+    public var pageControlHeight : CGFloat = 20
 
     
 
