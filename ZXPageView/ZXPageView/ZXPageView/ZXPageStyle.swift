@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZXPageStyle {
+public class ZXPageStyle {
     
     
     //标题栏是否可以滚动

@@ -16,7 +16,7 @@ protocol ZXContentViewDelegate:class {
 
 private let kContentCellId = "kContentCellId"
 
-class ZXContentView: UIView {
+public class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
     fileprivate var style:ZXPageStyle
     fileprivate var childVcs : [UIViewController]
@@ -53,7 +53,7 @@ class ZXContentView: UIView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -72,12 +72,12 @@ extension ZXContentView{
 
 extension ZXContentView:UICollectionViewDataSource{
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return childVcs.count
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //1.获取cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kContentCellId, for: indexPath)
         //2.给cell设置内容
@@ -96,11 +96,11 @@ extension ZXContentView:UICollectionViewDataSource{
 
 extension ZXContentView:UICollectionViewDelegate{
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         collectionViewDidEndScroll()
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {//如果没有减速的话
             collectionViewDidEndScroll()
         }
@@ -116,12 +116,12 @@ extension ZXContentView:UICollectionViewDelegate{
     }
     
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isForbidDelegate = false
         startOffsetX = scrollView.contentOffset.x
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         //1.判断是否需要执行后续代码
         guard  !isForbidDelegate  else { return  }

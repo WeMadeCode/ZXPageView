@@ -15,7 +15,7 @@ import UIKit
  1>函数名称相同，但是参数不同
  2>参数不同有两层函数: 1)参数的类型不同  2)参数的个数不同
  */
-extension UIColor{
+public extension UIColor{
     
 
     convenience init(r:CGFloat,g:CGFloat,b:CGFloat,alpha:CGFloat = 1.0) {

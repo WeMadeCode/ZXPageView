@@ -19,7 +19,7 @@ protocol ZXPageViewDataSource:class {
 }
 
 
-class ZXPageView: UIView {
+public class ZXPageView: UIView {
     // MARK: 定义属性
     weak var dataSource  : ZXPageViewDataSource?
     weak var delegate  :  ZXPageViewDelegate?
@@ -81,7 +81,7 @@ class ZXPageView: UIView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -133,30 +133,30 @@ extension ZXPageView{
 
 // MARK: - UICollectionView的数据源方法
 extension ZXPageView : UICollectionViewDataSource{
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataSource?.numberOfSectionInPageView(self) ?? 0
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let itemCount = dataSource?.pageView(self, numberOfItemsInSection: section) ?? 0
         if section == 0 {
             pageControl.numberOfPages = (itemCount - 1)/(layout.cols * layout.rows) + 1
         }
         return itemCount
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return dataSource!.pageView(self, cellForItemsAtIndexPath: indexPath)
     }
 }
 
 
 extension ZXPageView : UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.pageView?(self, didSelectedAtIndexPath: indexPath)
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         collectionViewDidEndScroll()
     }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             collectionViewDidEndScroll()
         }

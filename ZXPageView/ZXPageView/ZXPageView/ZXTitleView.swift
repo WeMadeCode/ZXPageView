@@ -12,7 +12,7 @@ protocol ZXTitleViewDelegate:class {
     func titleView(_ titleView:ZXTitleView,currentIndex:Int)
 }
 
-class ZXTitleView: UIView {
+public class ZXTitleView: UIView {
 
     weak var delegate : ZXTitleViewDelegate?
     fileprivate var style:ZXPageStyle
@@ -53,7 +53,7 @@ class ZXTitleView: UIView {
         setupSubView()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
