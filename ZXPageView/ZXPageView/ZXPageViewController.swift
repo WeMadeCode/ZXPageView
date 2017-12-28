@@ -37,12 +37,11 @@ extension ZXPageViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-        style.contentScrollEnable = false
-        style.titleScrollEnable = false
-//        style.isScrollEnable = true
+//        style.contentScrollEnable = false
+        style.isScrollEnable = false
         // 2.获取所有的标题
-//         let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
-        let titles = ["维保查询", "精准定价", "车史定价"]
+         let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+//        let titles = ["维保查询", "精准定价", "车史定价"]
         
         
         // 3.获取所有的内容控制器
@@ -57,7 +56,7 @@ extension ZXPageViewController{
         let y1 = UIApplication.shared.statusBarFrame.height
         let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
         let pageFrame = CGRect(x: 0, y: y1 + y2 , width: view.bounds.width, height: view.bounds.height - y1 - y2)
-        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 4)
+        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 0)
         view.addSubview(pageView)
     }
     

@@ -20,7 +20,6 @@ protocol ZXPageViewDataSource:class {
 
 
 public class ZXPageView: UIView {
-    // MARK: 定义属性
     weak var dataSource  : ZXPageViewDataSource?
     weak var delegate  :  ZXPageViewDelegate?
     private var defaultIndex:Int

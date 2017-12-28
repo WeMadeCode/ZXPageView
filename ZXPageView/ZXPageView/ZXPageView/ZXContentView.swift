@@ -39,7 +39,7 @@ public class ZXContentView: UIView {
         collectionView.bounces = false
         collectionView.register(UICollectionViewCell.self,forCellWithReuseIdentifier:kContentCellId)
         
-        collectionView.isScrollEnabled = self.style.contentScrollEnable
+        collectionView.isScrollEnabled = self.style.isScrollEnable
         return collectionView
         
     }()

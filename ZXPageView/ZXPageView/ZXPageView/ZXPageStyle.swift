@@ -10,10 +10,8 @@ import UIKit
 
 public class ZXPageStyle:NSObject {
     
-    //标题栏是否可以滚动
-    public var titleScrollEnable:Bool = false
     //内容是否可以滚动
-    public var contentScrollEnable:Bool = true
+    public var isScrollEnable:Bool = true
     
     //字体高度
     public var titleHeight : CGFloat = 44

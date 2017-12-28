@@ -29,12 +29,14 @@ public class ZXTitleView: UIView {
     }()
 
     private lazy var titleButtons : [UIButton] = [UIButton]()
+    private lazy var titleButtonWs : [CGFloat] = [CGFloat]()
     private lazy var titleScrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = self.bounds
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
         scrollView.backgroundColor = UIColor.white
+        scrollView.isScrollEnabled = false
         return scrollView
     }()
     private lazy var bottomLine: UIView = {
@@ -69,7 +71,7 @@ extension ZXTitleView{
         //2.创建所有的标题按钮
         setupTitleButtons()
         
-        //3.设置button的frame
+        //3.计算所有按钮的frame
         setupButtonsFrame()
         
         // 4.设置bottomLine
@@ -83,7 +85,7 @@ extension ZXTitleView{
             
             //1.创建UIbutton
             let button = UIButton()
-                        
+            
             //2.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
@@ -107,32 +109,49 @@ extension ZXTitleView{
     
     private func setupButtonsFrame(){
         
-        //1.定义出变量&常量
-        let buttonH = style.titleHeight
-        let buttonY:CGFloat = 0
-        var buttonW:CGFloat = 0
-        var buttonX:CGFloat = 0
-        
-        //2.设置titlelabel的frame
+        //1.定义变量
         let count = titleButtons.count
+        var totalWidth : CGFloat = CGFloat(count) * style.titleMargin
+
+        //2.计算按钮的frame
         for (i,titleButton) in titleButtons.enumerated() {
-            if style.titleScrollEnable {
-                let font = titleButton.titleLabel!.font!
-                let attributes = [NSAttributedStringKey.font:font]
-                let string = titles[i] as NSString
-                let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
-                buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
-                buttonX = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
-            }else{
-                buttonW = bounds.width / CGFloat(count)
-                buttonX = buttonW * CGFloat(i)
-            }
-            titleButton.frame = CGRect(x: buttonX, y: buttonY, width: buttonW, height: buttonH)
+            
+            
+            //计算所有按钮的width
+            let attributes = [NSAttributedStringKey.font:titleButton.titleLabel!.font!]
+            let string = titles[i] as NSString
+            let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
+            let buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
+            totalWidth = totalWidth + buttonW
+            self.titleButtonWs.append(buttonW)
+            
+            
+            //默认为均分屏幕,不可以滚动
+            let averageWidth = bounds.width / CGFloat(count)
+            let buttonX = averageWidth * CGFloat(i)
+            titleButton.frame = CGRect(x: buttonX, y: 0, width: averageWidth, height: style.titleHeight)
             
             //将button添加到scrollView中
             titleScrollView.addSubview(titleButton)
         }
         
+        
+        
+        if totalWidth > bounds.width { //需要强行滚动
+            
+           
+            for (i,width) in titleButtonWs.enumerated(){
+                //修改frame
+                let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
+                let buttonW:CGFloat = width
+                let titleButton = titleButtons[i]
+                titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
+                
+            }
+            titleScrollView.isScrollEnabled = true
+            
+        }
+
         //设置scale属性
         if style.isScaleEnable {
             titleButtons.first?.transform = CGAffineTransform(scaleX: style.maxScale, y: style.maxScale)
@@ -140,7 +159,7 @@ extension ZXTitleView{
         
         
         //3.设置contentSize
-        if style.titleScrollEnable {
+        if titleScrollView.isScrollEnabled {
             titleScrollView.contentSize.width = titleButtons.last!.frame.maxX + style.titleMargin * 0.5
         }
     }
@@ -246,21 +265,13 @@ extension ZXTitleView{
             })
         }
         
-        // 7.调整CoverView
-//        if style.isShowCoverView {
-//            let coverX = style.titleScrollEnable ? (targetButton.frame.origin.x - style.coverMargin) : targetButton.frame.origin.x
-//            let coverW = style.titleScrollEnable ? (targetButton.frame.width + style.coverMargin * 2) : targetButton.frame.width
-//            UIView.animate(withDuration: 0.15, animations: {
-//                self.coverView.frame.origin.x = coverX
-//                self.coverView.frame.size.width = coverW
-//            })
-//        }
+
     }
     
     fileprivate func adjustLabelPosition(_ targetButton:UIButton){
     
         //0.只有可以滚动的时候可以调整
-        guard style.titleScrollEnable else {
+        guard titleScrollView.isScrollEnabled else {
             return
         }
         
@@ -327,20 +338,9 @@ extension ZXTitleView :ZXContentViewDelegate{
             
             //4.2计算x值
             let deltaX = targetButton.center.x - sourceButton.center.x
-//            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
             bottomLine.center.x = sourceButton.center.x + progress * deltaX
-//            bottomLine.frame.origin.x = sourceButton.frame.origin.x + progress * deltaX
 
         }
-        
-        
-        // 5.coverView的调整
-//        if style.isShowCoverView {
-//            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
-//            let deltaW = targetButton.frame.width - sourceButton.frame.width
-//            coverView.frame.size.width = style.titleScrollEnable ? (sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress) : (sourceButton.frame.width + deltaW * progress)
-//            coverView.frame.origin.x = style.titleScrollEnable ? (sourceButton.frame.origin.x - style.coverMargin + deltaX * progress) : (sourceButton.frame.origin.x + deltaX * progress)
-//        }
     }
     
 }
