@@ -116,7 +116,6 @@ extension ZXTitleView{
         //2.计算按钮的frame
         for (i,titleButton) in titleButtons.enumerated() {
             
-            
             //计算所有按钮的width
             let attributes = [NSAttributedStringKey.font:titleButton.titleLabel!.font!]
             let string = titles[i] as NSString
@@ -139,7 +138,6 @@ extension ZXTitleView{
         
         if totalWidth > bounds.width { //需要强行滚动
             
-           
             for (i,width) in titleButtonWs.enumerated(){
                 //修改frame
                 let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
@@ -195,7 +193,7 @@ extension ZXTitleView{
 
 extension ZXTitleView{
 
-    @objc fileprivate func titleButtonClick(_ targetButton:UIButton){
+    @objc private func titleButtonClick(_ targetButton:UIButton){
         
         //1.校验button
         guard targetButton.tag != currentIndex else {  return  }
@@ -234,13 +232,13 @@ extension ZXTitleView{
         }
     }
     
-    fileprivate func setTargetLabel(_ targetButton:UIButton){
+    private func setTargetLabel(_ targetButton:UIButton){
         // 1.取出原来的label
         let sourceButton = titleButtons[currentIndex]
         
         // 2.改变Label的颜色
-        sourceButton.setTitleColor(style.selectColor, for: .normal)
-        targetButton.setTitleColor(style.normalColor, for: .normal)
+        sourceButton.setTitleColor(style.normalColor, for: .normal)
+        targetButton.setTitleColor(style.selectColor, for: .normal)
         
         // 3.记录最新的index
         currentIndex = targetButton.tag
@@ -268,7 +266,7 @@ extension ZXTitleView{
 
     }
     
-    fileprivate func adjustLabelPosition(_ targetButton:UIButton){
+    private func adjustLabelPosition(_ targetButton:UIButton){
     
         //0.只有可以滚动的时候可以调整
         guard titleScrollView.isScrollEnabled else {
@@ -307,8 +305,6 @@ extension ZXTitleView :ZXContentViewDelegate{
     
     
     func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
-
-        
         //1.获取sourceLabel&targetLabel
         let sourceButton = titleButtons[sourceIndex]
         let targetButton = titleButtons[targetIndex]
@@ -330,16 +326,13 @@ extension ZXTitleView :ZXContentViewDelegate{
         
         // 4.bottomLine的调整
         if style.isShowBottomLine {
-            
             //4.1计算宽度
             let deltaW = targetButton.titleLabel!.frame.width - sourceButton.titleLabel!.frame.width
             bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
             
-            
             //4.2计算x值
             let deltaX = targetButton.center.x - sourceButton.center.x
             bottomLine.center.x = sourceButton.center.x + progress * deltaX
-
         }
     }
     

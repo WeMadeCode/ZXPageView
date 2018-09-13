@@ -21,7 +21,7 @@ protocol ZXPageViewDataSource:class {
 
 public class ZXPageView: UIView {
     weak var dataSource  : ZXPageViewDataSource?
-    weak var delegate  :  ZXPageViewDelegate?
+    weak var delegate    : ZXPageViewDelegate?
     private var defaultIndex:Int
     private var style    : ZXPageStyle
     private var titles   = [String]()
@@ -60,7 +60,13 @@ public class ZXPageView: UIView {
     }()
     
     
-    public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0) {
+    public init(frame: CGRect,
+                style:ZXPageStyle,
+                titles:[String],
+                childVcs:[UIViewController],
+                parentVc:UIViewController,
+                defaultIndex:Int = 0)
+    {
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -70,7 +76,12 @@ public class ZXPageView: UIView {
         setupSubViews()
         
     }
-    public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout) {
+    
+    public init(frame:CGRect,
+                style:ZXPageStyle,
+                titles:[String],
+                layout:ZXPageViewLayout)
+    {
         self.style = style
         self.titles = titles
         self.layout = layout

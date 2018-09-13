@@ -112,9 +112,7 @@ extension ZXContentView:UICollectionViewDelegate{
         
         //2.通知代理
         delegate?.contentView(self, inIndex: inIndex)
-        
     }
-    
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isForbidDelegate = false
@@ -169,7 +167,6 @@ extension ZXContentView:UICollectionViewDelegate{
             if sourceIndex >= childVcs.count {
                 sourceIndex = childVcs.count - 1
             }
-
         }
         //4.通知代理
         delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)

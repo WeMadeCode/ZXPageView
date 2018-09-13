@@ -14,17 +14,17 @@ private let kCollectionViewCellID = "kCollectionViewCellID"
 class ZXPageViewController: UIViewController {
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-            method1()
         
-            automaticallyAdjustsScrollViewInsets = false
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
+        
+        self.method1()
         
     }
 
 
     deinit {
-        print("我死了")
+        print("deinit")
     }
 }
 
@@ -37,11 +37,11 @@ extension ZXPageViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-//        style.contentScrollEnable = false
-        style.isScrollEnable = false
+
+//        style.isScrollEnable = true
         // 2.获取所有的标题
          let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
-//        let titles = ["维保查询", "精准定价", "车史定价"]
+//        let titles = ["维保查询", "精准定价", "保卖估值","车史定价"]
         
         
         // 3.获取所有的内容控制器
