@@ -201,7 +201,7 @@ extension ZXPageView : UICollectionViewDelegate{
 
 // MARK: - 实现ZXPageTitle的代理方法
 extension ZXPageView : ZXTitleViewDelegate{
-    public func titleView(_ titleView: ZXTitleView, currentIndex: Int) {
+    public func titleView(_ titleView: ZXTitleView,currentTitle:String, currentIndex: Int) {
         
         //1.滚动到正确的位置
         let indexPath = IndexPath(item: 0, section: currentIndex)

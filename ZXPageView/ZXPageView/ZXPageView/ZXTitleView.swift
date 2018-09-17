@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol ZXTitleViewDelegate:class {
-    func titleView(_ titleView:ZXTitleView,currentIndex:Int)
+    func titleView(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int)
 }
 
 public class ZXTitleView: UIView {
@@ -212,7 +212,7 @@ extension ZXTitleView{
         adjustLabelPosition(targetButton)
         
         //6.通知代理
-        delegate?.titleView(self, currentIndex: currentIndex)
+        delegate?.titleView(self, currentTitle: targetButton.currentTitle ?? "", currentIndex: currentIndex)
         
         // 7.调整scale缩放
         if style.isScaleEnable {
