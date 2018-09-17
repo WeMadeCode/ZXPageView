@@ -48,7 +48,7 @@ public class ZXTitleView: UIView {
     }()
 
     
-    init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
+    public init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
         self.style = style
         self.titles = titles
         super.init(frame: frame)

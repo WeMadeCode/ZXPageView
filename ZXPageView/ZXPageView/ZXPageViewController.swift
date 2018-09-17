@@ -37,13 +37,8 @@ extension ZXPageViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-
-//        style.isScrollEnable = true
         // 2.获取所有的标题
          let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
-//        let titles = ["维保查询", "精准定价", "保卖估值","车史定价"]
-        
-        
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()
         for _ in 0..<titles.count {
@@ -51,7 +46,6 @@ extension ZXPageViewController{
             vc.view.backgroundColor = UIColor.randomColor
             childVcs.append(vc)
         }
-        
         // 4.创建HYPageView
         let y1 = UIApplication.shared.statusBarFrame.height
         let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
@@ -73,8 +67,6 @@ extension ZXPageViewController{
         layout.itemSpacing = 10
         layout.cols = 4
         layout.rows = 2
-        
-        
         //3.创建ZXPageView
         let y1 = UIApplication.shared.statusBarFrame.height
         let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
@@ -117,10 +109,8 @@ extension ZXPageViewController :ZXPageViewDataSource{
 }
 
 extension ZXPageViewController:ZXPageViewDelegate{
-    
     //点击某个item
     func pageView(_ pageView: ZXPageView, didSelectedAtIndexPath indexPath: IndexPath) {
-        
         print(indexPath)
     }
     
