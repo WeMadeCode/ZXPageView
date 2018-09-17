@@ -177,7 +177,7 @@ extension ZXContentView:UICollectionViewDelegate{
 
 extension ZXContentView:ZXTitleViewDelegate{
     
-    func titleView(_ titleView: ZXTitleView, currentIndex: Int) {
+    public func titleView(_ titleView: ZXTitleView, currentIndex: Int) {
         
         // 0.设置isForbidDelegate属性为true
         isForbidDelegate = true

@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol ZXTitleViewDelegate:class {
+public protocol ZXTitleViewDelegate:class {
     func titleView(_ titleView:ZXTitleView,currentIndex:Int)
 }
 
 public class ZXTitleView: UIView {
 
-    weak var delegate : ZXTitleViewDelegate?
+    public weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
     private var titles:[String]
     private var currentIndex : Int = 0
