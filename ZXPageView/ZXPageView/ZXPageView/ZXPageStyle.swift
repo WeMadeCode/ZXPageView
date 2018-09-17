@@ -35,6 +35,8 @@ public class ZXPageStyle:NSObject {
     /// 滚动条圆角
     public var cornerRadius : CGFloat = 2
     
+    
+    
     /// 是否支持标题缩放
     public var isScaleEnable : Bool = false
     /// 缩放大小

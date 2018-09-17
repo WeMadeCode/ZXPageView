@@ -182,14 +182,14 @@ extension ZXTitleView{
     }
 
     
+
     
+    // 设置默认滚动位置
     func setDefaultConetnt(index:Int)  {
-        
         let button = titleButtons[index]
         button.titleLabel?.sizeToFit()
         titleButtonClick(button)
     }
-
 }
 
 extension ZXTitleView{
