@@ -24,13 +24,16 @@ public class ZXPageStyle:NSObject {
     /// 字体间距
     public var titleMargin : CGFloat = 30
     
+    
+    
     /// 是否显示滚动条
     public var isShowBottomLine : Bool = true
     /// 滚动条颜色
     public var bottomLineColor : UIColor = UIColor.orange
     /// 滚动条高度
     public var bottomLineHeight : CGFloat = 2
-    
+    /// 滚动条圆角
+    public var cornerRadius : CGFloat = 2
     
     /// 是否支持标题缩放
     public var isScaleEnable : Bool = false

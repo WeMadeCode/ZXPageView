@@ -44,6 +44,7 @@ public class ZXTitleView: UIView {
         bottomLine.backgroundColor = self.style.bottomLineColor
         bottomLine.frame.size.height = self.style.bottomLineHeight
         bottomLine.frame.origin.y = self.bounds.height - self.style.bottomLineHeight
+        bottomLine.layer.cornerRadius = self.style.cornerRadius
         return bottomLine
     }()
 
