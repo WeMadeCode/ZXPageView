@@ -13,7 +13,6 @@ public protocol ZXTitleViewDelegate:class {
 }
 
 public class ZXTitleView: UIView {
-
     public weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
     private var titles:[String]
@@ -27,7 +26,6 @@ public class ZXTitleView: UIView {
         let deltaB = self.selectRGB.blue - self.normalRGB.blue
         return (deltaR, deltaG, deltaB)
     }()
-
     private lazy var titleButtons : [UIButton] = [UIButton]()
     private lazy var titleButtonWs : [CGFloat] = [CGFloat]()
     private lazy var titleScrollView:UIScrollView = {
@@ -71,13 +69,13 @@ extension ZXTitleView{
     
     private func setupSubView(){
         
-        //1.添加一个UIScrollView
+        // 1.添加一个UIScrollView
         addSubview(titleScrollView)
         
-        //2.创建所有的标题按钮
+        // 2.创建所有的标题按钮
         setupTitleButtons()
         
-        //3.计算所有按钮的frame
+        // 3.计算所有按钮的frame
         setupButtonsFrame()
         
         // 4.设置bottomLine
@@ -91,7 +89,6 @@ extension ZXTitleView{
     private func setupTitleButtons(){
         
         for (i,title) in titles.enumerated() {
-            
             //1.创建UIbutton
             let button = UIButton()
             
@@ -112,12 +109,10 @@ extension ZXTitleView{
             //4.监听button的点击
             button.addTarget(self, action: #selector(titleButtonClick(_:)), for: .touchUpInside)
         }
-        
     }
     
     
     private func setupButtonsFrame(){
-        
         //1.定义变量
         let count = titleButtons.count
         var totalWidth : CGFloat = CGFloat(count) * style.titleMargin
@@ -134,29 +129,40 @@ extension ZXTitleView{
             self.titleButtonWs.append(buttonW)
             
             
-            //默认为均分屏幕,不可以滚动
-            let averageWidth = bounds.width / CGFloat(count)
-            let buttonX = averageWidth * CGFloat(i)
-            titleButton.frame = CGRect(x: buttonX, y: 0, width: averageWidth, height: style.titleHeight)
-            
+        
             //将button添加到scrollView中
             titleScrollView.addSubview(titleButton)
         }
         
-        
-        
-        if totalWidth > bounds.width { //需要强行滚动
-            
+        if totalWidth > bounds.width { //总宽度大于屏幕宽度，按间距布局
             for (i,width) in titleButtonWs.enumerated(){
-                //修改frame
                 let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
                 let buttonW:CGFloat = width
                 let titleButton = titleButtons[i]
                 titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
-                
             }
             titleScrollView.isScrollEnabled = true
+        }else{ //总宽度小于屏幕宽度,不可以滚动
             
+            if style.divideScreen == true{//按等分屏幕布局
+                for (i,_) in titleButtonWs.enumerated(){
+                    let averageWidth = bounds.width / CGFloat(count)
+                    let buttonX = averageWidth * CGFloat(i)
+                    let titleButton = titleButtons[i]
+                    titleButton.frame = CGRect(x: buttonX, y: 0, width: averageWidth, height: style.titleHeight)
+                }
+                
+                
+            }else{ //任然按照间距布局
+                for (i,width) in titleButtonWs.enumerated(){
+                    let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
+                    let buttonW:CGFloat = width
+                    let titleButton = titleButtons[i]
+                    titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
+                }
+            }            
+            titleScrollView.isScrollEnabled = false
+
         }
 
         //设置scale属性

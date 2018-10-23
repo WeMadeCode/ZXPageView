@@ -11,7 +11,6 @@ import UIKit
 protocol ZXContentViewDelegate:class {
     func contentView(_ contentView:ZXContentView,inIndex:Int)
     func contentView(_ contentView:ZXContentView,sourceIndex:Int,targetIndex:Int,progress:CGFloat)
-    
 }
 
 private let kContentCellId = "kContentCellId"

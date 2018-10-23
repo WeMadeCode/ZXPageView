@@ -43,8 +43,13 @@ extension ZXPageViewController{
         style.coverBgColor = UIColor.orange
         style.selectColor = UIColor.white
         style.coverAlpha = 1
+        style.divideScreen = false
         // 2.获取所有的标题
-         let titles = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+//         let titles = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+        
+        let titles = ["头条推荐"]
+
+        
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()
         for _ in 0..<titles.count {
