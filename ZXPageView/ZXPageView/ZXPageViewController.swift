@@ -37,13 +37,14 @@ extension ZXPageViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
+        style.isScrollEnable = false
         style.isShowCoverView = true
+        style.isShowBottomLine = false
         style.coverBgColor = UIColor.orange
         style.selectColor = UIColor.white
         style.coverAlpha = 1
-        style.isShowBottomLine = false
         // 2.获取所有的标题
-         let titles = ["热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+         let titles = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()
         for _ in 0..<titles.count {

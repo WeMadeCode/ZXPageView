@@ -37,9 +37,9 @@ public class ZXPageStyle:NSObject {
     public var isShowCoverView : Bool = false
     public var coverBgColor : UIColor = UIColor.black
     public var coverAlpha : CGFloat = 0.4
-    public var coverMargin : CGFloat = 8
-    public var coverHeight : CGFloat = 25
-    public var coverRadius : CGFloat = 12
+    public var coverMargin : CGFloat = 12
+    public var coverHeight : CGFloat = 30
+    public var coverRadius : CGFloat = 15
     
     
     

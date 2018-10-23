@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ZXPageView"
-  s.version      = "0.2.5"
+  s.version      = "0.2.7"
   s.summary      = "滚动框架"
 
   # This description is used to generate tags and improve search results.
