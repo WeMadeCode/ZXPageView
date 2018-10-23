@@ -47,7 +47,12 @@ public class ZXTitleView: UIView {
         bottomLine.layer.cornerRadius = self.style.cornerRadius
         return bottomLine
     }()
-
+    private lazy var coverView : UIView = {
+        let coverView = UIView()
+        coverView.backgroundColor = self.style.coverBgColor
+        coverView.alpha = self.style.coverAlpha
+        return coverView
+    }()
     
     public init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
         self.style = style
@@ -77,6 +82,9 @@ extension ZXTitleView{
         
         // 4.设置bottomLine
         setupBottomLine()
+        
+        // 5.设置coverView
+        setupCoverView()
     }
     
     
@@ -182,6 +190,31 @@ extension ZXTitleView{
     }
 
     
+    private func setupCoverView(){
+        // 1.判断是否需要显示coverView
+        guard style.isShowCoverView else {
+            return
+        }
+        
+        // 2.添加到scrollView
+        titleScrollView.insertSubview(coverView, at: 0)
+        
+        // 3.设置遮盖的frame
+        let firstButton = titleButtons.first!
+        var coverW = firstButton.bounds.width
+        let coverH = style.coverHeight
+        var coverX = firstButton.frame.origin.x
+        let coverY = (firstButton.frame.height - coverH) * 0.5
+        if style.isScrollEnable {
+            coverX -= style.coverMargin
+            coverW += 2 * style.coverMargin
+        }
+        coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
+        
+        // 4.设置圆角
+        coverView.layer.cornerRadius = style.coverRadius
+        coverView.layer.masksToBounds = true
+    }
 
     
     // 设置默认滚动位置
@@ -229,6 +262,16 @@ extension ZXTitleView{
             UIView.animate(withDuration: 0.25, animations: {
                 self.bottomLine.frame.size.width = targetButton.titleLabel!.frame.size.width
                 self.bottomLine.center.x = targetButton.center.x
+            })
+        }
+        
+        // 9.调整CoverView
+        if style.isShowCoverView {
+            let coverX = style.isScrollEnable ? (targetButton.frame.origin.x - style.coverMargin) : targetButton.frame.origin.x
+            let coverW = style.isScrollEnable ? (targetButton.frame.width + style.coverMargin * 2) : targetButton.frame.width
+            UIView.animate(withDuration: 0.15, animations: {
+                self.coverView.frame.origin.x = coverX
+                self.coverView.frame.size.width = coverW
             })
         }
     }
@@ -334,6 +377,15 @@ extension ZXTitleView :ZXContentViewDelegate{
             //4.2计算x值
             let deltaX = targetButton.center.x - sourceButton.center.x
             bottomLine.center.x = sourceButton.center.x + progress * deltaX
+        }
+        
+        
+        // 5.coverView的调整
+        if style.isShowCoverView {
+            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
+            let deltaW = targetButton.frame.width - sourceButton.frame.width
+            coverView.frame.size.width = style.isScrollEnable ? (sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress) : (sourceButton.frame.width + deltaW * progress)
+            coverView.frame.origin.x = style.isScrollEnable ? (sourceButton.frame.origin.x - style.coverMargin + deltaX * progress) : (sourceButton.frame.origin.x + deltaX * progress)
         }
     }
     
