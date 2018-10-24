@@ -8,8 +8,21 @@
 
 import UIKit
 
-public protocol ZXTitleViewDelegate:class {
-    func titleView(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int)
+@objc public protocol ZXTitleViewDelegate:class {
+    /// 点击当前按钮
+    ///
+    /// - Parameters:
+    ///   - titleView: titleView
+    ///   - currentTitle: 当前标题
+    ///   - currentIndex: 当前标记
+    @objc optional func currentTitleClick(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int)
+    /// 点击下一个按钮
+    ///
+    /// - Parameters:
+    ///   - titleView: titleView
+    ///   - nextTitle: 下一个标题
+    ///   - nextIndex: 下一个标记
+    func nextTitleClick(_ titleView:ZXTitleView,nextTitle:String,nextIndex:Int)
 }
 
 public class ZXTitleView: UIView {
@@ -205,7 +218,13 @@ extension ZXTitleView{
         // 2.添加到scrollView
         titleScrollView.insertSubview(coverView, at: 0)
         
-        // 3.设置遮盖的frame
+       
+        // 3.重新计算按钮的x值
+        titleButtons.forEach { (btn) in
+            btn.frame.origin.x += style.coverMargin
+        }
+        
+        // 4.设置遮盖的frame
         let firstButton = titleButtons.first!
         let coverW = firstButton.bounds.width + 2 * style.coverMargin
         let coverH = style.coverHeight
@@ -213,9 +232,14 @@ extension ZXTitleView{
         let coverY = (firstButton.frame.height - coverH) * 0.5
         coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
         
-        // 4.设置圆角
+        // 5.设置圆角
         coverView.layer.cornerRadius = style.coverRadius
         coverView.layer.masksToBounds = true
+        
+        // 6.设置contenSize
+        if titleScrollView.isScrollEnabled == true{
+            titleScrollView.contentSize.width += 2 * style.coverMargin
+        }
     }
 
     
@@ -230,12 +254,16 @@ extension ZXTitleView{
 extension ZXTitleView{
 
     @objc private func titleButtonClick(_ targetButton:UIButton){
+
         
-        //1.校验button
-        guard targetButton.tag != currentIndex else {  return  }
-        
-        //2.取出原来的label
+        //1.取出原来的button
         let sourceButton = titleButtons[currentIndex]
+        
+        //2.校验button
+        guard targetButton.tag != currentIndex else {
+            delegate?.currentTitleClick?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
+            return
+        }
         
         //3.改变label的颜色
         sourceButton.setTitleColor(style.normalColor, for: .normal)
@@ -248,7 +276,7 @@ extension ZXTitleView{
         adjustLabelPosition(targetButton)
         
         //6.通知代理
-        delegate?.titleView(self, currentTitle: targetButton.currentTitle ?? "", currentIndex: currentIndex)
+        delegate?.nextTitleClick(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
         
         // 7.调整scale缩放
         if style.isScaleEnable {

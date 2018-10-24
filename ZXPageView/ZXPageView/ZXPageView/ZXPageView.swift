@@ -201,22 +201,22 @@ extension ZXPageView : UICollectionViewDelegate{
 
 // MARK: - 实现ZXPageTitle的代理方法
 extension ZXPageView : ZXTitleViewDelegate{
-    public func titleView(_ titleView: ZXTitleView,currentTitle:String, currentIndex: Int) {
-        
+    
+    public func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
         //1.滚动到正确的位置
-        let indexPath = IndexPath(item: 0, section: currentIndex)
+        let indexPath = IndexPath(item: 0, section: nextIndex)
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
         
         //2.微调collectionView的contentOffSet
         collectionView.contentOffset.x -= layout.sectionInset.left
         
         //3.改变pageController的numberOfPages
-        let itemCount = dataSource?.pageView(self, numberOfItemsInSection: currentIndex) ?? 0
+        let itemCount = dataSource?.pageView(self, numberOfItemsInSection: nextIndex) ?? 0
         pageControl.numberOfPages = (itemCount - 1)/(layout.rows * layout.cols) + 1
         pageControl.currentPage = 0
         
         //4.记录最新的currentSection
-        currentSection = currentIndex
+        currentSection = nextIndex
     }
 }
 

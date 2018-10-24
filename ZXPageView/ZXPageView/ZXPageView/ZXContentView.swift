@@ -175,19 +175,14 @@ extension ZXContentView:UICollectionViewDelegate{
 
 
 extension ZXContentView:ZXTitleViewDelegate{
-    
-    public func titleView(_ titleView: ZXTitleView, currentTitle: String,currentIndex: Int) {
-        
+    public func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
         // 0.设置isForbidDelegate属性为true
         isForbidDelegate = true
-        
         //1.根据currentIndex获取indexPath
-        let indexPath = IndexPath(item: currentIndex, section: 0)
+        let indexPath = IndexPath(item: nextIndex, section: 0)
         //2.滚动到正确位置
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
-        
     }
-
 }
 
 
