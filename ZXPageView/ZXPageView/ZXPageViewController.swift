@@ -129,6 +129,7 @@ extension ZXPageViewController:ZXPageViewDelegate{
 
 extension ZXPageViewController : ZXTitleViewDelegate{
     
+    //点击了某个titleView
     func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
         
         print(nextIndex)
