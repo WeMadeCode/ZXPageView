@@ -46,8 +46,7 @@ public class ZXPageView: UIView {
     }()
     private lazy var currentSection : Int = 0
     
-    
-    private lazy var titleView: ZXTitleView = {
+    lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
         return titleView
@@ -60,13 +59,7 @@ public class ZXPageView: UIView {
     }()
     
     
-    public init(frame: CGRect,
-                style:ZXPageStyle,
-                titles:[String],
-                childVcs:[UIViewController],
-                parentVc:UIViewController,
-                defaultIndex:Int = 0)
-    {
+    public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0){
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -74,21 +67,15 @@ public class ZXPageView: UIView {
         self.defaultIndex = defaultIndex
         super.init(frame:frame)
         setupSubViews()
-        
     }
     
-    public init(frame:CGRect,
-                style:ZXPageStyle,
-                titles:[String],
-                layout:ZXPageViewLayout)
-    {
+    public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout){
         self.style = style
         self.titles = titles
         self.layout = layout
         self.defaultIndex = 0
         super.init(frame: frame)
         setupCollection()
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {

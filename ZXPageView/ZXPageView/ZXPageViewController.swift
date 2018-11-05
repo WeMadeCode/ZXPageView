@@ -47,9 +47,6 @@ extension ZXPageViewController{
         // 2.获取所有的标题
          let titles = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         
-//        let titles = ["头条推荐"]
-
-        
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()
         for _ in 0..<titles.count {
@@ -63,6 +60,9 @@ extension ZXPageViewController{
         let pageFrame = CGRect(x: 0, y: y1 + y2 , width: view.bounds.width, height: view.bounds.height - y1 - y2)
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 0)
         view.addSubview(pageView)
+        
+        pageView.titleView.delegate = self
+        
     }
     
     //用法2
@@ -123,6 +123,16 @@ extension ZXPageViewController:ZXPageViewDelegate{
     //点击某个item
     func pageView(_ pageView: ZXPageView, didSelectedAtIndexPath indexPath: IndexPath) {
         print(indexPath)
+    }
+    
+}
+
+extension ZXPageViewController : ZXTitleViewDelegate{
+    
+    func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
+        
+        print(nextIndex)
+        
     }
     
 }
