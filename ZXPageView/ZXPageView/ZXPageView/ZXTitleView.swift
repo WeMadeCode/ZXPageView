@@ -141,8 +141,6 @@ extension ZXTitleView{
             totalWidth = totalWidth + buttonW
             self.titleButtonWs.append(buttonW)
             
-            
-        
             //将button添加到scrollView中
             titleScrollView.addSubview(titleButton)
         }
@@ -254,8 +252,6 @@ extension ZXTitleView{
 extension ZXTitleView{
 
     @objc private func titleButtonClick(_ targetButton:UIButton){
-
-        
         //1.取出原来的button
         let sourceButton = titleButtons[currentIndex]
         
@@ -288,7 +284,6 @@ extension ZXTitleView{
         
         //8.调整bottomLine
         if style.isShowBottomLine {
-            
             UIView.animate(withDuration: 0.25, animations: {
                 self.bottomLine.frame.size.width = targetButton.titleLabel!.frame.size.width
                 self.bottomLine.center.x = targetButton.center.x
@@ -304,6 +299,9 @@ extension ZXTitleView{
                 self.coverView.frame.size.width = coverW
             })
         }
+        
+        // 10.发送通知
+        NotificationCenter.default.post(name: Notification.Name.TitleView.sendTag, object: currentIndex)
     }
     
     private func setTargetLabel(_ targetButton:UIButton){
@@ -343,9 +341,7 @@ extension ZXTitleView{
     private func adjustLabelPosition(_ targetButton:UIButton){
     
         //0.只有可以滚动的时候可以调整
-        guard titleScrollView.isScrollEnabled else {
-            return
-        }
+        guard titleScrollView.isScrollEnabled else {  return  }
         
         //1.计算offsetX
         var offsetX = targetButton.center.x - bounds.width * 0.5
@@ -375,6 +371,10 @@ extension ZXTitleView :ZXContentViewDelegate{
         
         //2.让targetLabel居中显示
         adjustLabelPosition(titleButtons[currentIndex])
+        
+        
+        // 3.发送通知
+        NotificationCenter.default.post(name: Notification.Name.TitleView.sendTag, object: currentIndex)
     }
     
     

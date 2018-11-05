@@ -25,6 +25,8 @@ class ZXPageViewController: UIViewController {
 
     deinit {
         print("deinit")
+        
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -37,7 +39,7 @@ extension ZXPageViewController{
         
         // 1.创建需要的样式
         let style = ZXPageStyle()
-        style.isScrollEnable = false
+//        style.isScrollEnable = false
         style.isShowCoverView = true
         style.isShowBottomLine = false
         style.coverBgColor = UIColor.orange
@@ -61,10 +63,19 @@ extension ZXPageViewController{
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 0)
         view.addSubview(pageView)
         
-        pageView.titleView.delegate = self
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(getMessage(_:)), name: NSNotification.Name.TitleView.sendTag, object: nil)
     }
     
+    
+    @objc func getMessage(_ noti:Notification){
+        
+        if  let objc = noti.object as? Int{
+            print(objc)
+        }
+        
+       
+        
+    }
     //用法2
     func method2(){
         //1.创建所需要的样式
@@ -127,13 +138,3 @@ extension ZXPageViewController:ZXPageViewDelegate{
     
 }
 
-extension ZXPageViewController : ZXTitleViewDelegate{
-    
-    //点击了某个titleView
-    func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
-        
-        print(nextIndex)
-        
-    }
-    
-}

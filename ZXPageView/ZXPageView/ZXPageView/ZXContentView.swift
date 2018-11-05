@@ -105,6 +105,7 @@ extension ZXContentView:UICollectionViewDelegate{
         }
     }
     
+    //停止滚动
     func collectionViewDidEndScroll() {
         //1.获取停止的正确位置
         let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
@@ -118,6 +119,7 @@ extension ZXContentView:UICollectionViewDelegate{
         startOffsetX = scrollView.contentOffset.x
     }
     
+    //正在滚动
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         //1.判断是否需要执行后续代码

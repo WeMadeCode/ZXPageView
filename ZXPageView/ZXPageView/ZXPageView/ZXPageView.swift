@@ -46,7 +46,7 @@ public class ZXPageView: UIView {
     }()
     private lazy var currentSection : Int = 0
     
-    public lazy var titleView: ZXTitleView = {
+    private lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
         return titleView
@@ -57,7 +57,6 @@ public class ZXPageView: UIView {
         let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc,style:style)
         return contentView
     }()
-    
     
     public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0){
         self.style = style
@@ -86,8 +85,6 @@ public class ZXPageView: UIView {
 
 
 extension ZXPageView{
-    
-    
     /// 初始化控制器的UI
     private func setupSubViews(){
         
@@ -206,7 +203,6 @@ extension ZXPageView : ZXTitleViewDelegate{
         currentSection = nextIndex
     }
 }
-
 
 
 // MARK: - 对外提供的函数
