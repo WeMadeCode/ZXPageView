@@ -46,7 +46,7 @@ public class ZXPageView: UIView {
     }()
     private lazy var currentSection : Int = 0
     
-    lazy var titleView: ZXTitleView = {
+    public lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
         return titleView
