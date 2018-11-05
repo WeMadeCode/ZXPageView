@@ -11,13 +11,9 @@ import UIKit
 
 let ntcPrefix = "zxpageview.notification"
 
-
-
 extension Notification.Name {
-    
-    struct TitleView {
-    
-        static let sendTag = Notification.Name(rawValue: "\(ntcPrefix).titleView.sendTag")
+    public struct TitleView {
+       public static let sendTag = Notification.Name(rawValue: "\(ntcPrefix).titleView.sendTag")
     }
 }
 
