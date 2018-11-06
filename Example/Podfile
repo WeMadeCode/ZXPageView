@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ZXPageView_Example' do
+  pod 'ZXPageView', :path => '../'
+
+  target 'ZXPageView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

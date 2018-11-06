@@ -1,0 +1,6 @@
+framework module ZXPageView {
+  umbrella header "ZXPageView-umbrella.h"
+
+  export *
+  module * { export * }
+}

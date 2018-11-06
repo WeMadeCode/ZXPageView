@@ -1,0 +1,16 @@
+PODS:
+  - ZXPageView (0.3.5)
+
+DEPENDENCIES:
+  - ZXPageView (from `../`)
+
+EXTERNAL SOURCES:
+  ZXPageView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ZXPageView: 8b0f798eb6e3349a465f027222a25ad869b2c2e7
+
+PODFILE CHECKSUM: e56a63cdfa9f254af95bfb9efe993f1a516eb9ca
+
+COCOAPODS: 1.5.3
