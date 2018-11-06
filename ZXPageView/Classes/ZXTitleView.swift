@@ -134,7 +134,7 @@ extension ZXTitleView{
         for (i,titleButton) in titleButtons.enumerated() {
             
             //计算所有按钮的width
-            let attributes = [NSAttributedString.Key.font:titleButton.titleLabel!.font!]
+            let attributes = [NSAttributedStringKey.font:titleButton.titleLabel!.font!]
             let string = titles[i] as NSString
             let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
             let buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
