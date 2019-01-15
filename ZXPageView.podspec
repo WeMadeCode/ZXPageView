@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZXPageView'
-  s.version          = '0.3.6'
-  s.summary          = '滚动框架'
+  s.version          = '0.3.8'
+  s.summary          = '通用的滚动框架'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'ZXPageView/Classes/**/*'
 
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   
   # s.resource_bundles = {
   #   'ZXPageView' => ['ZXPageView/Assets/*.png']

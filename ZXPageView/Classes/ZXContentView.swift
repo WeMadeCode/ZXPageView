@@ -64,7 +64,7 @@ extension ZXContentView{
         
         //2.将所有的子控制器添加到父控制器中
         childVcs.forEach { (childVc) in
-            self.parentVc.addChildViewController(childVc)
+            self.parentVc.addChild(childVc)
         }
     }
 }

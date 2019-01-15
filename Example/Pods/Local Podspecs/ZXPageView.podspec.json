@@ -1,6 +1,6 @@
 {
   "name": "ZXPageView",
-  "version": "0.3.5",
+  "version": "0.3.8",
   "summary": "滚动框架",
   "description": "Copy the headline of the today scroll frame，a framework of sliding scrollView",
   "homepage": "https://github.com/WeMadeCode/ZXPageView",
@@ -13,10 +13,11 @@
   },
   "source": {
     "git": "https://github.com/WeMadeCode/ZXPageView.git",
-    "tag": "0.3.5"
+    "tag": "0.3.8"
   },
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "ZXPageView/Classes/**/*"
+  "source_files": "ZXPageView/Classes/**/*",
+  "swift_version": "4.2"
 }
