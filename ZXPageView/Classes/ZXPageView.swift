@@ -22,9 +22,9 @@ public protocol ZXPageViewDataSource:class {
 public class ZXPageView: UIView {
     public weak  var dataSource  : ZXPageViewDataSource?
     public weak  var delegate    : ZXPageViewDelegate?
-    private var defaultIndex:Int
-    private var style    : ZXPageStyle
-    private var titles   = [String]()
+    private var defaultIndex     : Int
+    private var style            : ZXPageStyle
+    private var titles = [String]()
     private var childVcs = [UIViewController]()
     private weak var parentVc : UIViewController!
     private var layout   : ZXPageViewLayout!
@@ -48,7 +48,7 @@ public class ZXPageView: UIView {
     
     private lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
-        let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles)
+        let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles , defaultIndex : self.defaultIndex)
         return titleView
     }()
     
@@ -98,11 +98,7 @@ extension ZXPageView{
         titleView.delegate = contentView
         contentView.delegate = titleView
         
-        //4.默认的滚动位置
-        guard defaultIndex <= 0 || defaultIndex >= titles.count else {
-            titleView.setDefaultConetnt(index:defaultIndex)
-            return
-        }
+
         
     }
     

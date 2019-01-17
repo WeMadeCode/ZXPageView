@@ -19,7 +19,7 @@ class ZXPageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         
-        self.method1()
+        self.method3()
         
     }
 
@@ -100,6 +100,27 @@ extension ZXPageViewController{
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
         pageView.backgroundColor = UIColor.white
         view.addSubview(pageView)
+    }
+    
+    
+    
+    func method3(){
+        
+        let titleArray = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
+        
+        let style = ZXPageStyle()
+        style.isScrollEnable = false
+        style.isShowCoverView = true
+        style.divideScreen = false
+        style.isShowBottomLine = false
+        style.coverAlpha = 1
+        
+        let y = UIApplication.shared.statusBarFrame.height + 44
+        
+        let titleFrame = CGRect(x: 0, y: y, width: self.view.frame.width, height: 44)
+        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titleArray,defaultIndex:3)
+        self.view.backgroundColor = UIColor.lightGray
+        self.view.addSubview(titleView)
     }
 }
 

@@ -26,6 +26,7 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
+    private var defaultIndex     : Int
     public weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
     private var titles:[String]
@@ -65,7 +66,8 @@ public class ZXTitleView: UIView {
         return coverView
     }()
     
-    public init(frame:CGRect,style:ZXPageStyle,titles:[String]) {
+    public init(frame:CGRect,style:ZXPageStyle,titles:[String],defaultIndex:Int) {
+        self.defaultIndex = defaultIndex
         self.style = style
         self.titles = titles
         super.init(frame: frame)
@@ -96,6 +98,9 @@ extension ZXTitleView{
         
         // 5.设置coverView
         setupCoverView()
+        
+        // 6.设置默认滚动位置
+        setDefaultContent()
     }
     
     
@@ -242,8 +247,12 @@ extension ZXTitleView{
 
     
     // 设置默认滚动位置
-    func setDefaultConetnt(index:Int)  {
-        let button = titleButtons[index]
+    private func setDefaultContent()  {
+
+        guard defaultIndex >= 0 && defaultIndex <= titles.count else {
+            return
+        }
+        let button = titleButtons[defaultIndex]
         button.titleLabel?.sizeToFit()
         titleButtonClick(button)
     }
