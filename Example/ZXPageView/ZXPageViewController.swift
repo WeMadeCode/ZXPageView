@@ -19,7 +19,7 @@ class ZXPageViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         
-        self.method3()
+        self.method2()
         
     }
 
@@ -61,7 +61,7 @@ extension ZXPageViewController{
         let y1 = UIApplication.shared.statusBarFrame.height
         let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
         let pageFrame = CGRect(x: 0, y: y1 + y2 , width: view.bounds.width, height: view.bounds.height - y1 - y2)
-        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 0)
+        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 10)
         view.addSubview(pageView)
         
         NotificationCenter.default.addObserver(self, selector: #selector(getMessage(_:)), name: NSNotification.Name.TitleView.sendTag, object: nil)
@@ -118,7 +118,7 @@ extension ZXPageViewController{
         let y = UIApplication.shared.statusBarFrame.height + 44
         
         let titleFrame = CGRect(x: 0, y: y, width: self.view.frame.width, height: 44)
-        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titleArray,defaultIndex:3)
+        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titleArray,defaultIndex:10000)
         self.view.backgroundColor = UIColor.lightGray
         self.view.addSubview(titleView)
     }
