@@ -54,11 +54,17 @@ public class ZXPageView: UIView {
     
     private lazy var contentView: ZXContentView = {
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
-        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc,style:style)
+        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs, parentVc: parentVc,style:style,defaultIndex : self.defaultIndex)
         return contentView
     }()
     
-    public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0){
+    public init(frame: CGRect,
+                style:ZXPageStyle,
+                titles:[String],
+                childVcs:[UIViewController],
+                parentVc:UIViewController,
+                defaultIndex:Int = 0)
+    {
         self.style = style
         self.titles = titles
         self.childVcs = childVcs
@@ -68,7 +74,11 @@ public class ZXPageView: UIView {
         setupSubViews()
     }
     
-    public init(frame:CGRect,style:ZXPageStyle,titles:[String],layout:ZXPageViewLayout){
+    public init(frame:CGRect,
+                style:ZXPageStyle,
+                titles:[String],
+                layout:ZXPageViewLayout)
+    {
         self.style = style
         self.titles = titles
         self.layout = layout
@@ -97,9 +107,6 @@ extension ZXPageView{
         //3.让ZXTitleView和ZXContentView进行交互
         titleView.delegate = contentView
         contentView.delegate = titleView
-        
-
-        
     }
     
     /// 初始化collectionView的UI

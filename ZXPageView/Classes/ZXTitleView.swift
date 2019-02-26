@@ -26,7 +26,7 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
-    private var defaultIndex     : Int
+    private var defaultIndex : Int
     public weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
     private var titles:[String]

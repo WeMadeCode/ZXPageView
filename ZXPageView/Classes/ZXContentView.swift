@@ -17,6 +17,7 @@ private let kContentCellId = "kContentCellId"
 
 public class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
+    private var defaultIndex : Int
     private var style:ZXPageStyle
     private var childVcs : [UIViewController]
     private weak var  parentVc : UIViewController!
@@ -28,7 +29,6 @@ public class ZXContentView: UIView {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
-        
         let collectionView = UICollectionView(frame: self.bounds, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isPagingEnabled = true
@@ -37,16 +37,21 @@ public class ZXContentView: UIView {
         collectionView.delegate = self
         collectionView.bounces = false
         collectionView.register(UICollectionViewCell.self,forCellWithReuseIdentifier:kContentCellId)
-        
         collectionView.isScrollEnabled = self.style.isScrollEnable
         return collectionView
         
     }()
     
-    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle) {
+    init(frame:CGRect,
+         childVcs:[UIViewController],
+         parentVc:UIViewController,
+         style:ZXPageStyle,
+         defaultIndex : Int)
+    {
         self.style = style
         self.childVcs = childVcs
         self.parentVc = parentVc
+        self.defaultIndex = defaultIndex
         super.init(frame: frame)
         setupSubView()
         
@@ -66,6 +71,9 @@ extension ZXContentView{
         childVcs.forEach { (childVc) in
             self.parentVc.addChild(childVc)
         }
+        
+        //3.先滚动到指定位置
+        self.scrollToSpecifiedIndex(self.defaultIndex)
     }
 }
 
@@ -180,11 +188,18 @@ extension ZXContentView:ZXTitleViewDelegate{
     public func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
         // 0.设置isForbidDelegate属性为true
         isForbidDelegate = true
+
+        // 1.滚动到指定位置
+        self.scrollToSpecifiedIndex(nextIndex)
+    }
+    
+    public func scrollToSpecifiedIndex(_ index:Int){
         //1.根据currentIndex获取indexPath
-        let indexPath = IndexPath(item: nextIndex, section: 0)
+        let indexPath = IndexPath(item: index, section: 0)
         //2.滚动到正确位置
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
+    
 }
 
 
