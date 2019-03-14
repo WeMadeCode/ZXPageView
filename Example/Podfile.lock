@@ -1,5 +1,5 @@
 PODS:
-  - ZXPageView (0.3.9)
+  - ZXPageView (0.4.0)
 
 DEPENDENCIES:
   - ZXPageView (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ZXPageView: c475b794e61ae058605545ea603f6a04b61bf31c
+  ZXPageView: 9eeb7bd02e179cf7f3cfe8e4d40dca0dfdbb6652
 
 PODFILE CHECKSUM: 8f6161a0d1e7d4fde6759c34bb34e239dca79d81
 

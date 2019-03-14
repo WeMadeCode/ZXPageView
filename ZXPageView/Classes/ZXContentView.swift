@@ -22,7 +22,7 @@ public class ZXContentView: UIView {
     private var childVcs : [UIViewController]
     private weak var  parentVc : UIViewController!
     private var startOffsetX : CGFloat = 0
-    private var isForbidDelegate:Bool = false
+    private var didClickTitleView:Bool = false
     private lazy var collectionView:UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = self.bounds.size
@@ -42,12 +42,7 @@ public class ZXContentView: UIView {
         
     }()
     
-    init(frame:CGRect,
-         childVcs:[UIViewController],
-         parentVc:UIViewController,
-         style:ZXPageStyle,
-         defaultIndex : Int)
-    {
+    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle,defaultIndex : Int){
         self.style = style
         self.childVcs = childVcs
         self.parentVc = parentVc
@@ -75,14 +70,23 @@ extension ZXContentView{
         //3.先滚动到指定位置
         self.scrollToSpecifiedIndex(self.defaultIndex)
     }
+    
+    
+    
+  //最终校准滚动位置
+  fileprivate func collectionViewDidEndScroll() {
+        //1.获取停止的正确位置
+        let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
+        
+        //2.通知代理
+        delegate?.contentView(self, inIndex: inIndex)
+    }
 }
 
 extension ZXContentView:UICollectionViewDataSource{
-    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return childVcs.count
     }
-    
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //1.获取cell
@@ -97,41 +101,12 @@ extension ZXContentView:UICollectionViewDataSource{
         //3.返回cell
         return cell
     }
-    
-
 }
 
 extension ZXContentView:UICollectionViewDelegate{
-
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        collectionViewDidEndScroll()
-    }
-    
-    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {//如果没有减速的话
-            collectionViewDidEndScroll()
-        }
-    }
-    
-    //停止滚动
-    func collectionViewDidEndScroll() {
-        //1.获取停止的正确位置
-        let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
-        
-        //2.通知代理
-        delegate?.contentView(self, inIndex: inIndex)
-    }
-    
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        isForbidDelegate = false
-        startOffsetX = scrollView.contentOffset.x
-    }
-    
-    //正在滚动
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        //1.判断是否需要执行后续代码
-        guard  !isForbidDelegate  else { return  }
+        //1.如果点击了titleView,则不执行以下逻辑
+        guard  !didClickTitleView  else { return  }
         
         //2.定于需要的参数
         var progress:CGFloat = 0
@@ -142,20 +117,15 @@ extension ZXContentView:UICollectionViewDelegate{
         let currentOffsetX = scrollView.contentOffset.x
         let scrollViewW = scrollView.bounds.width
         if currentOffsetX > startOffsetX {//左滑动
-            
             // 1.计算progress  floor:向下取整函数
             progress = currentOffsetX / scrollViewW -  floor(currentOffsetX / scrollViewW)
-            
-            
             // 2.计算sourceIndex
             sourceIndex = Int(currentOffsetX / scrollViewW)
-
             // 3.计算targetIndex
             targetIndex = sourceIndex + 1
             if targetIndex >= childVcs.count {
                 targetIndex = childVcs.count - 1
             }
-            
             // 4.如果完全划过去
             if progress == 0 {
                 progress = 1
@@ -163,14 +133,10 @@ extension ZXContentView:UICollectionViewDelegate{
             }
             
         }else{  //右滑动
-            
             // 1.计算progress
             progress = 1 - (currentOffsetX / scrollViewW - floor(currentOffsetX / scrollViewW))
-            
-            
             // 2.计算targetIndex
             targetIndex = Int(currentOffsetX / scrollViewW)
-            
             // 3.计算sourceIndex
             sourceIndex = targetIndex + 1
             if sourceIndex >= childVcs.count {
@@ -180,16 +146,32 @@ extension ZXContentView:UICollectionViewDelegate{
         //4.通知代理
         delegate?.contentView(self, sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)
     }
+    
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        didClickTitleView = false
+        startOffsetX = scrollView.contentOffset.x
+    }
+    
+  
+    
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            //如果没有减速的话
+            collectionViewDidEndScroll()
+        }
+    }
 
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        collectionViewDidEndScroll()
+    }
 }
 
 
 extension ZXContentView:ZXTitleViewDelegate{
-    public func nextTitleClick(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
-        // 0.设置isForbidDelegate属性为true
-        isForbidDelegate = true
-
-        // 1.滚动到指定位置
+    public func titleView(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
+        // 1.点击了titleView
+        self.didClickTitleView = true
+        // 2.滚动到指定位置
         self.scrollToSpecifiedIndex(nextIndex)
     }
     

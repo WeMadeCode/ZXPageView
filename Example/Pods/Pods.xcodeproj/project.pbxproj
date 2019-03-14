@@ -7,21 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02D40D92A87123E0863C07810505FB02 /* ZXPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1378F11689A2B9CF3CC62CFDE2CC1B /* ZXPageView.swift */; };
 		1A5DAD040F0D97ABB67B95FC4A02750B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
-		2111087B62097B3491C092132ECBF028 /* ZXPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4627D2224E48459A9044ECC46A609 /* ZXPageStyle.swift */; };
-		33E48B8726E6B8761137922FC71CFDE9 /* ZXPageViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FD3F1A2B6C32DF3C7EA92DA3517102 /* ZXPageViewLayout.swift */; };
-		39BBBD8FA1BC1896F80940D74DDC3548 /* ZXPageView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4318D1243C77CDBA9F07EF9710C7DD7C /* ZXPageView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		485FEB4B9231AE8F191F5C4FEF1213AF /* ZXNotification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1117C927139C944DA832E34C0A2216 /* ZXNotification+Extension.swift */; };
-		6D894799ECC50D04704F0A8963AB8DF0 /* ZXPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEA1848510A61EA785C582128F4F015 /* ZXPageView.swift */; };
+		39BBBD8FA1BC1896F80940D74DDC3548 /* ZXPageView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 68AD45A27FFDD70ED6AD0E52B5C72F17 /* ZXPageView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		487B55F7ECAF754BD82D145BD44FBC57 /* ZXTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72601A006B9A968F8EA0B7C2230F8D3B /* ZXTitleView.swift */; };
+		6DB49F337845CE499AAE3AB4412DA1BD /* ZXContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE51BA12EC8561E7B508F2A4F2EFB7C /* ZXContentView.swift */; };
+		743317E4790D609924BAC0888084ABC1 /* ZXPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89E322433C449542BD08DF880FB58B8 /* ZXPageStyle.swift */; };
 		7AC3C00AF63E7AAC1412C664262EDFCE /* Pods-ZXPageView_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E6EC84E8630BE309AE96F4315CBBEE0 /* Pods-ZXPageView_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F39426CEBCC2B29D012574D386AF249 /* ZXTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65207B7A6CDDB0ADF6CF6B87DFBCC521 /* ZXTitleView.swift */; };
+		7BA3D0DB7E232E45DB8E4E77CDD31AAA /* ZXUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05C4D8427DDDE30167734F5D1A75C7C /* ZXUIColor+Extension.swift */; };
 		8AD9A9F480ABDAA28EBC370FE1A839E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
-		972C64514FEFCEFAF052724F33FE576D /* ZXContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BC865FC57E4CF4B5BDA599511753D5 /* ZXContentView.swift */; };
 		9816CD6549827585452D86769898867F /* Pods-ZXPageView_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B1454F797849CE230B03E39B392D23 /* Pods-ZXPageView_Tests-dummy.m */; };
 		AAD81D519F1E8AC175B5C4761874164D /* Pods-ZXPageView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E29ACA407E9C47088BF0B58994683560 /* Pods-ZXPageView_Example-dummy.m */; };
-		D3BDA8261B5F88C1A5EB4F2CAEE3360B /* ZXUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19753F694CDD487437BCF5971BC0E95A /* ZXUIColor+Extension.swift */; };
+		B2EF8BDED93EEC6A9DF5C14BC3C17119 /* ZXPageView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CF47457554231717FC24E2501451C7 /* ZXPageView-dummy.m */; };
 		E31E4B2E594276072A7161F87D6E08B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
-		ECAE45B889E4911BA157CE9554FEF73D /* ZXPageView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 623A7B505B15218034C2EBD1509E67A6 /* ZXPageView-dummy.m */; };
 		FA822BE3ED7DEB92FB9E5E10E773B5A7 /* Pods-ZXPageView_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE1F09A1B26EE797660FCF617534773 /* Pods-ZXPageView_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -45,40 +43,38 @@
 /* Begin PBXFileReference section */
 		00B1454F797849CE230B03E39B392D23 /* Pods-ZXPageView_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ZXPageView_Tests-dummy.m"; sourceTree = "<group>"; };
 		16973B756F8892969405DDA518DA7E12 /* Pods_ZXPageView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ZXPageView_Tests.framework; path = "Pods-ZXPageView_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		19753F694CDD487437BCF5971BC0E95A /* ZXUIColor+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ZXUIColor+Extension.swift"; path = "ZXPageView/Classes/ZXUIColor+Extension.swift"; sourceTree = "<group>"; };
-		1BEA1848510A61EA785C582128F4F015 /* ZXPageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXPageView.swift; path = ZXPageView/Classes/ZXPageView.swift; sourceTree = "<group>"; };
 		1CCD2757811D5403D86BE6D4DF4BE05C /* Pods-ZXPageView_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ZXPageView_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		1D76AE47D32195DE4174C9D0DBD0271F /* Pods-ZXPageView_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ZXPageView_Tests.modulemap"; sourceTree = "<group>"; };
 		21C029E68613D26EF909E82CA2F3B281 /* Pods-ZXPageView_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ZXPageView_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		2ED9722B86687F5730BCDB0A94CB5116 /* Pods-ZXPageView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ZXPageView_Example.release.xcconfig"; sourceTree = "<group>"; };
-		34D4DEA656DF13DD5E2025FCAB96049B /* ZXPageView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ZXPageView.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		39F03E683F51363437AC2DE4A94A3053 /* ZXPageView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ZXPageView-Info.plist"; sourceTree = "<group>"; };
-		4318D1243C77CDBA9F07EF9710C7DD7C /* ZXPageView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZXPageView-umbrella.h"; sourceTree = "<group>"; };
-		4CD4627D2224E48459A9044ECC46A609 /* ZXPageStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXPageStyle.swift; path = ZXPageView/Classes/ZXPageStyle.swift; sourceTree = "<group>"; };
+		3C044351A36F8EDCB83C109A64C1A36A /* ZXPageView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZXPageView-prefix.pch"; sourceTree = "<group>"; };
+		497B232D0D0F92246702B2D5D6D0CB05 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		4F70493533679662C44CFF0EC637BB31 /* Pods-ZXPageView_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ZXPageView_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		5CABEB8BC7B0073A72FAF3DB4B35D78A /* ZXPageView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ZXPageView.modulemap; sourceTree = "<group>"; };
 		5E6EC84E8630BE309AE96F4315CBBEE0 /* Pods-ZXPageView_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ZXPageView_Tests-umbrella.h"; sourceTree = "<group>"; };
-		623A7B505B15218034C2EBD1509E67A6 /* ZXPageView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZXPageView-dummy.m"; sourceTree = "<group>"; };
-		65207B7A6CDDB0ADF6CF6B87DFBCC521 /* ZXTitleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXTitleView.swift; path = ZXPageView/Classes/ZXTitleView.swift; sourceTree = "<group>"; };
 		65E647E1F8F86C89878289238FE360A9 /* Pods-ZXPageView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ZXPageView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		681E87FEFCFDEFB4F311FFAC77AE3EFB /* Pods-ZXPageView_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ZXPageView_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		840CF6D783186F2C52EACA52A5D0910B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		8B1117C927139C944DA832E34C0A2216 /* ZXNotification+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ZXNotification+Extension.swift"; path = "ZXPageView/Classes/ZXNotification+Extension.swift"; sourceTree = "<group>"; };
-		97BCC4A77ECBC0A2F69C392374890E59 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		68AD45A27FFDD70ED6AD0E52B5C72F17 /* ZXPageView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZXPageView-umbrella.h"; sourceTree = "<group>"; };
+		6AE51BA12EC8561E7B508F2A4F2EFB7C /* ZXContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXContentView.swift; path = ZXPageView/Classes/ZXContentView.swift; sourceTree = "<group>"; };
+		72601A006B9A968F8EA0B7C2230F8D3B /* ZXTitleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXTitleView.swift; path = ZXPageView/Classes/ZXTitleView.swift; sourceTree = "<group>"; };
+		7F2FF3A346985F867405B674E8536AD8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		91CF47457554231717FC24E2501451C7 /* ZXPageView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZXPageView-dummy.m"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A7227A59953B1C3CD9C2A2820AB24540 /* Pods-ZXPageView_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ZXPageView_Example-Info.plist"; sourceTree = "<group>"; };
-		B2FD3F1A2B6C32DF3C7EA92DA3517102 /* ZXPageViewLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXPageViewLayout.swift; path = ZXPageView/Classes/ZXPageViewLayout.swift; sourceTree = "<group>"; };
+		A89E322433C449542BD08DF880FB58B8 /* ZXPageStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXPageStyle.swift; path = ZXPageView/Classes/ZXPageStyle.swift; sourceTree = "<group>"; };
+		ADA3708F365FBBD897B8A9FECFEA3AF4 /* ZXPageView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ZXPageView.modulemap; sourceTree = "<group>"; };
+		AE1378F11689A2B9CF3CC62CFDE2CC1B /* ZXPageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXPageView.swift; path = ZXPageView/Classes/ZXPageView.swift; sourceTree = "<group>"; };
 		B9BB449F7692A716317CDA2C629D1AF9 /* Pods-ZXPageView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ZXPageView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B9D52AEDBDE3511530F63F10694F46D6 /* Pods-ZXPageView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ZXPageView_Example.modulemap"; sourceTree = "<group>"; };
 		BCAB9B3925279A2A4476353CC3DFDFC3 /* Pods_ZXPageView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ZXPageView_Example.framework; path = "Pods-ZXPageView_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF13F41A676883745D172A600B8B6A8A /* ZXPageView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ZXPageView.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C05C4D8427DDDE30167734F5D1A75C7C /* ZXUIColor+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ZXUIColor+Extension.swift"; path = "ZXPageView/Classes/ZXUIColor+Extension.swift"; sourceTree = "<group>"; };
+		CA969B44D7F85177B30FBDC3160C98B4 /* ZXPageView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ZXPageView-Info.plist"; sourceTree = "<group>"; };
 		CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CDE1F09A1B26EE797660FCF617534773 /* Pods-ZXPageView_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ZXPageView_Example-umbrella.h"; sourceTree = "<group>"; };
 		CDFEF5B6D783506C5A84DC3433932600 /* ZXPageView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ZXPageView.framework; path = ZXPageView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3BC865FC57E4CF4B5BDA599511753D5 /* ZXContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZXContentView.swift; path = ZXPageView/Classes/ZXContentView.swift; sourceTree = "<group>"; };
-		DC3ACD62AA136E6942C386C620B899D9 /* ZXPageView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZXPageView.xcconfig; sourceTree = "<group>"; };
 		DCCA90FFC3DFD9659E69EE04EF3ADADE /* Pods-ZXPageView_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ZXPageView_Tests-Info.plist"; sourceTree = "<group>"; };
 		E29ACA407E9C47088BF0B58994683560 /* Pods-ZXPageView_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ZXPageView_Example-dummy.m"; sourceTree = "<group>"; };
-		EBC0C0ECA3A0E9C434EE0A26614E6C79 /* ZXPageView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZXPageView-prefix.pch"; sourceTree = "<group>"; };
+		EA8BE6F4C74AD94D8F060B21FE4555DB /* ZXPageView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZXPageView.xcconfig; sourceTree = "<group>"; };
 		F1F7F84DFA37E6E9493A51E65DD0C821 /* Pods-ZXPageView_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ZXPageView_Example-frameworks.sh"; sourceTree = "<group>"; };
 		F73481CD27CEADBE810402C644086AE3 /* Pods-ZXPageView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ZXPageView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,33 +107,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14E084086DDBB559AF26FFC74BB83977 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				840CF6D783186F2C52EACA52A5D0910B /* LICENSE */,
-				97BCC4A77ECBC0A2F69C392374890E59 /* README.md */,
-				34D4DEA656DF13DD5E2025FCAB96049B /* ZXPageView.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
-		19F0AE92F827D1B09E06539165E6934A /* ZXPageView */ = {
-			isa = PBXGroup;
-			children = (
-				D3BC865FC57E4CF4B5BDA599511753D5 /* ZXContentView.swift */,
-				8B1117C927139C944DA832E34C0A2216 /* ZXNotification+Extension.swift */,
-				4CD4627D2224E48459A9044ECC46A609 /* ZXPageStyle.swift */,
-				1BEA1848510A61EA785C582128F4F015 /* ZXPageView.swift */,
-				B2FD3F1A2B6C32DF3C7EA92DA3517102 /* ZXPageViewLayout.swift */,
-				65207B7A6CDDB0ADF6CF6B87DFBCC521 /* ZXTitleView.swift */,
-				19753F694CDD487437BCF5971BC0E95A /* ZXUIColor+Extension.swift */,
-				14E084086DDBB559AF26FFC74BB83977 /* Pod */,
-				8C4234B356C85D77634F384FE133F9AD /* Support Files */,
-			);
-			name = ZXPageView;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		3F7CB2D7CDFB438573D4018EF2327DA1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,26 +117,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		564476AB4EBBDA659790A57B51903E8D /* Development Pods */ = {
+		5B0813EA0B07390F831A4E9DC8B4CD5D /* ZXPageView */ = {
 			isa = PBXGroup;
 			children = (
-				19F0AE92F827D1B09E06539165E6934A /* ZXPageView */,
+				6AE51BA12EC8561E7B508F2A4F2EFB7C /* ZXContentView.swift */,
+				A89E322433C449542BD08DF880FB58B8 /* ZXPageStyle.swift */,
+				AE1378F11689A2B9CF3CC62CFDE2CC1B /* ZXPageView.swift */,
+				72601A006B9A968F8EA0B7C2230F8D3B /* ZXTitleView.swift */,
+				C05C4D8427DDDE30167734F5D1A75C7C /* ZXUIColor+Extension.swift */,
+				FD6C56C9A9C5562D599567EA7F8C17E4 /* Pod */,
+				FE7C43FC9A33B5ED446B41CD23E119B4 /* Support Files */,
 			);
-			name = "Development Pods";
+			name = ZXPageView;
+			path = ../..;
 			sourceTree = "<group>";
 		};
-		8C4234B356C85D77634F384FE133F9AD /* Support Files */ = {
+		8073C506F4C5D1A74E8A1E61F25B85D4 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5CABEB8BC7B0073A72FAF3DB4B35D78A /* ZXPageView.modulemap */,
-				DC3ACD62AA136E6942C386C620B899D9 /* ZXPageView.xcconfig */,
-				623A7B505B15218034C2EBD1509E67A6 /* ZXPageView-dummy.m */,
-				39F03E683F51363437AC2DE4A94A3053 /* ZXPageView-Info.plist */,
-				EBC0C0ECA3A0E9C434EE0A26614E6C79 /* ZXPageView-prefix.pch */,
-				4318D1243C77CDBA9F07EF9710C7DD7C /* ZXPageView-umbrella.h */,
+				5B0813EA0B07390F831A4E9DC8B4CD5D /* ZXPageView */,
 			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/ZXPageView";
+			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 		9B055D0CFEA43187E72B03DED11F5662 /* iOS */ = {
@@ -215,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				564476AB4EBBDA659790A57B51903E8D /* Development Pods */,
+				8073C506F4C5D1A74E8A1E61F25B85D4 /* Development Pods */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				3F7CB2D7CDFB438573D4018EF2327DA1 /* Products */,
 				E43E90125B28DDBB09AAF5F5197CFF56 /* Targets Support Files */,
@@ -237,6 +207,30 @@
 				BFC59F8EA5D12C26E04D0BCA1BA41817 /* Pods-ZXPageView_Tests */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		FD6C56C9A9C5562D599567EA7F8C17E4 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				497B232D0D0F92246702B2D5D6D0CB05 /* LICENSE */,
+				7F2FF3A346985F867405B674E8536AD8 /* README.md */,
+				BF13F41A676883745D172A600B8B6A8A /* ZXPageView.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		FE7C43FC9A33B5ED446B41CD23E119B4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADA3708F365FBBD897B8A9FECFEA3AF4 /* ZXPageView.modulemap */,
+				EA8BE6F4C74AD94D8F060B21FE4555DB /* ZXPageView.xcconfig */,
+				91CF47457554231717FC24E2501451C7 /* ZXPageView-dummy.m */,
+				CA969B44D7F85177B30FBDC3160C98B4 /* ZXPageView-Info.plist */,
+				3C044351A36F8EDCB83C109A64C1A36A /* ZXPageView-prefix.pch */,
+				68AD45A27FFDD70ED6AD0E52B5C72F17 /* ZXPageView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/ZXPageView";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,7 +287,7 @@
 			buildConfigurationList = 097FB4790DF0A09AB817D145447182C8 /* Build configuration list for PBXNativeTarget "ZXPageView" */;
 			buildPhases = (
 				65271EF2A4683FA8B492C0CAA931A816 /* Headers */,
-				2183835C06F2DAE351B37F1ACE22CEEF /* Sources */,
+				36D1BF01D9B2F900D7C3690CAB2EA8AD /* Sources */,
 				B6E8C7E954CB19B7819F232C04DBD60B /* Frameworks */,
 				FF5E20EAD44D0E7D5564952770521846 /* Resources */,
 			);
@@ -378,18 +372,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2183835C06F2DAE351B37F1ACE22CEEF /* Sources */ = {
+		36D1BF01D9B2F900D7C3690CAB2EA8AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				972C64514FEFCEFAF052724F33FE576D /* ZXContentView.swift in Sources */,
-				485FEB4B9231AE8F191F5C4FEF1213AF /* ZXNotification+Extension.swift in Sources */,
-				2111087B62097B3491C092132ECBF028 /* ZXPageStyle.swift in Sources */,
-				ECAE45B889E4911BA157CE9554FEF73D /* ZXPageView-dummy.m in Sources */,
-				6D894799ECC50D04704F0A8963AB8DF0 /* ZXPageView.swift in Sources */,
-				33E48B8726E6B8761137922FC71CFDE9 /* ZXPageViewLayout.swift in Sources */,
-				7F39426CEBCC2B29D012574D386AF249 /* ZXTitleView.swift in Sources */,
-				D3BDA8261B5F88C1A5EB4F2CAEE3360B /* ZXUIColor+Extension.swift in Sources */,
+				6DB49F337845CE499AAE3AB4412DA1BD /* ZXContentView.swift in Sources */,
+				743317E4790D609924BAC0888084ABC1 /* ZXPageStyle.swift in Sources */,
+				B2EF8BDED93EEC6A9DF5C14BC3C17119 /* ZXPageView-dummy.m in Sources */,
+				02D40D92A87123E0863C07810505FB02 /* ZXPageView.swift in Sources */,
+				487B55F7ECAF754BD82D145BD44FBC57 /* ZXTitleView.swift in Sources */,
+				7BA3D0DB7E232E45DB8E4E77CDD31AAA /* ZXUIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,7 +515,7 @@
 		};
 		060AC256D88E9EEE038E13D7C8F00E7F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC3ACD62AA136E6942C386C620B899D9 /* ZXPageView.xcconfig */;
+			baseConfigurationReference = EA8BE6F4C74AD94D8F060B21FE4555DB /* ZXPageView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -555,7 +547,7 @@
 		};
 		30B9A22691B5B65A6F062653BE13D7FB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC3ACD62AA136E6942C386C620B899D9 /* ZXPageView.xcconfig */;
+			baseConfigurationReference = EA8BE6F4C74AD94D8F060B21FE4555DB /* ZXPageView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

@@ -15,19 +15,20 @@ import UIKit
     ///   - titleView: titleView
     ///   - currentTitle: 当前标题
     ///   - currentIndex: 当前标记
-    @objc optional func currentTitleClick(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int)
+    @objc optional func titleView(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int)
     /// 点击下一个按钮
     ///
     /// - Parameters:
     ///   - titleView: titleView
     ///   - nextTitle: 下一个标题
     ///   - nextIndex: 下一个标记
-    func nextTitleClick(_ titleView:ZXTitleView,nextTitle:String,nextIndex:Int)
+    func titleView(_ titleView:ZXTitleView,nextTitle:String,nextIndex:Int)
 }
 
 public class ZXTitleView: UIView {
+    public  var didSelectedCurrentTitle : ((_ title:String,_ index:Int) ->())?
     private var defaultIndex : Int
-    public weak var delegate : ZXTitleViewDelegate?
+    public  weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
     private var titles:[String]
     private var currentIndex : Int = 0
@@ -266,7 +267,8 @@ extension ZXTitleView{
         
         //2.校验button
         guard targetButton.tag != currentIndex else {
-            delegate?.currentTitleClick?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
+            delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
+            self.didSelectedCurrentTitle?(sourceButton.currentTitle ?? "",currentIndex)
             return
         }
         
@@ -281,7 +283,7 @@ extension ZXTitleView{
         adjustLabelPosition(targetButton)
         
         //6.通知代理
-        delegate?.nextTitleClick(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
+        delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
         
         // 7.调整scale缩放
         if style.isScaleEnable {
@@ -308,9 +310,6 @@ extension ZXTitleView{
                 self.coverView.frame.size.width = coverW
             })
         }
-        
-        // 10.发送通知
-        NotificationCenter.default.post(name: Notification.Name.TitleView.sendTag, object: currentIndex)
     }
     
     private func setTargetLabel(_ targetButton:UIButton){
@@ -374,20 +373,21 @@ extension ZXTitleView{
 extension ZXTitleView :ZXContentViewDelegate{
 
     func contentView(_ contentView: ZXContentView, inIndex: Int) {
-        
         //1.记录最新的currentIndex
         currentIndex = inIndex
         
         //2.让targetLabel居中显示
         adjustLabelPosition(titleButtons[currentIndex])
         
-        
-        // 3.发送通知
-        NotificationCenter.default.post(name: Notification.Name.TitleView.sendTag, object: currentIndex)
+        // 3.通知外界
+        delegate?.titleView?(self, currentTitle: titleButtons[currentIndex].currentTitle ?? "", currentIndex: currentIndex)
+        self.didSelectedCurrentTitle?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
+
     }
     
-    
     func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+        
+        
         //1.获取sourceLabel&targetLabel
         let sourceButton = titleButtons[sourceIndex]
         let targetButton = titleButtons[targetIndex]
