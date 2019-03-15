@@ -67,45 +67,19 @@ extension ZXPageViewController{
         view.addSubview(pageView)
 
     }
-    
 
-    //用法2
+    
+    
     func method2(){
-        //1.创建所需要的样式
-//        let style = ZXPageStyle()
-//        //2.获取所有的标题
-//        let titles = ["推荐", "游戏", "热门", "趣玩"]
-//        //3.创建布局
-//        let layout = ZXPageViewLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 10)
-//        layout.lineSpacing = 10
-//        layout.itemSpacing = 10
-//        layout.cols = 4
-//        layout.rows = 2
-//        //3.创建ZXPageView
-//        let y1 = UIApplication.shared.statusBarFrame.height
-//        let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
-//        let pageFrame = CGRect(x: 0, y: y1 + y2, width: view.bounds.width, height: 300)
-//        let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles,layout:layout)
-//        pageView.dataSource = self
-//        pageView.delegate = self
-//        pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
-//        pageView.backgroundColor = UIColor.white
-//        view.addSubview(pageView)
-    }
-    
-    
-    
-    func method3(){
         
         let titleArray = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         
         let style = ZXPageStyle()
-        style.isScrollEnable = false
-        style.isShowCoverView = true
+//        style.isScrollEnable = false
+//        style.isShowCoverView = true
 //        style.divideScreen = false
-        style.isShowBottomLine = false
-        style.coverAlpha = 1
+//        style.isShowBottomLine = false
+//        style.coverAlpha = 1
         
         let y = UIApplication.shared.statusBarFrame.height + 44
         
@@ -113,6 +87,7 @@ extension ZXPageViewController{
         let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titleArray,defaultIndex:10000)
         self.view.backgroundColor = UIColor.lightGray
         self.view.addSubview(titleView)
+        
     }
 }
 
