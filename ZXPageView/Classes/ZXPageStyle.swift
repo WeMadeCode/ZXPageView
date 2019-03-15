@@ -13,20 +13,21 @@ public class ZXPageStyle:NSObject {
     /// 内容是否可以滚动
     public var isScrollEnable:Bool = true
 
-    /// 顶部字体属性
+    /// 顶部按钮属性
     public var titleHeight  : CGFloat = 44              // 字体高度
     public var normalColor  : UIColor = UIColor.gray    // 非选中字体颜色
     public var selectColor  : UIColor = UIColor.orange  // 选中字体的颜色
     public var fontSize     : CGFloat = 15              // 字体大小
     public var titleMargin  : CGFloat = 30              // 字体间距
-    public var divideScreen : Bool    = true            // 当标签过少时，是否会等分屏幕
+    public var isDivideByScreen : Bool    = true        // 当标签过少时，是否会等分屏幕
     
     /// 滚动条属性
     public var isShowBottomLine  : Bool    = true           // 是否显示滚动条
     public var bottomLineColor   : UIColor = UIColor.orange // 滚动条颜色
     public var bottomLineHeight  : CGFloat = 2              // 滚动条高度
     public var cornerRadius      : CGFloat = 2              // 滚动条圆角
-    
+    public var isLongStyle       : Bool = true              // 是否为长条形
+
     
     /// 标题缩放属性
     public var isScaleEnable : Bool    = false  // 是否支持

@@ -26,7 +26,7 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
-    public  var didSelectedCurrentTitle : ((_ title:String,_ index:Int) ->())?
+    public  var didSelectedTitle : ((_ title:String,_ index:Int) ->())?
     private var defaultIndex : Int
     public  weak var delegate : ZXTitleViewDelegate?
     private var style:ZXPageStyle
@@ -53,12 +53,12 @@ public class ZXTitleView: UIView {
         return scrollView
     }()
     private lazy var bottomLine: UIView = {
-        let bottomLine = UIView()
-        bottomLine.backgroundColor = self.style.bottomLineColor
-        bottomLine.frame.size.height = self.style.bottomLineHeight
-        bottomLine.frame.origin.y = self.bounds.height - self.style.bottomLineHeight
-        bottomLine.layer.cornerRadius = self.style.cornerRadius
-        return bottomLine
+        let line = UIView()
+        line.backgroundColor = self.style.bottomLineColor
+        line.frame.size.height = self.style.bottomLineHeight
+        line.frame.origin.y = self.bounds.height - self.style.bottomLineHeight
+        line.layer.cornerRadius = self.style.cornerRadius
+        return line
     }()
     private lazy var coverView : UIView = {
         let coverView = UIView()
@@ -105,7 +105,7 @@ extension ZXTitleView{
     }
     
     
-    private func setupTitleButtons(){
+     func setupTitleButtons(){
         
         for (i,title) in titles.enumerated() {
             //1.创建UIbutton
@@ -131,55 +131,22 @@ extension ZXTitleView{
     }
     
     
-    private func setupButtonsFrame(){
-        //1.定义变量
-        let count = titleButtons.count
-        var totalWidth : CGFloat = CGFloat(count) * style.titleMargin
-
-        //2.计算按钮的frame
-        for (i,titleButton) in titleButtons.enumerated() {
-            
-            //计算所有按钮的width
-            let attributes = [NSAttributedString.Key.font:titleButton.titleLabel!.font!]
-            let string = titles[i] as NSString
-            let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
-            let buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
-            totalWidth = totalWidth + buttonW
-            self.titleButtonWs.append(buttonW)
-            
-            //将button添加到scrollView中
-            titleScrollView.addSubview(titleButton)
-        }
+     func setupButtonsFrame(){
+        
+        let totalWidth = self.calculateTotalWidth()
         
         if totalWidth > bounds.width { //总宽度大于屏幕宽度，按间距布局
-            for (i,width) in titleButtonWs.enumerated(){
-                let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
-                let buttonW:CGFloat = width
-                let titleButton = titleButtons[i]
-                titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
-            }
+            //允许滚动
             titleScrollView.isScrollEnabled = true
-        }else{ //总宽度小于屏幕宽度,不可以滚动
-            
-            if style.divideScreen == true{//按等分屏幕布局
-                for (i,_) in titleButtonWs.enumerated(){
-                    let averageWidth = bounds.width / CGFloat(count)
-                    let buttonX = averageWidth * CGFloat(i)
-                    let titleButton = titleButtons[i]
-                    titleButton.frame = CGRect(x: buttonX, y: 0, width: averageWidth, height: style.titleHeight)
-                }
-                
-                
+            self.dividedByDistance()
+        }else{ //总宽度小于屏幕宽度
+            //禁止滚动
+             titleScrollView.isScrollEnabled = false
+            if style.isDivideByScreen == true{//按等分屏幕布局
+                self.dividedByScreen()
             }else{ //任然按照间距布局
-                for (i,width) in titleButtonWs.enumerated(){
-                    let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
-                    let buttonW:CGFloat = width
-                    let titleButton = titleButtons[i]
-                    titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
-                }
-            }            
-            titleScrollView.isScrollEnabled = false
-
+               self.dividedByDistance()
+            }
         }
 
         //设置scale属性
@@ -195,12 +162,48 @@ extension ZXTitleView{
     }
     
     
-    private func setupBottomLine(){
+    func calculateTotalWidth() -> CGFloat{
+        //1.定义变量
+        var totalWidth : CGFloat = CGFloat(titleButtons.count) * style.titleMargin
+        
+        //2.计算按钮的frame
+        for (i,titleButton) in titleButtons.enumerated() {
+            //计算所有按钮的width
+            let attributes = [NSAttributedString.Key.font:titleButton.titleLabel!.font!]
+            let string = titles[i] as NSString
+            let size = CGSize(width:CGFloat.greatestFiniteMagnitude,height:0)
+            let buttonW =  string.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil).width
+            totalWidth = totalWidth + buttonW
+            self.titleButtonWs.append(buttonW)
+            
+            //将button添加到scrollView中
+            titleScrollView.addSubview(titleButton)
+        }
+        return totalWidth
+    }
+    
+    func dividedByScreen()  {
+        for (i,_) in titleButtonWs.enumerated(){
+            let averageWidth = bounds.width / CGFloat(titleButtons.count)
+            let buttonX = averageWidth * CGFloat(i)
+            let titleButton = titleButtons[i]
+            titleButton.frame = CGRect(x: buttonX, y: 0, width: averageWidth, height: style.titleHeight)
+        }
+    }
+    
+    func dividedByDistance(){
+        for (i,width) in titleButtonWs.enumerated(){
+            let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
+            let buttonW:CGFloat = width
+            let titleButton = titleButtons[i]
+            titleButton.frame = CGRect(x: buttonX, y: 0, width: buttonW, height: style.titleHeight)
+        }
+    }
+    
+     func setupBottomLine(){
     
         //1.判断是否需要显示BottomLine
-        guard style.isShowBottomLine else {
-            return
-        }
+        guard style.isShowBottomLine else { return }
         
         //2.将bottomLine添加到scrollView中
         titleScrollView.addSubview(bottomLine)
@@ -208,12 +211,16 @@ extension ZXTitleView{
         // 3.设置bottomLine的frame中的属性
         let button = titleButtons.first!
         button.titleLabel?.sizeToFit()
-        bottomLine.frame.size.width = button.titleLabel!.frame.size.width
+        if style.isLongStyle{
+            bottomLine.frame.size.width = button.frame.size.width
+        }else{
+            bottomLine.frame.size.width = button.titleLabel!.frame.size.width
+        }
         bottomLine.center.x = button.center.x
     }
 
     
-    private func setupCoverView(){
+     func setupCoverView(){
         // 1.判断是否需要显示coverView
         guard style.isShowCoverView else {
             return
@@ -248,7 +255,7 @@ extension ZXTitleView{
 
     
     // 设置默认滚动位置
-    private func setDefaultContent()  {
+     func setDefaultContent()  {
 
         guard defaultIndex >= 0 && defaultIndex <= titles.count else {
             return
@@ -268,7 +275,6 @@ extension ZXTitleView{
         //2.校验button
         guard targetButton.tag != currentIndex else {
             delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
-            self.didSelectedCurrentTitle?(sourceButton.currentTitle ?? "",currentIndex)
             return
         }
         
@@ -282,9 +288,10 @@ extension ZXTitleView{
         //5.让点击的label居中显示
         adjustLabelPosition(targetButton)
         
-        //6.通知代理
+        //6.通知代理&回调
         delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
-        
+        self.didSelectedTitle?(sourceButton.currentTitle ?? "",currentIndex)
+
         // 7.调整scale缩放
         if style.isScaleEnable {
             UIView.animate(withDuration: 0.25, animations: { 
@@ -296,7 +303,11 @@ extension ZXTitleView{
         //8.调整bottomLine
         if style.isShowBottomLine {
             UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.frame.size.width = targetButton.titleLabel!.frame.size.width
+                if self.style.isLongStyle{
+                    self.bottomLine.frame.size.width = targetButton.frame.size.width
+                }else{
+                    self.bottomLine.frame.size.width = targetButton.titleLabel!.frame.size.width
+                }
                 self.bottomLine.center.x = targetButton.center.x
             })
         }
@@ -338,8 +349,12 @@ extension ZXTitleView{
         // 6.调整bottomLine
         if style.isShowBottomLine {
             UIView.animate(withDuration: 0.25, animations: {
-                self.bottomLine.frame.origin.x = targetButton.frame.origin.x
-                self.bottomLine.frame.size.width = targetButton.frame.width
+                if self.style.isLongStyle{
+                    self.bottomLine.frame.size.width =  targetButton.frame.size.width
+                }else{
+                    self.bottomLine.frame.size.width =  targetButton.titleLabel!.frame.size.width
+                }
+                self.bottomLine.center.x = targetButton.center.x
             })
         }
         
@@ -381,7 +396,7 @@ extension ZXTitleView :ZXContentViewDelegate{
         
         // 3.通知外界
         delegate?.titleView?(self, currentTitle: titleButtons[currentIndex].currentTitle ?? "", currentIndex: currentIndex)
-        self.didSelectedCurrentTitle?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
+        self.didSelectedTitle?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
 
     }
     
@@ -411,7 +426,11 @@ extension ZXTitleView :ZXContentViewDelegate{
         if style.isShowBottomLine {
             //4.1计算宽度
             let deltaW = targetButton.titleLabel!.frame.width - sourceButton.titleLabel!.frame.width
-            bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
+            if style.isLongStyle{
+                bottomLine.frame.size.width = sourceButton.frame.size.width + progress * deltaW
+            }else{
+                bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
+            }
             
             //4.2计算x值
             let deltaX = targetButton.center.x - sourceButton.center.x

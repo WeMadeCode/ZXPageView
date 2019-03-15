@@ -18,7 +18,7 @@ public class ZXPageView: UIView {
     private lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles , defaultIndex : self.defaultIndex)
-        titleView.didSelectedCurrentTitle = { title,index in
+        titleView.didSelectedTitle = { title,index in
             self.didFinishedScrollHandle?(title,index)
         }
         return titleView

@@ -10,6 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var safeY:CGFloat {
+        return (self.navigationController?.navigationBar.frame.size.height ?? 44) + UIApplication.shared.statusBarFrame.height
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,10 +24,15 @@ class ViewController: UIViewController {
     @IBAction func btnClick(_ sender: Any) {
         
         let vc = ZXPageViewController()
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         
         
+    }
+    @IBAction func btn2Click(_ sender: Any) {
+        
+        
+        let vc = ZXWaterViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
