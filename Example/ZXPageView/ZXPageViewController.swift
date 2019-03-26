@@ -18,7 +18,6 @@ class ZXPageViewController: ViewController {
         
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        
         self.method1()
         
     }
@@ -47,8 +46,7 @@ extension ZXPageViewController{
 //        style.coverAlpha = 1
 //        style.divideScreen = false
         // 2.获取所有的标题
-         let titles = ["头条推荐", "fff", "1", ] //"车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"
-        
+         let titles = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
         // 3.获取所有的内容控制器
         var childVcs = [UIViewController]()
         for _ in 0..<titles.count {
@@ -56,14 +54,15 @@ extension ZXPageViewController{
             vc.view.backgroundColor = UIColor.randomColor
             childVcs.append(vc)
         }
-        // 4.创建HYPageView
+        // 4.创建ZXPageView
         let y1 = UIApplication.shared.statusBarFrame.height
-        let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44
-        let pageFrame = CGRect(x: 0, y: y1 + y2 , width: view.bounds.width, height: view.bounds.height - y1 - y2)
+        let y2 = self.navigationController?.navigationBar.frame.size.height ?? 44 //y1 + y2
+        let pageFrame = CGRect(x: 0, y: 0 , width: view.bounds.width, height: view.bounds.height - 100 ) //- y1 - y2
         let pageView = ZXPageView(frame: pageFrame, style: style, titles: titles, childVcs: childVcs, parentVc : self, defaultIndex : 2)
         pageView.didFinishedScrollHandle = { title , index in
             print(title,index)
         }
+        pageView.backgroundColor = UIColor.red
         view.addSubview(pageView)
 
     }

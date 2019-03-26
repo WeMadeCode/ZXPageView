@@ -452,7 +452,7 @@ extension ZXTitleView :ZXContentViewDelegate{
 
 // MARK: - 对外提供的方法
 extension ZXTitleView{
-    func setCurrentIndex(currentIndex:Int)  {
+    public func setCurrentIndex(currentIndex:Int)  {
         setTargetLabel(titleButtons[currentIndex])
     }
 }
