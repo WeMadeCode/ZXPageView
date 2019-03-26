@@ -26,12 +26,13 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
-    public  var didSelectedTitle : ((_ title:String,_ index:Int) ->())?
-    private var defaultIndex : Int
-    public  weak var delegate : ZXTitleViewDelegate?
-    private var style:ZXPageStyle
-    private var titles:[String]
-    private var currentIndex : Int = 0
+    internal var selectCurrent : ((_ title:String,_ index:Int) ->())?
+    internal var selectNext : ((_ title:String,_ index:Int) ->())?
+    private  var defaultIndex : Int
+    public   weak var delegate : ZXTitleViewDelegate?
+    private  var style:ZXPageStyle
+    private  var titles:[String]
+    private  var currentIndex : Int = 0
     typealias ColorRGB = (red:CGFloat,green:CGFloat,blue:CGFloat)
     private lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
     private lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
@@ -67,7 +68,7 @@ public class ZXTitleView: UIView {
         return coverView
     }()
     
-    public init(frame:CGRect,style:ZXPageStyle,titles:[String],defaultIndex:Int) {
+    public init(frame:CGRect,style:ZXPageStyle,titles:[String],defaultIndex:Int = 0) {
         self.defaultIndex = defaultIndex
         self.style = style
         self.titles = titles
@@ -274,7 +275,8 @@ extension ZXTitleView{
         
         //2.校验button
         guard targetButton.tag != currentIndex else {
-            delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
+            self.selectCurrent?(sourceButton.currentTitle ?? "",currentIndex)
+            self.delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
             return
         }
         
@@ -289,8 +291,8 @@ extension ZXTitleView{
         adjustLabelPosition(targetButton)
         
         //6.通知代理&回调
-        delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
-        self.didSelectedTitle?(sourceButton.currentTitle ?? "",currentIndex)
+        self.delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
+        self.selectNext?(sourceButton.currentTitle ?? "",currentIndex)
 
         // 7.调整scale缩放
         if style.isScaleEnable {
@@ -362,7 +364,6 @@ extension ZXTitleView{
     }
     
     private func adjustLabelPosition(_ targetButton:UIButton){
-    
         //0.只有可以滚动的时候可以调整
         guard titleScrollView.isScrollEnabled else {  return  }
         
@@ -395,9 +396,8 @@ extension ZXTitleView :ZXContentViewDelegate{
         adjustLabelPosition(titleButtons[currentIndex])
         
         // 3.通知外界
-        delegate?.titleView?(self, currentTitle: titleButtons[currentIndex].currentTitle ?? "", currentIndex: currentIndex)
-        self.didSelectedTitle?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
-
+        self.delegate?.titleView?(self, currentTitle: titleButtons[currentIndex].currentTitle ?? "", currentIndex: currentIndex)
+        self.selectNext?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
     }
     
     func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
@@ -450,9 +450,9 @@ extension ZXTitleView :ZXContentViewDelegate{
 }
 
 
-// MARK: - 对外提供的方法
+// MARK: - 内部方法
 extension ZXTitleView{
-    public func setCurrentIndex(currentIndex:Int)  {
+    func setCurrentIndex(_ currentIndex:Int)  {
         setTargetLabel(titleButtons[currentIndex])
     }
 }

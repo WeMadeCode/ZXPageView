@@ -137,7 +137,7 @@ extension ZXWaterView : UICollectionViewDelegate {
             currentSection = indexPath.section
             
             // 2.3.让titleView选中最新的title
-            titleView.setCurrentIndex(currentIndex: currentSection)
+            titleView.setCurrentIndex(currentSection)
         }
         
         // 3.显示pageControl正确的currentPage

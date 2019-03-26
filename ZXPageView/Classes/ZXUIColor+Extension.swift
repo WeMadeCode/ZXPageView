@@ -30,7 +30,7 @@ public extension UIColor{
         var blue    :CGFloat = 0
         getRed(&red, green: &green, blue: &blue, alpha: nil)
         return (red * 255,green * 255,blue * 255)
-        
     }
     
+
 }

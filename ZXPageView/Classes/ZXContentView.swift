@@ -42,7 +42,7 @@ public class ZXContentView: UIView {
         
     }()
     
-    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle,defaultIndex : Int){
+    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle,defaultIndex : Int = 0){
         self.style = style
         self.childVcs = childVcs
         self.parentVc = parentVc

@@ -34,5 +34,11 @@ class ViewController: UIViewController {
         let vc = ZXWaterViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @IBAction func btn3Click(_ sender: Any) {
+        
+        let vc = ZXTitleViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
 }
 

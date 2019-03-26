@@ -8,8 +8,31 @@
 
 import UIKit
 
+@objc public protocol ZXPageViewDelegate:class {
+    
+    /// 展示当前页
+    ///
+    /// - Parameters:
+    ///   - pageView: pageView
+    ///   - currentTitle: 当前标题
+    ///   - currentIndex: 当前index
+    @objc optional func pageView(_ pageView:ZXPageView,currentTitle:String,currentIndex:Int)
+    
+    
+    /// 展示下一页
+    ///
+    /// - Parameters:
+    ///   - pageView: pageView
+    ///   - nextTitle: 下一个标题
+    ///   - nextIndex: 下一个标签
+    func pageView(_ pageView:ZXPageView,nextTitle:String,nextIndex:Int)
+}
+
+
+
 public class ZXPageView: UIView {
     
+    public weak var deleagte    : ZXPageViewDelegate?
     private var defaultIndex    : Int
     private var style           : ZXPageStyle
     private weak var parentVc   : UIViewController!
@@ -18,8 +41,11 @@ public class ZXPageView: UIView {
     private lazy var titleView: ZXTitleView = {
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles , defaultIndex : self.defaultIndex)
-        titleView.didSelectedTitle = { title,index in
-            self.didFinishedScrollHandle?(title,index)
+        titleView.selectCurrent = {title,index in
+            self.deleagte?.pageView?(self, currentTitle: title, currentIndex: index)
+        }
+        titleView.selectNext = { title,index in
+            self.deleagte?.pageView(self, nextTitle: title, nextIndex: index)
         }
         return titleView
     }()
@@ -29,7 +55,6 @@ public class ZXPageView: UIView {
         return contentView
     }()
     
-    public var didFinishedScrollHandle : ((_ title:String,_ index:Int) ->())?
     public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0){
         self.style = style
         self.titles = titles
