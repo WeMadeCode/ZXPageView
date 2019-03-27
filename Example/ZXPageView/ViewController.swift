@@ -21,15 +21,10 @@ class ViewController: UIViewController {
   
     
     @IBAction func btnClick(_ sender: Any) {
-        
         let vc = ZXPageViewController()
         self.navigationController?.pushViewController(vc, animated: true)
-        
-        
     }
     @IBAction func btn2Click(_ sender: Any) {
-        
-        
         let vc = ZXWaterViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -37,13 +37,13 @@ import UIKit
 
 
 public class ZXPageView: UIView {
-    private var dataSource  : ZXPageViewDataSource
-    public weak var deleagte    : ZXPageViewDelegate?
+    private weak var  dataSource  : ZXPageViewDataSource?
+    public  weak var  deleagte    : ZXPageViewDelegate?
    
     private lazy var titleView: ZXTitleView = {
-        let style = self.dataSource.styleForPageView()
-        let titles = self.dataSource.titlesForPageView()
-        let index  = self.dataSource.defaultScrollIndex?() ?? 0
+        let style  = self.dataSource?.styleForPageView() ?? ZXPageStyle()
+        let titles = self.dataSource?.titlesForPageView() ?? [String]()
+        let index  = self.dataSource?.defaultScrollIndex?() ?? 0
         let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titles , defaultIndex : index)
         titleView.selectCurrent = {title,index in
@@ -56,9 +56,9 @@ public class ZXPageView: UIView {
     }()
     
     private lazy var contentView: ZXContentView = {
-        let style = self.dataSource.styleForPageView()
-        let childVcs = self.dataSource.contentForPageView()
-        let index  = self.dataSource.defaultScrollIndex?() ?? 0
+        let style = self.dataSource?.styleForPageView() ?? ZXPageStyle()
+        let childVcs = self.dataSource?.contentForPageView() ?? [UIViewController]()
+        let index  = self.dataSource?.defaultScrollIndex?() ?? 0
         let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
         let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs,style:style)
         return contentView
@@ -73,8 +73,9 @@ public class ZXPageView: UIView {
         addConstraint()
     }
     
-    public convenience init(frame: CGRect,dataSource:ZXPageViewDataSource){
-        self.init(dataSource: dataSource)
+    public init(frame: CGRect,dataSource:ZXPageViewDataSource){
+        self.dataSource = dataSource
+        super.init(frame: frame)
         setupSubViews()
         addConstraint()
     }
@@ -100,7 +101,7 @@ extension ZXPageView{
     
     // obj1.property1 =（obj2.property2 * multiplier）+ constant value
     private func addConstraint(){
-        let style = self.dataSource.styleForPageView()
+        let style = self.dataSource?.styleForPageView() ?? ZXPageStyle()
         
         self.titleView.translatesAutoresizingMaskIntoConstraints = false
         

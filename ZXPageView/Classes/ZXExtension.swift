@@ -38,7 +38,7 @@ public extension UIColor{
 
 public extension UIView{
     /// Get view's parent view controller
-    public var zx_parentViewController: UIViewController? {
+    var zx_parentViewController: UIViewController? {
         weak var parentResponder: UIResponder? = self
         while parentResponder != nil {
             parentResponder = parentResponder!.next

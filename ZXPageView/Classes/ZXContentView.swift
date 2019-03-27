@@ -89,18 +89,14 @@ extension ZXContentView:UICollectionViewDataSource{
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        //1.获取cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kContentCellId, for: indexPath)
-        //2.给cell设置内容
-        for subView in cell.contentView.subviews {
-            subView.removeFromSuperview()
-        }
         let childVc = childVcs[indexPath.item]
         childVc.view.frame = cell.contentView.bounds
         cell.contentView.addSubview(childVc.view)
-        //3.返回cell
         return cell
     }
+   
+    
 }
 
 extension ZXContentView:UICollectionViewDelegate{

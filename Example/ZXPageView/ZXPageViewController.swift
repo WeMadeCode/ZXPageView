@@ -20,7 +20,13 @@ class ZXPageViewController: ViewController {
     override func viewDidLoad() {        
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        self.method1()
+        
+        let pageFrame = CGRect(x: 0, y: safeY , width: view.bounds.width, height: 500 )
+        let pageView = ZXPageView(frame: pageFrame, dataSource: self)
+        pageView.backgroundColor = UIColor.red
+        pageView.deleagte = self
+        self.view.addSubview(pageView)
+        
     }
 
 
@@ -30,42 +36,6 @@ class ZXPageViewController: ViewController {
     }
 }
 
-
-
-extension ZXPageViewController{
-    
-    //用法1
-    func method1(){
-        
-        let pageFrame = CGRect(x: 0, y: safeY , width: view.bounds.width, height: view.bounds.height - safeY )
-        let pageView = ZXPageView(frame: pageFrame, dataSource: self)
-        pageView.backgroundColor = UIColor.red
-        pageView.deleagte = self
-        self.view.addSubview(pageView)
-    }
-
-    
-    
-    func method2(){
-        
-//        let titleArray = ["头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"]
-//        
-//        let style = ZXPageStyle()
-//        style.isScrollEnable = false
-//        style.isShowCoverView = true
-//        style.divideScreen = false
-//        style.isShowBottomLine = false
-//        style.coverAlpha = 1
-//        
-//        let y =
-//        
-//        let titleFrame = CGRect(x: 0, y: y, width: self.view.frame.width, height: 44)
-//        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titleArray,defaultIndex:10000)
-//        self.view.backgroundColor = UIColor.lightGray
-//        self.view.addSubview(titleView)
-        
-    }
-}
 
 
 extension ZXPageViewController:ZXPageViewDelegate{
@@ -89,6 +59,11 @@ extension ZXPageViewController:ZXPageViewDataSource{
         for _ in 0..<titles.count {
             let vc = UIViewController()
             vc.view.backgroundColor = UIColor.zx_randomColor
+            
+            let view = UIView(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
+            view.backgroundColor = UIColor.red
+            vc.view.addSubview(view)
+            
             childVcs.append(vc)
         }
         return childVcs
