@@ -77,7 +77,7 @@ extension ZXWaterViewController : ZXWaterViewDataSource {
     
     func waterView(_ waterView: ZXWaterView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = waterView.dequeueReusableCell(withReuseIdentifier: kCollectionViewCellID, for: indexPath)
-        cell.backgroundColor = UIColor.randomColor
+        cell.backgroundColor = UIColor.zx_randomColor
         return cell
     }
 }

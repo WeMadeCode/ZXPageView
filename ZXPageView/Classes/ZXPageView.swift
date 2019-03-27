@@ -28,19 +28,24 @@ import UIKit
     func pageView(_ pageView:ZXPageView,nextTitle:String,nextIndex:Int)
 }
 
+@objc public protocol ZXPageViewDataSource {
+    func titlesForPageView() -> [String]
+    func contentForPageView() -> [UIViewController]
+    func styleForPageView() -> ZXPageStyle
+    @objc optional func defaultScrollIndex() -> Int
+}
 
 
 public class ZXPageView: UIView {
-    
+    private var dataSource  : ZXPageViewDataSource
     public weak var deleagte    : ZXPageViewDelegate?
-    private var defaultIndex    : Int
-    private var style           : ZXPageStyle
-    private weak var parentVc   : UIViewController!
-    private var titles          : [String]
-    private var childVcs        : [UIViewController]
+   
     private lazy var titleView: ZXTitleView = {
-        let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.style.titleHeight)
-        let titleView = ZXTitleView(frame: titleFrame, style: self.style, titles: self.titles , defaultIndex : self.defaultIndex)
+        let style = self.dataSource.styleForPageView()
+        let titles = self.dataSource.titlesForPageView()
+        let index  = self.dataSource.defaultScrollIndex?() ?? 0
+        let titleFrame = CGRect(x: 0, y: 0, width: self.bounds.width, height: style.titleHeight)
+        let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titles , defaultIndex : index)
         titleView.selectCurrent = {title,index in
             self.deleagte?.pageView?(self, currentTitle: title, currentIndex: index)
         }
@@ -49,20 +54,29 @@ public class ZXPageView: UIView {
         }
         return titleView
     }()
+    
     private lazy var contentView: ZXContentView = {
-        let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - self.style.titleHeight)
-        let contentView = ZXContentView(frame: contentFrame, childVcs: self.childVcs, parentVc: self.parentVc,style:self.style,defaultIndex : self.defaultIndex)
+        let style = self.dataSource.styleForPageView()
+        let childVcs = self.dataSource.contentForPageView()
+        let index  = self.dataSource.defaultScrollIndex?() ?? 0
+        let contentFrame = CGRect(x: 0, y: style.titleHeight, width: bounds.width, height: bounds.height - style.titleHeight)
+        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs,style:style)
         return contentView
     }()
+
     
-    public init(frame: CGRect,style:ZXPageStyle,titles:[String],childVcs:[UIViewController],parentVc:UIViewController,defaultIndex:Int = 0){
-        self.style = style
-        self.titles = titles
-        self.childVcs = childVcs
-        self.parentVc = parentVc
-        self.defaultIndex = defaultIndex
-        super.init(frame:frame)
+    
+    public init(dataSource:ZXPageViewDataSource) {
+        self.dataSource = dataSource
+        super.init(frame:CGRect.zero)
         setupSubViews()
+        addConstraint()
+    }
+    
+    public convenience init(frame: CGRect,dataSource:ZXPageViewDataSource){
+        self.init(dataSource: dataSource)
+        setupSubViews()
+        addConstraint()
     }
     
 
@@ -71,7 +85,6 @@ public class ZXPageView: UIView {
     }
     
 }
-
 
 extension ZXPageView{
     /// 初始化控制器的UI
@@ -85,9 +98,48 @@ extension ZXPageView{
         contentView.delegate = titleView
     }
     
+    // obj1.property1 =（obj2.property2 * multiplier）+ constant value
+    private func addConstraint(){
+        let style = self.dataSource.styleForPageView()
+        
+        self.titleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let titleViewWidth = NSLayoutConstraint(item: self.titleView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 0, constant: self.bounds.width)
+        self.titleView.addConstraint(titleViewWidth)
+        
+        let titleViewHeight = NSLayoutConstraint(item: self.titleView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 0, constant: style.titleHeight)
+        self.titleView.addConstraint(titleViewHeight)
+        
+        
+        let titleViewTop = NSLayoutConstraint(item: self.titleView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
+        self.addConstraint(titleViewTop)
+        
+        
+        let titleViewLeft = NSLayoutConstraint(item: self.titleView, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant: 0)
+        self.addConstraint(titleViewLeft)
+        
+        
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let contentViewTop = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.titleView, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        self.addConstraint(contentViewTop)
+        
+        
+        let contentViewLeft = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant: 0)
+        self.addConstraint(contentViewLeft)
+        
+        
+        let contentViewWidth = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 0, constant: self.bounds.width)
+        self.contentView.addConstraint(contentViewWidth)
+        
+        
+        let contentViewButton = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        self.addConstraint(contentViewButton)
+        
+        
+    }
+    
+    
+    
+    
 }
-
-
-
-
-

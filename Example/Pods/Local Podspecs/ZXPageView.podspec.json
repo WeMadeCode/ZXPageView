@@ -1,8 +1,8 @@
 {
   "name": "ZXPageView",
-  "version": "0.5.1",
-  "summary": "通用的滚动框架,仿造今日头条",
-  "description": "Copy the headline of the today scroll frame，a framework of sliding scrollView",
+  "version": "0.5.2",
+  "summary": "通用的滚动UI框架",
+  "description": "Copy the headline of the today scroll frame，a framework of sliding scrollView，and a waterfall flow framework",
   "homepage": "https://github.com/WeMadeCode/ZXPageView",
   "license": {
     "type": "MIT",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/WeMadeCode/ZXPageView.git",
-    "tag": "0.5.1"
+    "tag": "0.5.2"
   },
   "platforms": {
     "ios": "8.0"

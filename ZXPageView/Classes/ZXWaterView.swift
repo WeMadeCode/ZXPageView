@@ -88,7 +88,7 @@ public class ZXWaterView: UIView {
 // MARK:- UICollectionView的数据源
 extension ZXWaterView : UICollectionViewDataSource {
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return dataSource?.numberOfSectionsInWaterView(self) ?? 0
+        return dataSource!.numberOfSectionsInWaterView(self)
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

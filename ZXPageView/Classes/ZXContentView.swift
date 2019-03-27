@@ -20,7 +20,6 @@ public class ZXContentView: UIView {
     private var defaultIndex : Int
     private var style:ZXPageStyle
     private var childVcs : [UIViewController]
-    private weak var  parentVc : UIViewController!
     private var startOffsetX : CGFloat = 0
     private var didClickTitleView:Bool = false
     private lazy var collectionView:UICollectionView = {
@@ -42,10 +41,9 @@ public class ZXContentView: UIView {
         
     }()
     
-    init(frame:CGRect,childVcs:[UIViewController],parentVc:UIViewController,style:ZXPageStyle,defaultIndex : Int = 0){
+    init(frame:CGRect,childVcs:[UIViewController],style:ZXPageStyle,defaultIndex : Int = 0){
         self.style = style
         self.childVcs = childVcs
-        self.parentVc = parentVc
         self.defaultIndex = defaultIndex
         super.init(frame: frame)
         setupSubView()
@@ -64,7 +62,9 @@ extension ZXContentView{
         
         //2.将所有的子控制器添加到父控制器中
         childVcs.forEach { (childVc) in
-            self.parentVc.addChild(childVc)
+            if let vc = self.zx_parentViewController{
+                vc.addChild(childVc)
+            }
         }
         
         //3.先滚动到指定位置

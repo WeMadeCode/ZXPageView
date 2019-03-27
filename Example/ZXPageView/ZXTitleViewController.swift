@@ -59,7 +59,7 @@ class ZXTitleViewController: UIViewController {
         
         for (index,title)  in array.enumerated(){
             let vc = UIViewController()
-            vc.view.backgroundColor = UIColor.randomColor
+            vc.view.backgroundColor = UIColor.zx_randomColor
             vc.view.frame.origin.x = CGFloat(index) * self.view.frame.size.width
             vc.view.frame.origin.y = 0
             vc.view.frame.size.width =  UIScreen.main.bounds.width

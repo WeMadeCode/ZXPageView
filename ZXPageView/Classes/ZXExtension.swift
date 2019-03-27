@@ -1,5 +1,5 @@
 //
-//  ZXUIColor+Extension.swift
+//  ZXExtension.swift
 //  ZXPageView
 //
 //  Created by Anthony on 2017/11/2.
@@ -16,7 +16,7 @@ public extension UIColor{
     
     
     /// 生成随机色
-    class var randomColor : UIColor{
+    class var zx_randomColor : UIColor{
         return UIColor(r: CGFloat(arc4random_uniform(256)), g: CGFloat(arc4random_uniform(256)), b: CGFloat(arc4random_uniform(256)))
     }
     
@@ -24,7 +24,7 @@ public extension UIColor{
     /// 获取RGB
     ///
     /// - Returns: RGB
-    func getRGB() -> (CGFloat,CGFloat,CGFloat) {
+    func zx_getRGB() -> (CGFloat,CGFloat,CGFloat) {
         var red     :CGFloat = 0
         var green   :CGFloat = 0
         var blue    :CGFloat = 0
@@ -32,5 +32,21 @@ public extension UIColor{
         return (red * 255,green * 255,blue * 255)
     }
     
+
+}
+
+
+public extension UIView{
+    /// Get view's parent view controller
+    public var zx_parentViewController: UIViewController? {
+        weak var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
 
 }
