@@ -9,8 +9,6 @@
 import UIKit
 import ZXPageView
 
-private let kCollectionViewCellID = "kCollectionViewCellID"
-
 class ZXPageViewController: ViewController {
 
     
@@ -32,7 +30,6 @@ class ZXPageViewController: ViewController {
 
     deinit {
         print("deinit")
-        
     }
 }
 

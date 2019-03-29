@@ -136,8 +136,6 @@ extension ZXPageView{
         
         let contentViewButton = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
         self.addConstraint(contentViewButton)
-        
-        
     }
     
     

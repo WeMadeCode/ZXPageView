@@ -31,7 +31,7 @@ public class ZXPageStyle:NSObject {
     
     /// 标题缩放属性
     public var isScaleEnable : Bool    = false  // 是否支持
-    public var maxScale      : CGFloat = 1.2   // 缩放大小
+    public var maxScale      : CGFloat = 1.2    // 缩放大小
     
     /// 是否需要显示背景
     public var isShowCoverView : Bool    = false         //是否展示背景色
