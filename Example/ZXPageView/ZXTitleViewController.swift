@@ -57,7 +57,7 @@ class ZXTitleViewController: UIViewController {
         
         
         
-        for (index,title)  in array.enumerated(){
+        for (index,_)  in array.enumerated(){
             let vc = UIViewController()
             vc.view.backgroundColor = UIColor.zx_randomColor
             vc.view.frame.origin.x = CGFloat(index) * self.view.frame.size.width
@@ -76,9 +76,3 @@ class ZXTitleViewController: UIViewController {
 
 }
 
-extension ZXTitleViewController: UIScrollViewDelegate {
-  
-    
-    
-  
-}
