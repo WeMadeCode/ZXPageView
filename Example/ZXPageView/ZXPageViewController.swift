@@ -29,7 +29,7 @@ class ZXPageViewController: ViewController {
     func frameLayout(){
         let pageFrame = CGRect(x: 0, y: safeY , width: view.bounds.width, height: 500 )
         let pageView = ZXPageView(frame: pageFrame)
-        pageView.deleagte = self
+        pageView.delegate = self
         pageView.dataSource = self
         self.view.addSubview(pageView)
     }
@@ -37,7 +37,7 @@ class ZXPageViewController: ViewController {
     func autoLayout(){
         let pageView = ZXPageView()
         self.view.addSubview(pageView)
-        pageView.deleagte = self
+        pageView.delegate = self
         pageView.dataSource = self
         pageView.snp.makeConstraints { (make) in
             if #available(iOS 11.0, *){
