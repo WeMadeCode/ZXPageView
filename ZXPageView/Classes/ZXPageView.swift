@@ -19,6 +19,12 @@ import UIKit
     @objc optional func pageView(_ pageView:ZXPageView,currentTitle:String,currentIndex:Int)
     
     
+    
+    /// 默认选中的位置
+    ///
+    /// - Returns: 位置
+    @objc optional func defaultScrollIndex() -> Int
+    
     /// 展示下一页
     ///
     /// - Parameters:
@@ -26,13 +32,35 @@ import UIKit
     ///   - nextTitle: 下一个标题
     ///   - nextIndex: 下一个标签
     func pageView(_ pageView:ZXPageView,nextTitle:String,nextIndex:Int)
+    
+    
+    
+    /// 默认内容尺寸，AutoLayout布局时必须设置改大小，Frame布局可以不用设置改大小
+    ///
+    /// - Returns: 尺寸
+    @objc optional func defaultPageSize() -> CGSize
+
+
 }
 
 @objc public protocol ZXPageViewDataSource {
+    
+    /// 标题数据源
+    ///
+    /// - Returns: 标题
     func titlesForPageView() -> [String]
+    
+    
+    /// 内容数据源
+    ///
+    /// - Returns: 内容
     func contentForPageView() -> [UIViewController]
+    
+    
+    /// 样式数据源
+    ///
+    /// - Returns: 样式
     func styleForPageView() -> ZXPageStyle
-    @objc optional func defaultScrollIndex() -> Int
 }
 
 
@@ -48,24 +76,20 @@ public class ZXPageView: UIView {
     private lazy var titleView: ZXTitleView = {
         let style  = self.dataSource?.styleForPageView() ?? ZXPageStyle()
         let titles = self.dataSource?.titlesForPageView() ?? [String]()
-        let index  = self.dataSource?.defaultScrollIndex?() ?? 0
-        let titleFrame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: style.titleHeight)
+        let index  = self.deleagte?.defaultScrollIndex?() ?? 0
+        let width = self.deleagte?.defaultPageSize?().width ?? self.bounds.width
+        let titleFrame = CGRect(x: 0, y: 0, width: width , height: style.titleHeight)
         let titleView = ZXTitleView(frame: titleFrame, style: style, titles: titles , defaultIndex : index)
-        titleView.selectCurrent = {title,index in
-            self.deleagte?.pageView?(self, currentTitle: title, currentIndex: index)
-        }
-        titleView.selectNext = { title,index in
-            self.deleagte?.pageView(self, nextTitle: title, nextIndex: index)
-        }
         return titleView
     }()
     
     private lazy var contentView: ZXContentView = {
         let style = self.dataSource?.styleForPageView() ?? ZXPageStyle()
         let childVcs = self.dataSource?.contentForPageView() ?? [UIViewController]()
-        let index  = self.dataSource?.defaultScrollIndex?() ?? 0
-        let contentFrame = CGRect(x: 0, y: style.titleHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - style.titleHeight)
-        let contentView = ZXContentView(frame: contentFrame, childVcs: childVcs,style:style)
+        let width = self.deleagte?.defaultPageSize?().width ?? self.bounds.width
+        let height = self.deleagte?.defaultPageSize?().height ?? self.bounds.height - style.titleHeight
+        let frame = CGRect(x: 0, y: style.titleHeight, width: width, height: height)
+        let contentView = ZXContentView(frame:frame,childVcs: childVcs,style:style)
         return contentView
     }()
 
@@ -74,8 +98,9 @@ public class ZXPageView: UIView {
     public init() {
         super.init(frame:CGRect.zero)
     }
+
     
-    public override init(frame: CGRect){
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
@@ -86,6 +111,32 @@ public class ZXPageView: UIView {
     
 }
 
+
+
+extension ZXPageView:ZXTitleViewDelegate{
+    public func titleView(_ titleView: ZXTitleView, currentTitle: String, currentIndex: Int) {
+        self.deleagte?.pageView?(self, currentTitle: currentTitle, currentIndex: currentIndex)
+    }
+    public func titleView(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
+        self.contentView.scrollToSpecifiedIndex(nextIndex)
+        self.deleagte?.pageView(self, nextTitle: nextTitle, nextIndex: nextIndex)
+    }
+}
+
+
+extension ZXPageView :ZXContentViewDelegate{
+    func contentView(_ contentView: ZXContentView, index: Int) {
+        self.titleView.setCurrentIndex(index)
+    }
+    
+    func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+        self.titleView.setCurrentProgress(sourceIndex: sourceIndex, targetIndex: targetIndex, progress: progress)
+    }
+}
+
+
+
+
 extension ZXPageView{
     /// 初始化控制器的UI
     private func setupSubViews(){
@@ -94,8 +145,8 @@ extension ZXPageView{
         //2.创建ZXContentView
         addSubview(contentView)
         //3.设置代理
-        titleView.delegate = contentView
-        contentView.delegate = titleView
+        titleView.delegate = self
+        contentView.delegate = self
     }
     
     // obj1.property1 =（obj2.property2 * multiplier）+ constant value
@@ -130,8 +181,5 @@ extension ZXPageView{
         let contentViewBottom = NSLayoutConstraint(item: self.contentView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
         self.addConstraint(contentViewBottom)
     }
-    
-    
-    
-    
+
 }

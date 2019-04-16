@@ -9,13 +9,13 @@
 import UIKit
 
 protocol ZXContentViewDelegate:class {
-    func contentView(_ contentView:ZXContentView,inIndex:Int)
+    func contentView(_ contentView:ZXContentView,index:Int)
     func contentView(_ contentView:ZXContentView,sourceIndex:Int,targetIndex:Int,progress:CGFloat)
 }
 
 private let kContentCellId = "kContentCellId"
 
-public class ZXContentView: UIView {
+internal class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
     private var defaultIndex : Int
     private var style:ZXPageStyle
@@ -41,13 +41,12 @@ public class ZXContentView: UIView {
         
     }()
     
-    init(frame:CGRect,childVcs:[UIViewController],style:ZXPageStyle,defaultIndex : Int = 0){
+    init(frame:CGRect, childVcs:[UIViewController], style:ZXPageStyle ,defaultIndex:Int = 0){
         self.style = style
         self.childVcs = childVcs
         self.defaultIndex = defaultIndex
         super.init(frame: frame)
         setupSubView()
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -56,7 +55,7 @@ public class ZXContentView: UIView {
 }
 
 extension ZXContentView{
-    fileprivate func setupSubView(){
+    private func setupSubView(){
         //1.添加collectionView
         addSubview(collectionView)
         
@@ -71,15 +70,13 @@ extension ZXContentView{
         self.scrollToSpecifiedIndex(self.defaultIndex)
     }
     
-    
-    
-  //最终校准滚动位置
-  fileprivate func collectionViewDidEndScroll() {
+   //最终校准滚动位置
+   private func collectionViewDidEndScroll() {
         //1.获取停止的正确位置
-        let inIndex = Int(collectionView.contentOffset.x/collectionView.bounds.width)
+        let index = Int(collectionView.contentOffset.x/collectionView.bounds.width)
         
         //2.通知代理
-        delegate?.contentView(self, inIndex: inIndex)
+        delegate?.contentView(self, index: index)
     }
 }
 
@@ -95,8 +92,6 @@ extension ZXContentView:UICollectionViewDataSource{
         cell.contentView.addSubview(childVc.view)
         return cell
     }
-   
-    
 }
 
 extension ZXContentView:UICollectionViewDelegate{
@@ -162,22 +157,18 @@ extension ZXContentView:UICollectionViewDelegate{
     }
 }
 
-
-extension ZXContentView:ZXTitleViewDelegate{
-    public func titleView(_ titleView: ZXTitleView, nextTitle: String, nextIndex: Int) {
-        // 1.点击了titleView
-        self.didClickTitleView = true
-        // 2.滚动到指定位置
-        self.scrollToSpecifiedIndex(nextIndex)
-    }
+//MARK: 给外界使用的方法
+extension ZXContentView{
     
     public func scrollToSpecifiedIndex(_ index:Int){
-        //1.根据currentIndex获取indexPath
+        //1.点击了titleView
+        self.didClickTitleView = true
+        //2.根据currentIndex获取indexPath
         let indexPath = IndexPath(item: index, section: 0)
-        //2.滚动到正确位置
+        //3.滚动到正确位置
         collectionView.scrollToItem(at: indexPath, at: .left, animated: false)
     }
+
     
 }
-
 

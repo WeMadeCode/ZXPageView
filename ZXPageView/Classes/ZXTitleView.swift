@@ -26,8 +26,6 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
-    internal var selectCurrent : ((_ title:String,_ index:Int) ->())?
-    internal var selectNext : ((_ title:String,_ index:Int) ->())?
     private  var defaultIndex : Int
     public   weak var delegate : ZXTitleViewDelegate?
     private  var style:ZXPageStyle
@@ -257,52 +255,53 @@ extension ZXTitleView{
     
     // 设置默认滚动位置
      func setDefaultContent()  {
-
         guard defaultIndex >= 0 && defaultIndex <= titles.count else {
             return
         }
         let button = titleButtons[defaultIndex]
-        button.titleLabel?.sizeToFit()
         titleButtonClick(button)
     }
 }
 
 extension ZXTitleView{
-
-    @objc private func titleButtonClick(_ targetButton:UIButton){
-        //1.取出原来的button
+     @objc private func titleButtonClick(_ targetButton:UIButton){
+    
+        // 1.取出原来的label
         let sourceButton = titleButtons[currentIndex]
         
-        //2.校验button
+        // 2.校验button
         guard targetButton.tag != currentIndex else {
-            self.selectCurrent?(sourceButton.currentTitle ?? "",currentIndex)
             self.delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
             return
         }
         
-        //3.改变label的颜色
+        // 3.改变Label的颜色
         sourceButton.setTitleColor(style.normalColor, for: .normal)
         targetButton.setTitleColor(style.selectColor, for: .normal)
-    
-        //4.记录最新的index
+        
+        // 4.记录最新的index
         currentIndex = targetButton.tag
         
-        //5.让点击的label居中显示
+        // 5.让点击的label居中显示
         adjustLabelPosition(targetButton)
         
-        //6.通知代理&回调
-        self.delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
-        self.selectNext?(sourceButton.currentTitle ?? "",currentIndex)
-
-        // 7.调整scale缩放
+        // 6.设置动画
+        setStyleAnimated(sourceButton,targetButton)
+        
+        // 7.通知代理
+        delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
+    }
+    
+    private func setStyleAnimated(_ sourceButton:UIButton, _ targetButton:UIButton){
+        // 1.调整scale缩放
         if style.isScaleEnable {
-            UIView.animate(withDuration: 0.25, animations: { 
+            UIView.animate(withDuration: 0.25, animations: {
                 sourceButton.transform = CGAffineTransform.identity
                 targetButton.transform = CGAffineTransform(scaleX: self.style.maxScale, y: self.style.maxScale)
             })
         }
         
-        //8.调整bottomLine
+        //2.调整bottomLine
         if style.isShowBottomLine {
             UIView.animate(withDuration: 0.25, animations: {
                 if self.style.isLongStyle{
@@ -314,7 +313,7 @@ extension ZXTitleView{
             })
         }
         
-        // 9.调整CoverView
+        // 3.调整CoverView
         if style.isShowCoverView {
             let coverX = targetButton.frame.origin.x - style.coverMargin
             let coverW = targetButton.frame.width + style.coverMargin * 2
@@ -325,42 +324,45 @@ extension ZXTitleView{
         }
     }
     
-    private func setTargetLabel(_ targetButton:UIButton){
-        // 1.取出原来的label
-        let sourceButton = titleButtons[currentIndex]
+   
+    private func setStyleAnimatedProgressed(_ sourceButton:UIButton, _ targetButton:UIButton,_ progress:CGFloat){
+        // 1.字体颜色的渐变
+        let sourceColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
+        sourceButton.setTitleColor(sourceColor, for: .normal)
+        let targetColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
+        targetButton.setTitleColor(targetColor, for: .normal)
         
-        // 2.改变Label的颜色
-        sourceButton.setTitleColor(style.normalColor, for: .normal)
-        targetButton.setTitleColor(style.selectColor, for: .normal)
-        
-        // 3.记录最新的index
-        currentIndex = targetButton.tag
-        
-        // 4.让点击的label居中显示
-        adjustLabelPosition(targetButton)
-        
-        // 5.调整scale缩放
-        // transform : frame.wh = bounds.wh * transform的值
+        // 2.scale的调整
         if style.isScaleEnable {
-            UIView.animate(withDuration: 0.25, animations: {
-                sourceButton.transform = CGAffineTransform.identity
-                targetButton.transform = CGAffineTransform(scaleX: self.style.maxScale, y: self.style.maxScale)
-            })
+            let deltaScale = style.maxScale - 1.0
+            sourceButton.transform = CGAffineTransform(scaleX: style.maxScale - progress * deltaScale, y: style.maxScale - progress * deltaScale)
+            targetButton.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale, y: 1.0 + progress * deltaScale)
         }
         
-        // 6.调整bottomLine
+        // 3.bottomLine的调整
         if style.isShowBottomLine {
-            UIView.animate(withDuration: 0.25, animations: {
-                if self.style.isLongStyle{
-                    self.bottomLine.frame.size.width =  targetButton.frame.size.width
-                }else{
-                    self.bottomLine.frame.size.width =  targetButton.titleLabel!.frame.size.width
-                }
-                self.bottomLine.center.x = targetButton.center.x
-            })
+            //4.1计算宽度
+            let deltaW = targetButton.titleLabel!.frame.width - sourceButton.titleLabel!.frame.width
+            if style.isLongStyle{
+                bottomLine.frame.size.width = sourceButton.frame.size.width + progress * deltaW
+            }else{
+                bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
+            }
+            
+            //4.2计算x值
+            let deltaX = targetButton.center.x - sourceButton.center.x
+            bottomLine.center.x = sourceButton.center.x + progress * deltaX
         }
         
-
+        
+        // 4.coverView的调整
+        if style.isShowCoverView {
+            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
+            let deltaW = targetButton.frame.width - sourceButton.frame.width
+            coverView.frame.size.width = sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress
+            coverView.frame.origin.x = sourceButton.frame.origin.x - style.coverMargin + deltaX * progress
+        }
+        
     }
     
     private func adjustLabelPosition(_ targetButton:UIButton){
@@ -386,73 +388,15 @@ extension ZXTitleView{
 }
 
 
-extension ZXTitleView :ZXContentViewDelegate{
 
-    func contentView(_ contentView: ZXContentView, inIndex: Int) {
-        //1.记录最新的currentIndex
-        currentIndex = inIndex
-        
-        //2.让targetLabel居中显示
-        adjustLabelPosition(titleButtons[currentIndex])
-        
-        // 3.通知外界
-        self.delegate?.titleView?(self, currentTitle: titleButtons[currentIndex].currentTitle ?? "", currentIndex: currentIndex)
-        self.selectNext?(titleButtons[currentIndex].currentTitle ?? "",currentIndex)
-    }
-    
-    func contentView(_ contentView: ZXContentView, sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
-        
-        
-        //1.获取sourceLabel&targetLabel
-        let sourceButton = titleButtons[sourceIndex]
-        let targetButton = titleButtons[targetIndex]
-        
-
-        //2.字体颜色的渐变
-        let sourceColor = UIColor(r: selectRGB.red - progress * deltaRGB.red, g: selectRGB.green - progress * deltaRGB.green, b: selectRGB.blue - progress * deltaRGB.blue)
-        sourceButton.setTitleColor(sourceColor, for: .normal)
-        let targetColor = UIColor(r: normalRGB.red + progress * deltaRGB.red, g: normalRGB.green + progress * deltaRGB.green, b: normalRGB.blue + progress * deltaRGB.blue)
-        targetButton.setTitleColor(targetColor, for: .normal)
-        
-        
-        // 3.scale的调整
-        if style.isScaleEnable {
-            let deltaScale = style.maxScale - 1.0
-            sourceButton.transform = CGAffineTransform(scaleX: style.maxScale - progress * deltaScale, y: style.maxScale - progress * deltaScale)
-            targetButton.transform = CGAffineTransform(scaleX: 1.0 + progress * deltaScale, y: 1.0 + progress * deltaScale)
-        }
-        
-        // 4.bottomLine的调整
-        if style.isShowBottomLine {
-            //4.1计算宽度
-            let deltaW = targetButton.titleLabel!.frame.width - sourceButton.titleLabel!.frame.width
-            if style.isLongStyle{
-                bottomLine.frame.size.width = sourceButton.frame.size.width + progress * deltaW
-            }else{
-                bottomLine.frame.size.width = sourceButton.titleLabel!.frame.width + progress * deltaW
-            }
-            
-            //4.2计算x值
-            let deltaX = targetButton.center.x - sourceButton.center.x
-            bottomLine.center.x = sourceButton.center.x + progress * deltaX
-        }
-        
-        
-        // 5.coverView的调整
-        if style.isShowCoverView {
-            let deltaX = targetButton.frame.origin.x - sourceButton.frame.origin.x
-            let deltaW = targetButton.frame.width - sourceButton.frame.width
-            coverView.frame.size.width = sourceButton.frame.width + 2 * style.coverMargin + deltaW * progress
-            coverView.frame.origin.x = sourceButton.frame.origin.x - style.coverMargin + deltaX * progress
-        }
-    }
-    
-}
-
-
-// MARK: - 内部方法
+// MARK: - 给外界使用的方法
 extension ZXTitleView{
     func setCurrentIndex(_ currentIndex:Int)  {
-        setTargetLabel(titleButtons[currentIndex])
+        titleButtonClick(titleButtons[currentIndex])
+    }
+    
+    
+    func setCurrentProgress(sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+        self.setStyleAnimatedProgressed(titleButtons[sourceIndex], titleButtons[targetIndex], progress)
     }
 }

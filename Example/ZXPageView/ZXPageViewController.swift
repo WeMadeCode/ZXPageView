@@ -68,6 +68,10 @@ extension ZXPageViewController:ZXPageViewDelegate{
 
 extension ZXPageViewController:ZXPageViewDataSource{
    
+    func defaultPageSize() -> CGSize {
+        return  CGSize(width: self.view.frame.size.width, height: 300)
+    }
+    
     func defaultScrollIndex() -> Int {
         return 5
     }
@@ -80,11 +84,6 @@ extension ZXPageViewController:ZXPageViewDataSource{
         for _ in 0..<titles.count {
             let vc = UIViewController()
             vc.view.backgroundColor = UIColor.zx_randomColor
-            
-            let view = UIView(frame: CGRect(x: 100, y: 100, width: 100, height: 100))
-            view.backgroundColor = UIColor.red
-            vc.view.addSubview(view)
-            
             childVcs.append(vc)
         }
         return childVcs
