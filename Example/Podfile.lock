@@ -1,16 +1,23 @@
 PODS:
-  - ZXPageView (0.5.2)
+  - SnapKit (4.2.0)
+  - ZXPageView (0.7.0)
 
 DEPENDENCIES:
+  - SnapKit (~> 4.2.0)
   - ZXPageView (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SnapKit
 
 EXTERNAL SOURCES:
   ZXPageView:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ZXPageView: 1cc38736a93c7243da0d6ad1c9428f883ecbce32
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  ZXPageView: 335ab04638f53f5c9ae1564ab8d0fcfbd3365516
 
-PODFILE CHECKSUM: 8f6161a0d1e7d4fde6759c34bb34e239dca79d81
+PODFILE CHECKSUM: 5da74a020387c3606e6228e31077ce2e328730a5
 
 COCOAPODS: 1.6.1

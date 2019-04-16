@@ -8,6 +8,7 @@
 
 import UIKit
 import ZXPageView
+import SnapKit
 
 class ZXPageViewController: ViewController {
 
@@ -17,16 +18,36 @@ class ZXPageViewController: ViewController {
     
     override func viewDidLoad() {        
         super.viewDidLoad()
+    
         self.view.backgroundColor = UIColor.white
         
-        let pageFrame = CGRect(x: 0, y: safeY , width: view.bounds.width, height: 500 )
-        let pageView = ZXPageView(frame: pageFrame, dataSource: self)
-        pageView.backgroundColor = UIColor.red
-        pageView.deleagte = self
-        self.view.addSubview(pageView)
+        self.autoLayout()
         
     }
 
+    
+    func frameLayout(){
+        let pageFrame = CGRect(x: 0, y: safeY , width: view.bounds.width, height: 500 )
+        let pageView = ZXPageView(frame: pageFrame)
+        pageView.deleagte = self
+        pageView.dataSource = self
+        self.view.addSubview(pageView)
+    }
+    
+    func autoLayout(){
+        let pageView = ZXPageView()
+        self.view.addSubview(pageView)
+        pageView.deleagte = self
+        pageView.dataSource = self
+        pageView.snp.makeConstraints { (make) in
+            if #available(iOS 11.0, *){
+                make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            }else{
+                make.top.equalTo(self.topLayoutGuide.snp.bottom)
+            }
+            make.left.right.bottom.equalToSuperview()
+        }
+    }
 
     deinit {
         print("deinit")

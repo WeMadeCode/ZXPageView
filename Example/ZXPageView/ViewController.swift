@@ -30,8 +30,8 @@ class ViewController: UIViewController {
     }
     @IBAction func btn3Click(_ sender: Any) {
         
-        let vc = ZXTitleViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = ZXTitleViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
         
     }
 }
