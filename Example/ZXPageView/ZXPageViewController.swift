@@ -68,6 +68,9 @@ extension ZXPageViewController:ZXPageViewDelegate{
 
 extension ZXPageViewController:ZXPageViewDataSource{
    
+    func defaultScrollIndex() -> Int {
+        return 5
+    }
    
     func titlesForPageView() -> [String]{
         return self.titles        
