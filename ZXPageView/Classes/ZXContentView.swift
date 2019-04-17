@@ -15,7 +15,7 @@ protocol ZXContentViewDelegate:class {
 
 private let kContentCellId = "kContentCellId"
 
-internal class ZXContentView: UIView {
+public class ZXContentView: UIView {
     weak var delegate:ZXContentViewDelegate?
     private var defaultIndex : Int
     private var style:ZXPageStyle

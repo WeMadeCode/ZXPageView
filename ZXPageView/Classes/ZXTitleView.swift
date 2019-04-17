@@ -391,12 +391,12 @@ extension ZXTitleView{
 
 // MARK: - 给外界使用的方法
 extension ZXTitleView{
-    func setCurrentIndex(_ currentIndex:Int)  {
+   public func setCurrentIndex(_ currentIndex:Int)  {
         titleButtonClick(titleButtons[currentIndex])
     }
     
     
-    func setCurrentProgress(sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
+   public func setCurrentProgress(sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
         self.setStyleAnimatedProgressed(titleButtons[sourceIndex], titleButtons[targetIndex], progress)
     }
 }
