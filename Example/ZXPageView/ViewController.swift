@@ -24,15 +24,17 @@ class ViewController: UIViewController {
         let vc = ZXPageViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     @IBAction func btn2Click(_ sender: Any) {
-        let vc = ZXWaterViewController()
+        let vc = ZXHorizontalViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
     @IBAction func btn3Click(_ sender: Any) {
         
-//        let vc = ZXTitleViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
+        let vc = ZXSingleWaterViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

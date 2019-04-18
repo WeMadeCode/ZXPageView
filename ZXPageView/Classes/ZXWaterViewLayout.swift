@@ -9,77 +9,88 @@ import UIKit
 
 import UIKit
 
-public class ZXWaterViewLayout: UICollectionViewLayout {
-    fileprivate lazy var cellAttrs : [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
-    public var sectionInset : UIEdgeInsets = UIEdgeInsets.zero
-    public var itemSpacing : CGFloat = 0
-    public var lineSpacing : CGFloat = 0
-    public var cols = 4
-    public var rows = 2
-    fileprivate lazy var pageCount = 0
+public protocol ZXWaterViewLayoutDataSource : class {
+    func waterView(_ layout: ZXWaterViewLayout, heightForRowAt indexPath: IndexPath) -> CGFloat
 }
 
-// MARK:- 准备所有的布局
+public class ZXWaterViewLayout: UICollectionViewFlowLayout {
+    /// 数据源
+    public weak var dataSource : ZXWaterViewLayoutDataSource?
+    /// 列数
+    public var cols = 2
+    private lazy var attrsArray  = [UICollectionViewLayoutAttributes]()
+    private var maxH : CGFloat = 0
+    private var startIndex = 0
+    private lazy var colHeights : [CGFloat] = {
+        var colHeights = Array(repeating: self.sectionInset.top, count: self.cols)
+        return colHeights
+    }()
+}
+
+
 extension ZXWaterViewLayout {
+    //MARK: - 初始化生成每个视图的布局信息
     override public func prepare() {
         super.prepare()
         
-        // 1.对collectionView进行校验
-        guard let collectionView = collectionView else {
-            return
-        }
+        // 1.对collectionView进行判空校验
+        guard let collectionView = collectionView else { return }
         
+        // 2.获取item的个数(仅考虑一个section的情况)
+        let itemCount = collectionView.numberOfItems(inSection: 0)
         
-        // 2.获取多少组
-        let sectionCount = collectionView.numberOfSections
+        // 3.计算item的宽度
+        let itemW = (collectionView.bounds.width - self.sectionInset.left - self.sectionInset.right - self.minimumInteritemSpacing * CGFloat((cols - 1))) / CGFloat(cols)
         
-        // 3.获取每组中有多少个数据
-        let itemW : CGFloat = (collectionView.bounds.width - sectionInset.left - sectionInset.right - CGFloat(cols - 1) * itemSpacing) / CGFloat(cols)
-        let itemH : CGFloat = (collectionView.bounds.height - sectionInset.top - sectionInset.bottom - CGFloat(rows - 1) * lineSpacing) / CGFloat(rows)
-        // 计算累加的组有多少页
-        for sectionIndex in 0..<sectionCount {
-            let itemCount = collectionView.numberOfItems(inSection: sectionIndex)
+        // 3.计算所有的item的属性
+        for itemIndex in startIndex..<itemCount {
+            // 3.1设置每一个item位置相关的属性
+            let indexPath = IndexPath(item: itemIndex, section: 0)
             
-            // 4.为每一个cell创建对应的UICollectionViewLayoutAttributes
-            for itemIndex in 0..<itemCount {
-                // 4.1.创建Attributes
-                let indexPath = IndexPath(item: itemIndex, section: sectionIndex)
-                let attr = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                
-                // 4.2.求出itemIndex在该组中的第几页中的第几个
-                let pageIndex = itemIndex / (rows * cols)
-                let pageItemIndex = itemIndex % (rows * cols)
-                
-                // 4.3.求itemIndex在该也中第几行/第几列
-                let rowIndex = pageItemIndex / cols
-                let colIndex = pageItemIndex % cols
-                
-                // 4.2.设置Attributes的frame
-                let itemY : CGFloat = sectionInset.top + (itemH + lineSpacing) * CGFloat(rowIndex)
-                let itemX : CGFloat = CGFloat(pageCount + pageIndex) * collectionView.bounds.width + sectionInset.left + (itemW + itemSpacing) * CGFloat(colIndex)
-                attr.frame = CGRect(x: itemX, y: itemY, width: itemW, height: itemH)
-                
-                // 4.3.将Attributes添加到数组中
-                cellAttrs.append(attr)
+            // 3.2根据位置创建Attributes属性
+            let attrs = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            
+            // 3.3获取item的高度
+            guard let itemH = dataSource?.waterView(self, heightForRowAt: indexPath) else{
+                fatalError("请设置数据源,并且实现对应的数据源方法")
             }
+         
+            // 3.4取出最小列的位置
+            var minH = colHeights.min()!
+            let index = colHeights.index(of: minH)!
+            minH = minH + itemH + minimumLineSpacing
+            colHeights[index] = minH
             
-            // 5.计算该组一共占据多少页
-            pageCount += (itemCount - 1) / (cols * rows) + 1
+            // 3.5设置item的属性
+            let x = self.sectionInset.left + (self.minimumInteritemSpacing + itemW) * CGFloat(index)
+            let y =  minH - itemH - self.minimumLineSpacing
+            attrs.frame = CGRect(x: x , y: y, width: itemW, height: itemH)
+            
+            // 3.6添加到数组中
+            attrsArray.append(attrs)
         }
+        
+        // 4.记录最大值
+        maxH = colHeights.max()!
+        
+        // 5.给startIndex重新复制
+        startIndex = itemCount
     }
 }
 
 
-// MARK:- 返回布局
+// MARK:- 返回决定一段区域所有cell和头尾视图的布局属性
 extension ZXWaterViewLayout {
     override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return cellAttrs
+        return attrsArray
     }
 }
+
+
 
 // MARK:- 设置可滚动的区域
 extension ZXWaterViewLayout {
     override public var collectionViewContentSize: CGSize {
-        return CGSize(width: CGFloat(pageCount) * collectionView!.bounds.width, height: 0)
+        return CGSize(width: 0, height: maxH + sectionInset.bottom - minimumLineSpacing)
     }
 }

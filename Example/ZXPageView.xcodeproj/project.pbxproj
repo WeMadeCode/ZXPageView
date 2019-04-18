@@ -16,7 +16,8 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		91B3DF5ED108DF291272B662 /* Pods_ZXPageView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7705108500E6EF6DF4CC63F /* Pods_ZXPageView_Example.framework */; };
 		9232D5C12191487D00FE69EB /* ZXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9232D5C02191487D00FE69EB /* ZXPageViewController.swift */; };
-		924F2372223B8A9800948FC5 /* ZXWaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F2371223B8A9800948FC5 /* ZXWaterViewController.swift */; };
+		924F2372223B8A9800948FC5 /* ZXHorizontalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */; };
+		C4FF5C6D22684E1000215F41 /* ZXSingleWaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +46,10 @@
 		608F880E82E40CAD730AE07E /* Pods-ZXPageView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXPageView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZXPageView_Tests/Pods-ZXPageView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		80767B931A686E4ED436696A /* Pods-ZXPageView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXPageView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZXPageView_Example/Pods-ZXPageView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9232D5C02191487D00FE69EB /* ZXPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZXPageViewController.swift; sourceTree = "<group>"; };
-		924F2371223B8A9800948FC5 /* ZXWaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXWaterViewController.swift; sourceTree = "<group>"; };
+		924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXHorizontalViewController.swift; sourceTree = "<group>"; };
 		A9B2B5910705CDC98055F506 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C1E570C0B1E04CD30E72752F /* ZXPageView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZXPageView.podspec; path = ../ZXPageView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXSingleWaterViewController.swift; sourceTree = "<group>"; };
 		F7705108500E6EF6DF4CC63F /* Pods_ZXPageView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZXPageView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB506E8F82AC04CFE3D82876 /* Pods-ZXPageView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZXPageView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZXPageView_Example/Pods-ZXPageView_Example.release.xcconfig"; sourceTree = "<group>"; };
 		FD2123265488E0A9412423FE /* Pods_ZXPageView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZXPageView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,7 +122,8 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				9232D5C02191487D00FE69EB /* ZXPageViewController.swift */,
-				924F2371223B8A9800948FC5 /* ZXWaterViewController.swift */,
+				924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */,
+				C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -345,9 +348,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4FF5C6D22684E1000215F41 /* ZXSingleWaterViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				9232D5C12191487D00FE69EB /* ZXPageViewController.swift in Sources */,
-				924F2372223B8A9800948FC5 /* ZXWaterViewController.swift in Sources */,
+				924F2372223B8A9800948FC5 /* ZXHorizontalViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

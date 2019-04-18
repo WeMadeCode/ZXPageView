@@ -12,7 +12,7 @@ import ZXPageView
 
 private let kCollectionViewCellID = "kCollectionViewCellID"
 
-class ZXWaterViewController: ViewController {
+class ZXHorizontalViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class ZXWaterViewController: ViewController {
         let titles = ["推荐", "游戏游戏游戏游戏", "热门"] //, "趣玩"
         
         // 3.创建布局
-        let layout = ZXWaterViewLayout()
+        let layout = ZXHorizontalViewLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.lineSpacing = 10
         layout.itemSpacing = 10
@@ -39,13 +39,15 @@ class ZXWaterViewController: ViewController {
         
         // 4.创建Water
         let pageFrame = CGRect(x: 0, y: self.safeY, width: self.view.bounds.width, height: 300)
-        let pageView = ZXWaterView(frame: pageFrame, style: style, titles: titles, layout : layout)
+        let pageView = ZXHorizontalView(frame: pageFrame, style: style, titles: titles, layout : layout)
         pageView.dataSource = self
         pageView.delegate = self
         pageView.registerCell(UICollectionViewCell.self, identifier: kCollectionViewCellID)
         pageView.backgroundColor = UIColor.orange
         view.addSubview(pageView)
     }
+    
+
     
     deinit {
         print("deinit")
@@ -56,12 +58,12 @@ class ZXWaterViewController: ViewController {
 }
 
 
-extension ZXWaterViewController : ZXWaterViewDataSource {
-    func numberOfSectionsInWaterView(_ waterView: ZXWaterView) -> Int {
+extension ZXHorizontalViewController : ZXHorizontalViewDataSource {
+    func numberOfSectionsInWaterView(_ waterView: ZXHorizontalView) -> Int {
         return 3
     }
-    
-    func waterView(_ waterView: ZXWaterView, numberOfItemsInSection section: Int) -> Int {
+
+    func waterView(_ waterView: ZXHorizontalView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 12
         } else if section == 1 {
@@ -71,11 +73,11 @@ extension ZXWaterViewController : ZXWaterViewDataSource {
         }else{
             return 13
         }
-        
-       
+
+
     }
-    
-    func waterView(_ waterView: ZXWaterView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+
+    func waterView(_ waterView: ZXHorizontalView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = waterView.dequeueReusableCell(withReuseIdentifier: kCollectionViewCellID, for: indexPath)
         cell.backgroundColor = UIColor.zx_randomColor
         return cell
@@ -83,8 +85,8 @@ extension ZXWaterViewController : ZXWaterViewDataSource {
 }
 
 
-extension ZXWaterViewController : ZXWaterViewDelegate {
-    func waterView(_ waterView: ZXWaterView, didSelectedAtIndexPath indexPath: IndexPath) {
+extension ZXHorizontalViewController : ZXHorizontalViewDelegate {
+    func waterView(_ waterView: ZXHorizontalView, didSelectedAtIndexPath indexPath: IndexPath) {
         print(indexPath)
     }
 }
