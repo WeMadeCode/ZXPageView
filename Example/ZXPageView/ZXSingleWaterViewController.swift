@@ -8,6 +8,7 @@
 
 import UIKit
 import ZXPageView
+import MJRefresh
 
 
 
@@ -15,26 +16,47 @@ private let kWaterCellID = "kWaterCellID"
 
 class ZXSingleWaterViewController: UIViewController {
     
-    var count : Int = 500
+    var count : Int = 1
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        // 1.设置布局
+    lazy var collectionView: UICollectionView = {
         let layout = ZXWaterViewLayout()
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
         layout.dataSource = self
         
-        // 2.创建UICollectionView
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: kWaterCellID)
+        collectionView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadNewData))
+        collectionView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreData))
+        return collectionView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+     
         view.addSubview(collectionView)
     }
     
+    @objc func loadMoreData(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.collectionView.mj_footer.endRefreshing()
+            self.count += 1
+            self.collectionView.reloadData()
+            
+        }
+    }
+    
+    @objc func loadNewData(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.collectionView.mj_header.endRefreshing()
+            self.count = 1
+            self.collectionView.reloadData()
+            
+        }
+    }
     
     deinit {
         print("deinit")
@@ -52,13 +74,7 @@ extension ZXSingleWaterViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterCellID, for: indexPath)
         
         cell.backgroundColor = UIColor.zx_randomColor
-        
-//        if indexPath.item == count - 1 {
-//            count += 20
-//
-//            collectionView.reloadData()
-//        }
-        
+    
         return cell
     }
 }

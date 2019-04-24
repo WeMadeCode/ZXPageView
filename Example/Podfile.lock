@@ -1,13 +1,16 @@
 PODS:
+  - MJRefresh (3.1.16)
   - SnapKit (4.2.0)
-  - ZXPageView (0.8.0)
+  - ZXPageView (0.8.1)
 
 DEPENDENCIES:
+  - MJRefresh (~> 3.1.16)
   - SnapKit (~> 4.2.0)
   - ZXPageView (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - MJRefresh
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -15,9 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  MJRefresh: 7798e16e53a5ef7f332dd05b27664db4e29530fd
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  ZXPageView: 1fd646bc8a0faab9544136039f0a730c81f05490
+  ZXPageView: 87759aa7aaaabd507864c3dc2518cd03e6b8242c
 
-PODFILE CHECKSUM: 5da74a020387c3606e6228e31077ce2e328730a5
+PODFILE CHECKSUM: d013e6c7a672f87827398d9a2eb29f24570c8bff
 
 COCOAPODS: 1.6.1
