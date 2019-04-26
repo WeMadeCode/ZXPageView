@@ -83,10 +83,11 @@ public class ZXPageView: UIView {
     private lazy var contentView: ZXContentView = {
         let style = self.dataSource!.styleForPageView()
         let childVcs = self.dataSource!.contentForPageView()
+        let index  = self.dataSource?.defaultScrollIndex?() ?? 0
         let width = self.dataSource?.defaultPageSize?().width ?? self.bounds.width
         let height = self.dataSource?.defaultPageSize?().height ?? self.bounds.height - style.titleHeight
         let frame = CGRect(x: 0, y: style.titleHeight, width: width, height: height)
-        let contentView = ZXContentView(frame:frame,childVcs: childVcs,style:style)
+        let contentView = ZXContentView(frame:frame,childVcs: childVcs,style:style,defaultIndex:index)
         return contentView
     }()
 

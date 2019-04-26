@@ -69,11 +69,11 @@ extension ZXPageViewController:ZXPageViewDelegate{
 extension ZXPageViewController:ZXPageViewDataSource{
    
     func defaultPageSize() -> CGSize {
-        return  CGSize(width: self.view.frame.size.width, height: 300)
+        return CGSize(width: self.view.frame.size.width, height: 300)
     }
     
     func defaultScrollIndex() -> Int {
-        return 5
+        return 4
     }
    
     func titlesForPageView() -> [String]{
@@ -81,9 +81,13 @@ extension ZXPageViewController:ZXPageViewDataSource{
     }
     func contentForPageView() -> [UIViewController]{
         var childVcs = [UIViewController]()
-        for _ in 0..<titles.count {
+        for i in 0..<titles.count {
             let vc = UIViewController()
-            vc.view.backgroundColor = UIColor.zx_randomColor
+            if i == 4{
+                vc.view.backgroundColor = UIColor.red
+            }else{
+                vc.view.backgroundColor = UIColor.zx_randomColor
+            }
             childVcs.append(vc)
         }
         return childVcs
