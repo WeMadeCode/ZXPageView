@@ -18,10 +18,12 @@ public class ZXWaterViewLayout: UICollectionViewFlowLayout {
     public weak var dataSource : ZXWaterViewLayoutDataSource?
     /// 列数
     public var cols = 2
+    // 布局信息数组
     private lazy var attrsArray  = [UICollectionViewLayoutAttributes]()
     private var maxHeight : CGFloat = 0
     // 所有列的总高度
-    private lazy var colHeights = [CGFloat]()
+    private lazy var colHeights =  Array(repeating: self.sectionInset.top, count: self.cols)
+    private var startIndex : Int = 0
 }
 
 
@@ -32,16 +34,18 @@ extension ZXWaterViewLayout {
 
         guard let collectionView = collectionView else { return }
         
-        //高度高度数组
-        colHeights = Array(repeating: self.sectionInset.top, count: self.cols)
-        
-        //清除布局信息
-        attrsArray.removeAll()
-        
         //获取行数(仅考虑一个section的情况)
         let rowCount = collectionView.numberOfItems(inSection: 0)
-       
-        for row in 0..<rowCount{
+        
+        
+        //初始化属性
+        if startIndex >= rowCount{
+            startIndex = 0
+            attrsArray.removeAll()
+            colHeights = Array(repeating: self.sectionInset.top, count: self.cols)
+        }
+        
+        for row in startIndex..<rowCount{
             //创建位置
             let indexPath = IndexPath(item: row, section: 0)
             
@@ -50,6 +54,14 @@ extension ZXWaterViewLayout {
                 attrsArray.append(attrs)
             }
         }
+        
+        // 记录最大高度
+        if let max = colHeights.max(){
+            maxHeight = max
+        }
+        
+        //记录位置
+        startIndex = rowCount
     }
     
     // MARK:- 返回决定一段区域所有cell和头尾视图的布局属性
@@ -83,12 +95,7 @@ extension ZXWaterViewLayout {
         minH = minH + itemH + minimumLineSpacing
         // 更新最短那列的高度
         colHeights[index] = minH
-        
-        // 记录最大高度
-        if maxHeight < minH{
-            maxHeight = minH
-        }
-        
+     
         //计算横坐标
         let itemX = self.sectionInset.left + (self.minimumInteritemSpacing + itemW) * CGFloat(index)
         //计算纵坐标

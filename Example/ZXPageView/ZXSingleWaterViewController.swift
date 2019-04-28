@@ -16,7 +16,7 @@ private let kWaterCellID = "kWaterCellID"
 
 class ZXSingleWaterViewController: UIViewController {
     
-    var count : Int = 1
+    var count : Int = 20
     
     lazy var collectionView: UICollectionView = {
         let layout = ZXWaterViewLayout()
@@ -43,7 +43,7 @@ class ZXSingleWaterViewController: UIViewController {
     @objc func loadMoreData(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.collectionView.mj_footer.endRefreshing()
-            self.count += 1
+            self.count += 20
             self.collectionView.reloadData()
             
         }
@@ -52,7 +52,7 @@ class ZXSingleWaterViewController: UIViewController {
     @objc func loadNewData(){
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.collectionView.mj_header.endRefreshing()
-            self.count = 1
+            self.count = 20
             self.collectionView.reloadData()
             
         }

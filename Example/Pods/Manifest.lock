@@ -1,7 +1,7 @@
 PODS:
   - MJRefresh (3.1.16)
   - SnapKit (4.2.0)
-  - ZXPageView (0.8.2)
+  - ZXPageView (0.8.3)
 
 DEPENDENCIES:
   - MJRefresh (~> 3.1.16)
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   MJRefresh: 7798e16e53a5ef7f332dd05b27664db4e29530fd
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  ZXPageView: 75331d2b895249f25f784f5247d5e8170f36dca2
+  ZXPageView: c8fe6ad2c69a4eb3bd3d4a7dff50895adb989360
 
 PODFILE CHECKSUM: d013e6c7a672f87827398d9a2eb29f24570c8bff
 
