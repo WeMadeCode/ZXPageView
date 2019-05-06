@@ -48,6 +48,13 @@ class ZXPageViewController: ViewController {
             make.left.right.bottom.equalToSuperview()
         }
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        print(self.children)
+        
+    }
 
     deinit {
         print("deinit")
@@ -80,15 +87,16 @@ extension ZXPageViewController:ZXPageViewDataSource{
         return self.titles        
     }
     func contentForPageView() -> [UIViewController]{
-        var childVcs = [UIViewController]()
+        var childVcs = [TestViewController]()
         for i in 0..<titles.count {
-            let vc = UIViewController()
+            let vc = TestViewController()
             if i == 4{
                 vc.view.backgroundColor = UIColor.red
             }else{
                 vc.view.backgroundColor = UIColor.zx_randomColor
             }
             childVcs.append(vc)
+            self.addChild(vc)
         }
         return childVcs
     }

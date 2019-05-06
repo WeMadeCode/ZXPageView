@@ -59,14 +59,7 @@ extension ZXContentView{
         //1.添加collectionView
         addSubview(collectionView)
         
-        //2.将所有的子控制器添加到父控制器中
-        childVcs.forEach { (childVc) in
-            if let vc = self.zx_parentViewController{
-                vc.addChild(childVc)
-            }
-        }
-        
-        //3.先滚动到指定位置
+        //2.滚动到指定位置
         self.scrollToSpecifiedIndex(self.defaultIndex)
     }
     
