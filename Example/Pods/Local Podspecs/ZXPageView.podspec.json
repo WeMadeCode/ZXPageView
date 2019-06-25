@@ -1,6 +1,6 @@
 {
   "name": "ZXPageView",
-  "version": "0.8.4",
+  "version": "0.8.6",
   "summary": "通用的滚动UI框架",
   "description": "Copy the headline of the today scroll frame，a framework of sliding scrollView，and a waterfall flow framework",
   "homepage": "https://github.com/WeMadeCode/ZXPageView",
@@ -13,11 +13,12 @@
   },
   "source": {
     "git": "https://github.com/WeMadeCode/ZXPageView.git",
-    "tag": "0.8.4"
+    "tag": "0.8.6"
   },
   "platforms": {
     "ios": "8.0"
   },
   "source_files": "ZXPageView/Classes/**/*",
-  "swift_version": "4.2"
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
 }

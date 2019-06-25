@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZXPageView'
-  s.version          = '0.8.5'
+  s.version          = '0.8.6'
   s.summary          = '通用的滚动UI框架'
 
 # This description is used to generate tags and improve search results.
@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.source_files = 'ZXPageView/Classes/**/*'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
   
   # s.resource_bundles = {
   #   'ZXPageView' => ['ZXPageView/Assets/*.png']
