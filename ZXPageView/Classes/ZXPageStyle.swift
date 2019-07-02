@@ -34,7 +34,8 @@ public class ZXPageStyle:NSObject {
     public var maxScale      : CGFloat = 1.2    // 缩放大小
     
     /// 是否需要显示背景
-    public var isShowCoverView : Bool    = false         //是否展示背景色
+    public var isShowCoverView : Bool    = false         //是否单个展示背景色
+    public var isShowEachView  : Bool    = false         //是否全部展示背景色
     public var coverBgColor    : UIColor = UIColor.black //背景色颜色
     public var coverAlpha      : CGFloat = 0.4           //背景色透明度
     public var coverMargin     : CGFloat = 12            //背景边距

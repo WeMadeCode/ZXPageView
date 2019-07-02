@@ -32,6 +32,7 @@ class ZXPageViewController: ViewController {
         pageView.delegate = self
         pageView.dataSource = self
         self.view.addSubview(pageView)
+        
     }
     
     func autoLayout(){
@@ -103,10 +104,11 @@ extension ZXPageViewController:ZXPageViewDataSource{
     
     func styleForPageView() -> ZXPageStyle{
         let style = ZXPageStyle()
-        style.isShowCoverView = true
+        style.isShowEachView = true
+//        style.isShowCoverView = true
         style.isDivideByScreen = false
         style.isShowBottomLine = false
-        style.coverBgColor = UIColor.orange
+        style.coverBgColor = UIColor.lightGray
         style.normalColor = UIColor.lightGray
         style.selectColor = UIColor.white
         style.coverAlpha = 1

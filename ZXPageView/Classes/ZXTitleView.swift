@@ -40,14 +40,14 @@ public class ZXTitleView: UIView {
         let deltaB = self.selectRGB.blue - self.normalRGB.blue
         return (deltaR, deltaG, deltaB)
     }()
-    private lazy var titleButtons : [UIButton] = [UIButton]()
-    private lazy var titleButtonWs : [CGFloat] = [CGFloat]()
+    private lazy var titleButtons  = [UIButton]()
+    private lazy var titleButtonWs = [CGFloat]()
     private lazy var titleScrollView:UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = self.bounds
+        scrollView.backgroundColor = UIColor.white
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.scrollsToTop = false
-        scrollView.backgroundColor = UIColor.white
         scrollView.isScrollEnabled = false
         return scrollView
     }()
@@ -63,6 +63,8 @@ public class ZXTitleView: UIView {
         let coverView = UIView()
         coverView.backgroundColor = self.style.coverBgColor
         coverView.alpha = self.style.coverAlpha
+        coverView.layer.cornerRadius = style.coverRadius
+        coverView.layer.masksToBounds = true
         return coverView
     }()
     
@@ -83,7 +85,6 @@ public class ZXTitleView: UIView {
 extension ZXTitleView{
     
     private func setupSubView(){
-        
         // 1.添加一个UIScrollView
         addSubview(titleScrollView)
         
@@ -104,13 +105,22 @@ extension ZXTitleView{
     }
     
     
-     func setupTitleButtons(){
+    private func setupTitleButtons(){
+        //1.清空子控件
+        titleScrollView.subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        titleScrollView.contentSize.width = 0
+        
+        //2.清空数组
+        titleButtons.removeAll()
+        titleButtonWs.removeAll()
         
         for (i,title) in titles.enumerated() {
-            //1.创建UIbutton
+            //3.创建UIbutton
             let button = UIButton()
             
-            //2.设置button的属性
+            //4.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
             if i == 0{
@@ -121,17 +131,17 @@ extension ZXTitleView{
             button.titleLabel?.textAlignment = .center
             button.titleLabel?.font = UIFont.systemFont(ofSize:style.fontSize)
      
-            //3.将button添加到数组中
+            //5.将button添加到数组中
             titleButtons.append(button)
             
-            //4.监听button的点击
+            //6.监听button的点击
             button.addTarget(self, action: #selector(titleButtonClick(_:)), for: .touchUpInside)
         }
     }
     
     
-     func setupButtonsFrame(){
-        
+   private func setupButtonsFrame(){
+        //计算按钮总宽度
         let totalWidth = self.calculateTotalWidth()
         
         if totalWidth > bounds.width { //总宽度大于屏幕宽度，按间距布局
@@ -144,7 +154,7 @@ extension ZXTitleView{
             if style.isDivideByScreen == true{//按等分屏幕布局
                 self.dividedByScreen()
             }else{ //任然按照间距布局
-               self.dividedByDistance()
+                self.dividedByDistance()
             }
         }
 
@@ -161,7 +171,7 @@ extension ZXTitleView{
     }
     
     
-    func calculateTotalWidth() -> CGFloat{
+    private func calculateTotalWidth() -> CGFloat{
         //1.定义变量
         var totalWidth : CGFloat = CGFloat(titleButtons.count) * style.titleMargin
         
@@ -181,7 +191,7 @@ extension ZXTitleView{
         return totalWidth
     }
     
-    func dividedByScreen()  {
+    private func dividedByScreen()  {
         for (i,_) in titleButtonWs.enumerated(){
             let averageWidth = bounds.width / CGFloat(titleButtons.count)
             let buttonX = averageWidth * CGFloat(i)
@@ -190,7 +200,7 @@ extension ZXTitleView{
         }
     }
     
-    func dividedByDistance(){
+    private func dividedByDistance(){
         for (i,width) in titleButtonWs.enumerated(){
             let buttonX:CGFloat = i == 0 ? style.titleMargin * 0.5 : (titleButtons[i - 1].frame.maxX + style.titleMargin)
             let buttonW:CGFloat = width
@@ -199,8 +209,8 @@ extension ZXTitleView{
         }
     }
     
-     func setupBottomLine(){
-    
+    private func setupBottomLine(){
+        
         //1.判断是否需要显示BottomLine
         guard style.isShowBottomLine else { return }
         
@@ -219,34 +229,51 @@ extension ZXTitleView{
     }
 
     
-     func setupCoverView(){
-        // 1.判断是否需要显示coverView
-        guard style.isShowCoverView else {
-            return
+    private  func setupCoverView(){
+        
+        // 判断是否需要显示单个背景图
+        if style.isShowCoverView {
+            // 添加到scrollView
+            titleScrollView.insertSubview(coverView, at: 0)
+            
+            // 重新计算按钮的x值
+            titleButtons.forEach { (btn) in
+                btn.frame.origin.x += style.coverMargin
+            }
+            
+            // 计算cover的frame
+            let firstButton = titleButtons.first!
+            let coverW = firstButton.bounds.width + 2 * style.coverMargin
+            let coverH = style.coverHeight
+            let coverX = firstButton.frame.origin.x - style.coverMargin
+            let coverY = (firstButton.frame.height - coverH) * 0.5
+            coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
+            
+        }else if style.isShowEachView { //判断是否需要显示全部背景图
+            titleButtons.forEach { (btn) in
+                //创建coverView
+                let coverView = UIView()
+                coverView.backgroundColor = self.style.coverBgColor
+                coverView.alpha = self.style.coverAlpha
+                coverView.layer.cornerRadius = style.coverRadius
+                coverView.layer.masksToBounds = true
+                
+                //添加到scrollView
+                titleScrollView.insertSubview(coverView, at: 0)
+                
+                //重新计算按钮的x值
+                btn.frame.origin.x += style.coverMargin
+                
+                // 计算cover的frame
+                let coverW = btn.bounds.width + 2 * style.coverMargin
+                let coverH = style.coverHeight
+                let coverX = btn.frame.origin.x - style.coverMargin
+                let coverY = (btn.frame.height - coverH) * 0.5
+                coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
+            }
         }
         
-        // 2.添加到scrollView
-        titleScrollView.insertSubview(coverView, at: 0)
-        
-       
-        // 3.重新计算按钮的x值
-        titleButtons.forEach { (btn) in
-            btn.frame.origin.x += style.coverMargin
-        }
-        
-        // 4.设置遮盖的frame
-        let firstButton = titleButtons.first!
-        let coverW = firstButton.bounds.width + 2 * style.coverMargin
-        let coverH = style.coverHeight
-        let coverX = firstButton.frame.origin.x - style.coverMargin
-        let coverY = (firstButton.frame.height - coverH) * 0.5
-        coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
-        
-        // 5.设置圆角
-        coverView.layer.cornerRadius = style.coverRadius
-        coverView.layer.masksToBounds = true
-        
-        // 6.设置contenSize
+        // 设置contenSize
         if titleScrollView.isScrollEnabled == true{
             titleScrollView.contentSize.width += 2 * style.coverMargin
         }
@@ -254,7 +281,7 @@ extension ZXTitleView{
 
     
     // 设置默认滚动位置
-     func setDefaultContent()  {
+    private func setDefaultContent()  {
         guard defaultIndex >= 0 && defaultIndex <= titles.count else {
             return
         }
@@ -399,4 +426,16 @@ extension ZXTitleView{
    public func setCurrentProgress(sourceIndex: Int, targetIndex: Int, progress: CGFloat) {
         self.setStyleAnimatedProgressed(titleButtons[sourceIndex], titleButtons[targetIndex], progress)
     }
+    
+    
+    /// 单独使用titleView的时候使用
+    ///
+    /// - Parameter titles: 需要更新的新数据源
+    public func updateTitles(_ titles:[String]){
+       
+        self.titles = titles
+        
+        self.setupSubView()
+    }
+    
 }

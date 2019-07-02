@@ -42,14 +42,23 @@
                                     <action selector="btn3Click:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="iDW-i8-zHb"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d20-QL-mnx">
+                                <rect key="frame" x="30" y="344" width="93" height="30"/>
+                                <state key="normal" title="前往TitleView"/>
+                                <connections>
+                                    <action selector="btn4Click:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TcW-ov-Ozq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="d20-QL-mnx" firstAttribute="leading" secondItem="nvB-fI-hVP" secondAttribute="leading" id="1S4-sK-mii"/>
                             <constraint firstItem="nvB-fI-hVP" firstAttribute="top" secondItem="UlW-0F-TZN" secondAttribute="bottom" constant="30" id="2Qq-eA-LJq"/>
                             <constraint firstItem="UlW-0F-TZN" firstAttribute="top" secondItem="ihL-B7-m6n" secondAttribute="bottom" constant="30" id="QC2-H4-G1X"/>
                             <constraint firstItem="UlW-0F-TZN" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="30" id="UVA-9h-fIK"/>
                             <constraint firstItem="nvB-fI-hVP" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="30" id="UcT-7R-iFD"/>
                             <constraint firstItem="ihL-B7-m6n" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="30" id="XWF-tr-j6H"/>
+                            <constraint firstItem="d20-QL-mnx" firstAttribute="top" secondItem="nvB-fI-hVP" secondAttribute="bottom" constant="30" id="lSI-wH-cDl"/>
                             <constraint firstItem="ihL-B7-m6n" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="rTP-EZ-7lu"/>
                         </constraints>
                     </view>
@@ -57,7 +66,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-577" y="-1014"/>
+            <point key="canvasLocation" x="-724" y="-1137"/>
         </scene>
         <!--Item-->
         <scene sceneID="ieF-T2-f8X">

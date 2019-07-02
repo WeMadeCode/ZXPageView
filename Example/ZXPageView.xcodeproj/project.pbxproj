@@ -17,6 +17,7 @@
 		91B3DF5ED108DF291272B662 /* Pods_ZXPageView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7705108500E6EF6DF4CC63F /* Pods_ZXPageView_Example.framework */; };
 		9232D5C12191487D00FE69EB /* ZXPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9232D5C02191487D00FE69EB /* ZXPageViewController.swift */; };
 		924F2372223B8A9800948FC5 /* ZXHorizontalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */; };
+		C44875B422CB37E600563D11 /* ZXTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44875B322CB37E600563D11 /* ZXTitleViewController.swift */; };
 		C48371DD2280243800C8ECA0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48371DC2280243800C8ECA0 /* TestViewController.swift */; };
 		C4FF5C6D22684E1000215F41 /* ZXSingleWaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXHorizontalViewController.swift; sourceTree = "<group>"; };
 		A9B2B5910705CDC98055F506 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C1E570C0B1E04CD30E72752F /* ZXPageView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZXPageView.podspec; path = ../ZXPageView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C44875B322CB37E600563D11 /* ZXTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXTitleViewController.swift; sourceTree = "<group>"; };
 		C48371DC2280243800C8ECA0 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZXSingleWaterViewController.swift; sourceTree = "<group>"; };
 		F7705108500E6EF6DF4CC63F /* Pods_ZXPageView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZXPageView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				C48371DC2280243800C8ECA0 /* TestViewController.swift */,
 				924F2371223B8A9800948FC5 /* ZXHorizontalViewController.swift */,
 				C4FF5C6C22684E1000215F41 /* ZXSingleWaterViewController.swift */,
+				C44875B322CB37E600563D11 /* ZXTitleViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -350,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4FF5C6D22684E1000215F41 /* ZXSingleWaterViewController.swift in Sources */,
+				C44875B422CB37E600563D11 /* ZXTitleViewController.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				9232D5C12191487D00FE69EB /* ZXPageViewController.swift in Sources */,
 				924F2372223B8A9800948FC5 /* ZXHorizontalViewController.swift in Sources */,
