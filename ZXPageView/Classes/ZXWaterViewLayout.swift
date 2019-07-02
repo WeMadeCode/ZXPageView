@@ -91,7 +91,7 @@ extension ZXWaterViewLayout {
         
         // 取出最小列的值
         guard var minH = colHeights.min() else { return nil }
-        guard let index = colHeights.index(of: minH) else { return nil}
+        guard let index = colHeights.firstIndex(of: minH) else { return nil}
         minH = minH + itemH + minimumLineSpacing
         // 更新最短那列的高度
         colHeights[index] = minH
