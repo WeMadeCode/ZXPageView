@@ -26,7 +26,7 @@ import UIKit
 }
 
 public class ZXTitleView: UIView {
-    private  var defaultIndex : Int
+    private  let defaultIndex : Int
     public   weak var delegate : ZXTitleViewDelegate?
     private  var style:ZXPageStyle
     private  var titles:[String]
@@ -88,24 +88,27 @@ extension ZXTitleView{
         // 1.添加一个UIScrollView
         addSubview(titleScrollView)
         
-        // 2.创建所有的标题按钮
+        // 2.清空操作
+        initSubData()
+        
+        // 3.创建所有的标题按钮
         setupTitleButtons()
         
-        // 3.计算所有按钮的frame
+        // 4.计算所有按钮的frame
         setupButtonsFrame()
         
-        // 4.设置bottomLine
+        // 5.设置bottomLine
         setupBottomLine()
         
-        // 5.设置coverView
+        // 6.设置coverView
         setupCoverView()
         
-        // 6.设置默认滚动位置
+        // 7.设置默认滚动位置
         setDefaultContent()
     }
     
     
-    private func setupTitleButtons(){
+    func initSubData(){
         //1.清空子控件
         titleScrollView.subviews.forEach { (view) in
             view.removeFromSuperview()
@@ -115,12 +118,15 @@ extension ZXTitleView{
         //2.清空数组
         titleButtons.removeAll()
         titleButtonWs.removeAll()
-        
+        currentIndex = 0
+    }
+    
+    private func setupTitleButtons(){
         for (i,title) in titles.enumerated() {
-            //3.创建UIbutton
+            //1.创建UIbutton
             let button = UIButton()
             
-            //4.设置button的属性
+            //2.设置button的属性
             button.tag = i
             button.setTitle(title, for: .normal)
             if i == 0{
@@ -131,10 +137,10 @@ extension ZXTitleView{
             button.titleLabel?.textAlignment = .center
             button.titleLabel?.font = UIFont.systemFont(ofSize:style.fontSize)
      
-            //5.将button添加到数组中
+            //3.将button添加到数组中
             titleButtons.append(button)
             
-            //6.监听button的点击
+            //4.监听button的点击
             button.addTarget(self, action: #selector(titleButtonClick(_:)), for: .touchUpInside)
         }
     }
@@ -282,40 +288,58 @@ extension ZXTitleView{
     
     // 设置默认滚动位置
     private func setDefaultContent()  {
-        guard defaultIndex >= 0 && defaultIndex <= titles.count else {
-            return
+        if defaultIndex >= 0 && defaultIndex <= titles.count{
+            
+            // 1.取出目标按钮
+            let targetButton = titleButtons[defaultIndex]
+            
+            // 2.取出原来的按钮
+            let sourceButton = titleButtons[currentIndex]
+            
+            // 3.改变按钮的颜色
+            sourceButton.setTitleColor(style.normalColor, for: .normal)
+            targetButton.setTitleColor(style.selectColor, for: .normal)
+            
+            // 4.记录最新的index
+            currentIndex = targetButton.tag
+            
+            // 5.让点击的按钮居中显示
+            adjustButtonPosition(targetButton)
+            
+            // 6.设置动画
+            setStyleAnimated(sourceButton,targetButton)
         }
-        let button = titleButtons[defaultIndex]
-        titleButtonClick(button)
+
     }
 }
 
 extension ZXTitleView{
+    
      @objc private func titleButtonClick(_ targetButton:UIButton){
     
-        // 1.取出原来的label
+        // 1.取出原来的按钮
         let sourceButton = titleButtons[currentIndex]
         
-        // 2.校验button
-        guard targetButton.tag != currentIndex else {
+        // 2.通知外界点击了当前按钮
+        if targetButton.tag == currentIndex{
             self.delegate?.titleView?(self, currentTitle: sourceButton.currentTitle ?? "", currentIndex: currentIndex)
             return
         }
-        
-        // 3.改变Label的颜色
+       
+        // 3.改变按钮的颜色
         sourceButton.setTitleColor(style.normalColor, for: .normal)
         targetButton.setTitleColor(style.selectColor, for: .normal)
         
         // 4.记录最新的index
         currentIndex = targetButton.tag
         
-        // 5.让点击的label居中显示
-        adjustLabelPosition(targetButton)
+        // 5.让点击的按钮居中显示
+        adjustButtonPosition(targetButton)
         
         // 6.设置动画
         setStyleAnimated(sourceButton,targetButton)
         
-        // 7.通知代理
+        // 7.通知外界点击了下一个按钮
         delegate?.titleView(self, nextTitle: targetButton.currentTitle ?? "", nextIndex: currentIndex)
     }
     
@@ -392,7 +416,7 @@ extension ZXTitleView{
         
     }
     
-    private func adjustLabelPosition(_ targetButton:UIButton){
+    private func adjustButtonPosition(_ targetButton:UIButton){
         //0.只有可以滚动的时候可以调整
         guard titleScrollView.isScrollEnabled else {  return  }
         

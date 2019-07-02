@@ -32,15 +32,26 @@ class ZXTitleViewController: UIViewController {
         style.coverAlpha = 1
         
         titleView = ZXTitleView(frame: CGRect(x: 0, y: 100, width: self.view.frame.width, height: 50), style: style, titles: titles)
-        
+        titleView.delegate = self
         self.view.addSubview(titleView)
     }
     
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        titleView.updateTitles(["趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","头条推荐", "fff", "1", "车模推荐", "趣玩游", "娱乐","热门游戏", "趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐"])
+        titleView.updateTitles(["趣玩游", "娱乐", "热门游戏", "趣玩游", "娱乐","头条推荐"])
     }
     
+
+}
+
+extension ZXTitleViewController:ZXTitleViewDelegate{
+    func titleView(_ titleView:ZXTitleView,nextTitle:String,nextIndex:Int){
+        print(nextTitle)
+    }
+    
+    func titleView(_ titleView:ZXTitleView,currentTitle:String,currentIndex:Int){
+        print(currentTitle)
+    }
 
 }
