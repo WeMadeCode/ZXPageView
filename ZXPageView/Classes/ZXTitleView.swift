@@ -255,6 +255,11 @@ extension ZXTitleView{
             let coverY = (firstButton.frame.height - coverH) * 0.5
             coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
             
+            // 更新contenSize
+            if titleScrollView.isScrollEnabled == true{
+                titleScrollView.contentSize.width += 2 * style.coverMargin
+            }
+            
         }else if style.isShowEachView { //判断是否需要显示全部背景图
             titleButtons.forEach { (btn) in
                 //创建coverView
@@ -277,12 +282,14 @@ extension ZXTitleView{
                 let coverY = (btn.frame.height - coverH) * 0.5
                 coverView.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
             }
+            
+            // 更新contenSize
+            if titleScrollView.isScrollEnabled == true{
+                titleScrollView.contentSize.width += 2 * style.coverMargin
+            }
         }
         
-        // 设置contenSize
-        if titleScrollView.isScrollEnabled == true{
-            titleScrollView.contentSize.width += 2 * style.coverMargin
-        }
+
     }
 
     
