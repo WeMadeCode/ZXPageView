@@ -104,13 +104,13 @@ extension ZXPageViewController:ZXPageViewDataSource{
     
     func styleForPageView() -> ZXPageStyle{
         let style = ZXPageStyle()
-        style.isShowEachView = true
+//        style.isShowEachView = true
 //        style.isShowCoverView = true
         style.isDivideByScreen = false
-        style.isShowBottomLine = false
-        style.coverBgColor = UIColor.lightGray
+        style.isShowBottomLine = true
+//        style.coverBgColor = UIColor.lightGray
         style.normalColor = UIColor.lightGray
-        style.selectColor = UIColor.white
+        style.selectColor = UIColor.red
         style.coverAlpha = 1
         return style
     }
