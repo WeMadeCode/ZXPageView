@@ -32,8 +32,8 @@ public class ZXTitleView: UIView {
     private  var titles:[String]
     private  var currentIndex : Int = 0
     typealias ColorRGB = (red:CGFloat,green:CGFloat,blue:CGFloat)
-    private lazy var selectRGB : ColorRGB = self.style.selectColor.zx_getRGB()
-    private lazy var normalRGB : ColorRGB = self.style.normalColor.zx_getRGB()
+    private lazy var selectRGB : ColorRGB = self.style.selectColor.getRGB()
+    private lazy var normalRGB : ColorRGB = self.style.normalColor.getRGB()
     private lazy var deltaRGB : ColorRGB = {
         let deltaR = self.selectRGB.red - self.normalRGB.red
         let deltaG = self.selectRGB.green - self.normalRGB.green

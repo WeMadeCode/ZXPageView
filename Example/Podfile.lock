@@ -1,17 +1,38 @@
 PODS:
   - MJRefresh (3.1.16)
   - SnapKit (4.2.0)
-  - ZXPageView (0.8.9)
+  - SwifterSwift (5.0.0):
+    - SwifterSwift/AppKit (= 5.0.0)
+    - SwifterSwift/CoreGraphics (= 5.0.0)
+    - SwifterSwift/CoreLocation (= 5.0.0)
+    - SwifterSwift/Dispatch (= 5.0.0)
+    - SwifterSwift/Foundation (= 5.0.0)
+    - SwifterSwift/MapKit (= 5.0.0)
+    - SwifterSwift/SpriteKit (= 5.0.0)
+    - SwifterSwift/SwiftStdlib (= 5.0.0)
+    - SwifterSwift/UIKit (= 5.0.0)
+  - SwifterSwift/AppKit (5.0.0)
+  - SwifterSwift/CoreGraphics (5.0.0)
+  - SwifterSwift/CoreLocation (5.0.0)
+  - SwifterSwift/Dispatch (5.0.0)
+  - SwifterSwift/Foundation (5.0.0)
+  - SwifterSwift/MapKit (5.0.0)
+  - SwifterSwift/SpriteKit (5.0.0)
+  - SwifterSwift/SwiftStdlib (5.0.0)
+  - SwifterSwift/UIKit (5.0.0)
+  - ZXPageView (0.9.2)
 
 DEPENDENCIES:
   - MJRefresh (~> 3.1.16)
   - SnapKit (~> 4.2.0)
+  - SwifterSwift (~> 5.0.0)
   - ZXPageView (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - MJRefresh
     - SnapKit
+    - SwifterSwift
 
 EXTERNAL SOURCES:
   ZXPageView:
@@ -20,8 +41,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   MJRefresh: 7798e16e53a5ef7f332dd05b27664db4e29530fd
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  ZXPageView: 7c045327d6f89e83bd6ce9ae3664ad35d8770e03
+  SwifterSwift: 96f90594b370802f01647c2b1229c74a84ffafee
+  ZXPageView: 386387de94e8ad4a6c9c557c54acddfd4b43b243
 
-PODFILE CHECKSUM: d013e6c7a672f87827398d9a2eb29f24570c8bff
+PODFILE CHECKSUM: 47a2bd1ed35df33213f2204f4aa7aaceed950990
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.7.5

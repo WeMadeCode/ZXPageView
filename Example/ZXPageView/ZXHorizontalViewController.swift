@@ -8,7 +8,7 @@
 
 import UIKit
 import ZXPageView
-
+import SwifterSwift
 
 private let kCollectionViewCellID = "kCollectionViewCellID"
 
@@ -79,7 +79,7 @@ extension ZXHorizontalViewController : ZXHorizontalViewDataSource {
 
     func waterView(_ waterView: ZXHorizontalView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = waterView.dequeueReusableCell(withReuseIdentifier: kCollectionViewCellID, for: indexPath)
-        cell.backgroundColor = UIColor.zx_randomColor
+        cell.backgroundColor = UIColor.random
         return cell
     }
 }

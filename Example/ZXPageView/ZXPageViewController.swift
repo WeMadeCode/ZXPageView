@@ -22,7 +22,8 @@ class ZXPageViewController: ViewController {
         self.view.backgroundColor = UIColor.white
         
         self.autoLayout()
-        
+     
+    
     }
 
     
@@ -94,7 +95,7 @@ extension ZXPageViewController:ZXPageViewDataSource{
             if i == 4{
                 vc.view.backgroundColor = UIColor.red
             }else{
-                vc.view.backgroundColor = UIColor.zx_randomColor
+                vc.view.backgroundColor = UIColor.random
             }
             childVcs.append(vc)
             self.addChild(vc)

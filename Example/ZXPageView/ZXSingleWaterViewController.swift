@@ -73,7 +73,7 @@ extension ZXSingleWaterViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kWaterCellID, for: indexPath)
         
-        cell.backgroundColor = UIColor.zx_randomColor
+        cell.backgroundColor = UIColor.random
     
         return cell
     }
