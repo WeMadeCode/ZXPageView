@@ -36,6 +36,13 @@ class ZXPageViewController: ViewController {
         
     }
     
+    
+    /*
+     需要解决的问题：
+     1.defaultPageSize必须设置，否则会出问题
+     2.pageView或者其他依赖的布局的空间 updateConstraints会出问题。
+
+    */
     func autoLayout(){
         let pageView = ZXPageView()
         self.view.addSubview(pageView)
