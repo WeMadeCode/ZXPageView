@@ -34,24 +34,20 @@ import UIKit
     /// - Returns: 标题
     func titlesForPageView() -> [String]
     
-    
     /// 内容数据源
     ///
     /// - Returns: 内容
     func contentForPageView() -> [UIViewController]
-    
     
     /// 样式数据源
     ///
     /// - Returns: 样式
     func styleForPageView() -> ZXPageStyle
     
-    
     /// 默认选中的位置
     ///
     /// - Returns: 位置
     @objc optional func defaultScrollIndex() -> Int
-    
     
     /// 默认内容尺寸，AutoLayout布局时必须设置改大小，Frame布局可以不用设置改大小
     ///
@@ -103,7 +99,7 @@ public class ZXPageView: UIView {
     }
     
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
