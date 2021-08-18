@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public protocol ZXTitleViewDelegate:class {
+@objc public protocol ZXTitleViewDelegate: AnyObject {
     /// 点击当前按钮
     ///
     /// - Parameters:

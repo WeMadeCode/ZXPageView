@@ -9,7 +9,7 @@ import UIKit
 
 import UIKit
 
-public protocol ZXWaterViewLayoutDataSource : class {
+public protocol ZXWaterViewLayoutDataSource : AnyObject {
     func waterView(_ layout: ZXWaterViewLayout, heightForRowAt indexPath: IndexPath) -> CGFloat
 }
 

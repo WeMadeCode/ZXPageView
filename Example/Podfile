@@ -10,7 +10,5 @@ target 'ZXPageView_Example' do
   
   target 'ZXPageView_Tests' do
     inherit! :search_paths
-
-    
   end
 end

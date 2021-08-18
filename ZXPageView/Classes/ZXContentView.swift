@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ZXContentViewDelegate:class {
+protocol ZXContentViewDelegate: AnyObject {
     func contentView(_ contentView:ZXContentView,index:Int)
     func contentView(_ contentView:ZXContentView,sourceIndex:Int,targetIndex:Int,progress:CGFloat)
 }
@@ -151,7 +151,7 @@ extension ZXContentView:UICollectionViewDelegate{
 }
 
 //MARK: 给外界使用的方法
-extension ZXContentView{
+extension ZXContentView {
     
     public func scrollToSpecifiedIndex(_ index:Int){
         //1.点击了titleView

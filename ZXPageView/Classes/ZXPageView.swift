@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public protocol ZXPageViewDelegate:class {
+@objc public protocol ZXPageViewDelegate: AnyObject {
     
     /// 展示当前页
     ///

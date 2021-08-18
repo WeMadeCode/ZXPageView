@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ZXPageStyle:NSObject {
+public class ZXPageStyle: NSObject {
     
     /// 内容是否可以滚动
     public var isScrollEnable:Bool = true

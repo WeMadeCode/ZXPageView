@@ -7,14 +7,14 @@
 
 import UIKit
 
-public protocol ZXHorizontalViewDataSource : class {
+public protocol ZXHorizontalViewDataSource : AnyObject {
      func numberOfSectionsInWaterView(_ waterView : ZXHorizontalView) -> Int
      func waterView(_ waterView : ZXHorizontalView, numberOfItemsInSection section: Int) -> Int
      func waterView(_ waterView : ZXHorizontalView, cellForItemAtIndexPath indexPath : IndexPath) -> UICollectionViewCell
 }
 
 
-@objc public protocol ZXHorizontalViewDelegate : class {
+@objc public protocol ZXHorizontalViewDelegate : AnyObject {
     @objc optional func waterView(_ waterView : ZXHorizontalView, didSelectedAtIndexPath indexPath : IndexPath)
 }
 
